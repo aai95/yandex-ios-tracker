@@ -56,7 +56,10 @@ final class TrackersViewController: UIViewController {
         makeTrackersViewLayout()
     }
     
-    @objc private func addTracker() {}
+    @objc private func addTracker() {
+        let createTrackerController = UINavigationController(rootViewController: CreateTrackerViewController())
+        present(createTrackerController, animated: true)
+    }
     
     private func setupNavigationBar() {
         let addButton = UIBarButtonItem(

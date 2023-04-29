@@ -16,6 +16,7 @@
 		8E9973CF29FBD16C007E8001 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973CE29FBD16C007E8001 /* UIColorExtension.swift */; };
 		8E9973D129FBEBED007E8001 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D029FBEBED007E8001 /* MainTabBarController.swift */; };
 		8E9973D329FBFC26007E8001 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D229FBFC26007E8001 /* StatisticsViewController.swift */; };
+		8E9973D529FCFAA7007E8001 /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		8E9973CE29FBD16C007E8001 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		8E9973D029FBEBED007E8001 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		8E9973D229FBFC26007E8001 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		8E9973CC29FBCA72007E8001 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */,
 				8E9973D029FBEBED007E8001 /* MainTabBarController.swift */,
 				8E9973D229FBFC26007E8001 /* StatisticsViewController.swift */,
 				8E99737429F56EE8007E8001 /* TrackersViewController.swift */,
@@ -167,6 +170,7 @@
 				8E99737129F56EE8007E8001 /* AppDelegate.swift in Sources */,
 				8E99737329F56EE8007E8001 /* SceneDelegate.swift in Sources */,
 				8E9973D329FBFC26007E8001 /* StatisticsViewController.swift in Sources */,
+				8E9973D529FCFAA7007E8001 /* CreateTrackerViewController.swift in Sources */,
 				8E9973D129FBEBED007E8001 /* MainTabBarController.swift in Sources */,
 				8E9973CF29FBD16C007E8001 /* UIColorExtension.swift in Sources */,
 			);
