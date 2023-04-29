@@ -49,8 +49,25 @@ final class TrackersViewController: UIViewController {
         return label
     }()
     
+    private let collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        view.register(TrackerCollectionViewCell.self, forCellWithReuseIdentifier: TrackerCollectionViewCell.identifier)
+        return view
+    }()
+    
+    private let widthParameters = CollectionWidthParameters(cellsNumber: 2, leftInset: 16, rightInset: 16, interCellSpacing: 10)
+    
+    private let emojis: Array<String> = [
+        "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏",
+        "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥", "🥑", "🍆",
+        "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅",
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
         setupNavigationBar()
         makeTrackersViewLayout()
@@ -78,10 +95,12 @@ final class TrackersViewController: UIViewController {
         let topStack = makeVerticalStack()
         
         view.addSubview(topStack)
+        view.addSubview(collectionView)
         view.addSubview(placeholderImage)
         view.addSubview(placeholderLabel)
         
         topStack.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         placeholderImage.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -89,6 +108,11 @@ final class TrackersViewController: UIViewController {
             topStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             topStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             topStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            collectionView.topAnchor.constraint(equalTo: topStack.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             placeholderImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             placeholderImage.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
@@ -120,5 +144,38 @@ final class TrackersViewController: UIViewController {
         hStack.addArrangedSubview(datePicker)
         
         return hStack
+    }
+}
+
+extension TrackersViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return emojis.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let trackerCell = collectionView
+            .dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier, for: indexPath) as? TrackerCollectionViewCell
+        else {
+            preconditionFailure("Failed to cast UICollectionViewCell as TrackerCollectionViewCell")
+        }
+        trackerCell.setEmoji(value: emojis[indexPath.row])
+        trackerCell.setName(value: "Тестовый трекер номер \(indexPath.row)")
+        trackerCell.setCounter(value: indexPath.row)
+        
+        return trackerCell
+    }
+}
+
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let availableWidth = collectionView.bounds.width - widthParameters.widthInsets
+        let cellWidth =  availableWidth / CGFloat(widthParameters.cellsNumber)
+        return CGSize(width: cellWidth, height: 144)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: widthParameters.leftInset, bottom: 10, right: widthParameters.rightInset)
     }
 }

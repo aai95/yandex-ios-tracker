@@ -17,6 +17,8 @@
 		8E9973D129FBEBED007E8001 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D029FBEBED007E8001 /* MainTabBarController.swift */; };
 		8E9973D329FBFC26007E8001 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D229FBFC26007E8001 /* StatisticsViewController.swift */; };
 		8E9973D529FCFAA7007E8001 /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */; };
+		8E9973D729FD2998007E8001 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */; };
+		8E9973DB29FD6D07007E8001 /* CollectionWidthParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		8E9973D029FBEBED007E8001 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		8E9973D229FBFC26007E8001 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
+		8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
+		8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWidthParameters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +69,9 @@
 			isa = PBXGroup;
 			children = (
 				8E9973CD29FBD008007E8001 /* Extensions */,
+				8E9973D929FD6C42007E8001 /* Utilities */,
 				8E9973CC29FBCA72007E8001 /* ViewControllers */,
+				8E9973D829FD44E5007E8001 /* Views */,
 				8E99737029F56EE8007E8001 /* AppDelegate.swift */,
 				8E99737229F56EE8007E8001 /* SceneDelegate.swift */,
 				8E99737629F56EE8007E8001 /* Main.storyboard */,
@@ -93,6 +99,22 @@
 				8E9973CE29FBD16C007E8001 /* UIColorExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8E9973D829FD44E5007E8001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8E9973D929FD6C42007E8001 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,10 +189,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E99737529F56EE8007E8001 /* TrackersViewController.swift in Sources */,
+				8E9973DB29FD6D07007E8001 /* CollectionWidthParameters.swift in Sources */,
 				8E99737129F56EE8007E8001 /* AppDelegate.swift in Sources */,
 				8E99737329F56EE8007E8001 /* SceneDelegate.swift in Sources */,
 				8E9973D329FBFC26007E8001 /* StatisticsViewController.swift in Sources */,
 				8E9973D529FCFAA7007E8001 /* CreateTrackerViewController.swift in Sources */,
+				8E9973D729FD2998007E8001 /* TrackerCollectionViewCell.swift in Sources */,
 				8E9973D129FBEBED007E8001 /* MainTabBarController.swift in Sources */,
 				8E9973CF29FBD16C007E8001 /* UIColorExtension.swift in Sources */,
 			);
