@@ -52,7 +52,7 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     private func makeCreateTrackerViewLayout() {
-        view.backgroundColor = UIColor.ypWhiteDay
+        view.backgroundColor = .ypWhiteDay
         
         let buttonStack = makeVerticalStack()
         

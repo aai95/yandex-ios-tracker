@@ -49,9 +49,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private let incrementButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.setImage(UIImage(named: "AddTrackerButton")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(UIImage(named: "PlusButton")?.withTintColor(.ypWhiteDay), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-        button.tintColor = .ypWhiteDay
         button.backgroundColor = .ypGray
         
         button.layer.masksToBounds = true

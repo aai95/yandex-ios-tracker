@@ -80,7 +80,7 @@ final class TrackersViewController: UIViewController {
     
     private func setupNavigationBar() {
         let addButton = UIBarButtonItem(
-            image: UIImage(named: "AddTrackerButton"),
+            image: UIImage(named: "PlusButton"),
             style: .plain,
             target: self,
             action: #selector(addTracker)
@@ -90,26 +90,26 @@ final class TrackersViewController: UIViewController {
     }
     
     private func makeTrackersViewLayout() {
-        view.backgroundColor = UIColor.ypWhiteDay
+        view.backgroundColor = .ypWhiteDay
         
-        let topStack = makeVerticalStack()
+        let headerStack = makeVerticalStack()
         
-        view.addSubview(topStack)
+        view.addSubview(headerStack)
         view.addSubview(collectionView)
         view.addSubview(placeholderImage)
         view.addSubview(placeholderLabel)
         
-        topStack.translatesAutoresizingMaskIntoConstraints = false
+        headerStack.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         placeholderImage.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            topStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            topStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            topStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            headerStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            headerStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            collectionView.topAnchor.constraint(equalTo: topStack.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: headerStack.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -120,6 +120,9 @@ final class TrackersViewController: UIViewController {
             placeholderLabel.centerXAnchor.constraint(equalTo: placeholderImage.centerXAnchor),
             placeholderLabel.topAnchor.constraint(equalTo: placeholderImage.bottomAnchor, constant: 8)
         ])
+        
+        placeholderImage.isHidden = true
+        placeholderLabel.isHidden = true
     }
     
     private func makeVerticalStack() -> UIStackView {

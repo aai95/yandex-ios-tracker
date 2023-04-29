@@ -8,6 +8,10 @@ final class MainTabBarController: UITabBarController {
         tabBar.layer.borderWidth = 1
         tabBar.layer.borderColor = UIColor.ypGray.cgColor
         
+        setupTabBarItems()
+    }
+    
+    private func setupTabBarItems() {
         let trackersController = UINavigationController(rootViewController: TrackersViewController())
         let statisticsController = UINavigationController(rootViewController: StatisticsViewController())
         
@@ -21,6 +25,6 @@ final class MainTabBarController: UITabBarController {
             image: UIImage(named: "StatisticsTab"),
             tag: 1
         )
-        self.viewControllers = [trackersController, statisticsController]
+        viewControllers = [trackersController, statisticsController]
     }
 }
