@@ -19,6 +19,7 @@
 		8E9973D529FCFAA7007E8001 /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */; };
 		8E9973D729FD2998007E8001 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */; };
 		8E9973DB29FD6D07007E8001 /* CollectionWidthParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */; };
+		8E9973DF29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973DE29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
 		8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
 		8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWidthParameters.swift; sourceTree = "<group>"; };
+		8E9973DE29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */,
+				8E9973DE29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 				8E9973D529FCFAA7007E8001 /* CreateTrackerViewController.swift in Sources */,
 				8E9973D729FD2998007E8001 /* TrackerCollectionViewCell.swift in Sources */,
 				8E9973D129FBEBED007E8001 /* MainTabBarController.swift in Sources */,
+				8E9973DF29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift in Sources */,
 				8E9973CF29FBD16C007E8001 /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

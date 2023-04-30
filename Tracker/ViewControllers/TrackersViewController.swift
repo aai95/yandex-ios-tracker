@@ -51,7 +51,16 @@ final class TrackersViewController: UIViewController {
     
     private let collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        view.register(TrackerCollectionViewCell.self, forCellWithReuseIdentifier: TrackerCollectionViewCell.identifier)
+        
+        view.register(
+            TrackerCollectionViewCell.self,
+            forCellWithReuseIdentifier: TrackerCollectionViewCell.identifier
+        )
+        view.register(
+            TrackerCollectionViewHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TrackerCollectionViewHeader.identifier
+        )
         return view
     }()
     
@@ -152,8 +161,21 @@ final class TrackersViewController: UIViewController {
 
 extension TrackersViewController: UICollectionViewDataSource {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return emojis.count
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 3
+        case 2:
+            return 2
+        default:
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -162,12 +184,25 @@ extension TrackersViewController: UICollectionViewDataSource {
         else {
             preconditionFailure("Failed to cast UICollectionViewCell as TrackerCollectionViewCell")
         }
-        trackerCell.setColor(value: UIColor(named: "YPSelection\(indexPath.row % 18 + 1)")!)
-        trackerCell.setEmoji(value: emojis[indexPath.row])
-        trackerCell.setName(value: "Тестовый трекер номер \(indexPath.row)")
-        trackerCell.setCounter(value: indexPath.row)
+        let number = Int.random(in: 0..<emojis.count)
+        
+        trackerCell.setColor(value: UIColor(named: "YPSelection\(number % 18 + 1)")!)
+        trackerCell.setEmoji(value: emojis[number])
+        trackerCell.setName(value: "Тестовый трекер номер \(number)")
+        trackerCell.setCounter(value: number)
         
         return trackerCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let trackerHeader = collectionView
+            .dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrackerCollectionViewHeader.identifier, for: indexPath) as? TrackerCollectionViewHeader
+        else {
+            preconditionFailure("Failed to cast UICollectionReusableView as TrackerCollectionViewHeader")
+        }
+        trackerHeader.setTitle(value: "Тестовая категория \(indexPath.section)")
+        
+        return trackerHeader
     }
 }
 
@@ -181,5 +216,14 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: widthParameters.leftInset, bottom: 10, right: widthParameters.rightInset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        let indexPath = IndexPath(row: 0, section: section)
+        let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+        let targetSize = CGSize(width: collectionView.bounds.width, height: 50)
+        
+        return headerView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .required)
     }
 }
