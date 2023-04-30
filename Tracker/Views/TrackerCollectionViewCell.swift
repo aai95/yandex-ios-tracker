@@ -6,7 +6,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     
     private let canvasView: UIView = {
         let view = UIView()
-        view.backgroundColor = .ypGray
         
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 16
@@ -32,7 +31,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         
         label.textColor = .ypWhiteDay
         label.font = .systemFont(ofSize: 12, weight: .medium)
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         
         return label
     }()
@@ -51,7 +50,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         
         button.setImage(UIImage(named: "PlusButton")?.withTintColor(.ypWhiteDay), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-        button.backgroundColor = .ypGray
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
@@ -70,6 +68,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setColor(value: UIColor) {
+        canvasView.backgroundColor = value
+        incrementButton.backgroundColor = value
     }
     
     func setEmoji(value: String) {

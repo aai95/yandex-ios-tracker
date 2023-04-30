@@ -162,6 +162,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         else {
             preconditionFailure("Failed to cast UICollectionViewCell as TrackerCollectionViewCell")
         }
+        trackerCell.setColor(value: UIColor(named: "YPSelection\(indexPath.row % 18 + 1)")!)
         trackerCell.setEmoji(value: emojis[indexPath.row])
         trackerCell.setName(value: "Тестовый трекер номер \(indexPath.row)")
         trackerCell.setCounter(value: indexPath.row)
