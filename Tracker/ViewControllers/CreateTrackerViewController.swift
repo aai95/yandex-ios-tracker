@@ -39,7 +39,11 @@ final class CreateTrackerViewController: UIViewController {
         makeCreateTrackerViewLayout()
     }
     
-    @objc private func createHabitTracker() {}
+    @objc private func createHabitTracker() {
+        let createHabitController = UINavigationController(rootViewController: CreateHabitViewController())
+        present(createHabitController, animated: true)
+    }
+    
     @objc private func createEventTracker() {}
     
     private func setupNavigationBar() {
