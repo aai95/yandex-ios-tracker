@@ -25,6 +25,8 @@
 		8E9973E529FFF337007E8001 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973E429FFF337007E8001 /* CustomTextField.swift */; };
 		8E9973E829FFF421007E8001 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973E729FFF421007E8001 /* SettingModel.swift */; };
 		8E9973EA2A001081007E8001 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973E92A001081007E8001 /* CreateEventViewController.swift */; };
+		8E9973EC2A0038F5007E8001 /* ConfigureScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973EB2A0038F5007E8001 /* ConfigureScheduleViewController.swift */; };
+		8E9973EE2A003E08007E8001 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973ED2A003E08007E8001 /* SwitchTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		8E9973E429FFF337007E8001 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		8E9973E729FFF421007E8001 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		8E9973E92A001081007E8001 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		8E9973EB2A0038F5007E8001 /* ConfigureScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureScheduleViewController.swift; sourceTree = "<group>"; };
+		8E9973ED2A003E08007E8001 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 		8E9973CC29FBCA72007E8001 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8E9973EB2A0038F5007E8001 /* ConfigureScheduleViewController.swift */,
 				8E9973E92A001081007E8001 /* CreateEventViewController.swift */,
 				8E9973E029FEAF94007E8001 /* CreateHabitViewController.swift */,
 				8E9973D429FCFAA7007E8001 /* CreateTrackerViewController.swift */,
@@ -121,6 +126,7 @@
 			children = (
 				8E9973E429FFF337007E8001 /* CustomTextField.swift */,
 				8E9973E229FFB1E7007E8001 /* SettingTableViewCell.swift */,
+				8E9973ED2A003E08007E8001 /* SwitchTableViewCell.swift */,
 				8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */,
 				8E9973DE29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift */,
 			);
@@ -220,6 +226,7 @@
 				8E9973DB29FD6D07007E8001 /* CollectionWidthParameters.swift in Sources */,
 				8E99737129F56EE8007E8001 /* AppDelegate.swift in Sources */,
 				8E99737329F56EE8007E8001 /* SceneDelegate.swift in Sources */,
+				8E9973EE2A003E08007E8001 /* SwitchTableViewCell.swift in Sources */,
 				8E9973D329FBFC26007E8001 /* StatisticsViewController.swift in Sources */,
 				8E9973E129FEAF94007E8001 /* CreateHabitViewController.swift in Sources */,
 				8E9973E329FFB1E7007E8001 /* SettingTableViewCell.swift in Sources */,
@@ -228,6 +235,7 @@
 				8E9973D129FBEBED007E8001 /* MainTabBarController.swift in Sources */,
 				8E9973DF29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift in Sources */,
 				8E9973E829FFF421007E8001 /* SettingModel.swift in Sources */,
+				8E9973EC2A0038F5007E8001 /* ConfigureScheduleViewController.swift in Sources */,
 				8E9973CF29FBD16C007E8001 /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
