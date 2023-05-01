@@ -1,6 +1,6 @@
 import UIKit
 
-final class CreateHabitViewController: UIViewController {
+final class CreateEventViewController: UIViewController {
     
     private let nameField: CustomTextField = {
         let field = CustomTextField()
@@ -24,7 +24,7 @@ final class CreateHabitViewController: UIViewController {
         
         table.layer.masksToBounds = true
         table.layer.cornerRadius = 16
-        table.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        table.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
         return table
     }()
@@ -60,8 +60,7 @@ final class CreateHabitViewController: UIViewController {
     }()
     
     private let settings: Array<SettingModel> = [
-        SettingModel(name: "Категория"),
-        SettingModel(name: "Расписание")
+        SettingModel(name: "Категория")
     ]
     
     override func viewDidLoad() {
@@ -70,7 +69,7 @@ final class CreateHabitViewController: UIViewController {
         settingsTable.dataSource = self
         
         setupNavigationBar()
-        makeCreateHabitViewLayout()
+        makeCreateEventViewLayout()
     }
     
     @objc private func cancel() {
@@ -85,10 +84,10 @@ final class CreateHabitViewController: UIViewController {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
-        navigationController?.navigationBar.topItem?.title = "Новая привычка"
+        navigationController?.navigationBar.topItem?.title = "Новое нерегулярное событие"
     }
     
-    private func makeCreateHabitViewLayout() {
+    private func makeCreateEventViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
         let footerStack = makeHorizontalStack()
@@ -131,7 +130,7 @@ final class CreateHabitViewController: UIViewController {
     }
 }
 
-extension CreateHabitViewController: UITableViewDataSource {
+extension CreateEventViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settings.count

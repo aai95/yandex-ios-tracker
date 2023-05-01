@@ -44,7 +44,10 @@ final class CreateTrackerViewController: UIViewController {
         present(createHabitController, animated: true)
     }
     
-    @objc private func createEventTracker() {}
+    @objc private func createEventTracker() {
+        let createEventController = UINavigationController(rootViewController: CreateEventViewController())
+        present(createEventController, animated: true)
+    }
     
     private func setupNavigationBar() {
         let titleAttributes = [
