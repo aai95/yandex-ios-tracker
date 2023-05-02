@@ -63,14 +63,14 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        makeTrackerCollectionViewCellLayout()
+        makeViewLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setColor(value: UIColor) {
+    func setColor(value: UIColor?) {
         canvasView.backgroundColor = value
         incrementButton.backgroundColor = value
     }
@@ -110,7 +110,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     
     @objc private func incrementDayCounter() {}
     
-    private func makeTrackerCollectionViewCellLayout() {
+    private func makeViewLayout() {
         contentView.addSubview(canvasView)
         contentView.addSubview(emojiView)
         contentView.addSubview(nameLabel)

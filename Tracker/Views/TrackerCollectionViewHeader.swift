@@ -9,7 +9,6 @@ final class TrackerCollectionViewHeader: UICollectionReusableView {
         
         label.textColor = .ypBlackDay
         label.font = .systemFont(ofSize: 19, weight: .bold)
-        label.numberOfLines = 1
         
         return label
     }()
@@ -17,7 +16,7 @@ final class TrackerCollectionViewHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        makeTrackerCollectionViewHeaderLayout()
+        makeViewLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -28,7 +27,7 @@ final class TrackerCollectionViewHeader: UICollectionReusableView {
         titleLabel.text = value
     }
     
-    private func makeTrackerCollectionViewHeaderLayout() {
+    private func makeViewLayout() {
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         

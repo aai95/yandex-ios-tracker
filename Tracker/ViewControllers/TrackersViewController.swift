@@ -49,19 +49,19 @@ final class TrackersViewController: UIViewController {
         return label
     }()
     
-    private let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let trackerCollection: UICollectionView = {
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
-        view.register(
+        collection.register(
             TrackerCollectionViewCell.self,
             forCellWithReuseIdentifier: TrackerCollectionViewCell.identifier
         )
-        view.register(
+        collection.register(
             TrackerCollectionViewHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: TrackerCollectionViewHeader.identifier
         )
-        return view
+        return collection
     }()
     
     private let widthParameters = CollectionWidthParameters(cellsNumber: 2, leftInset: 16, rightInset: 16, interCellSpacing: 10)
@@ -75,11 +75,11 @@ final class TrackersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        trackerCollection.dataSource = self
+        trackerCollection.delegate = self
         
         setupNavigationBar()
-        makeTrackersViewLayout()
+        makeViewLayout()
     }
     
     @objc private func addTracker() {
@@ -98,18 +98,18 @@ final class TrackersViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .ypBlackDay
     }
     
-    private func makeTrackersViewLayout() {
+    private func makeViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
-        let headerStack = makeVerticalStack()
+        let headerStack = makeHeaderStack()
         
         view.addSubview(headerStack)
-        view.addSubview(collectionView)
+        view.addSubview(trackerCollection)
         view.addSubview(placeholderImage)
         view.addSubview(placeholderLabel)
         
         headerStack.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        trackerCollection.translatesAutoresizingMaskIntoConstraints = false
         placeholderImage.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -118,10 +118,10 @@ final class TrackersViewController: UIViewController {
             headerStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             headerStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            collectionView.topAnchor.constraint(equalTo: headerStack.bottomAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            trackerCollection.topAnchor.constraint(equalTo: headerStack.bottomAnchor),
+            trackerCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            trackerCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trackerCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             placeholderImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             placeholderImage.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
@@ -134,19 +134,7 @@ final class TrackersViewController: UIViewController {
         placeholderLabel.isHidden = true
     }
     
-    private func makeVerticalStack() -> UIStackView {
-        let vStack = UIStackView()
-        
-        vStack.axis = .vertical
-        vStack.spacing = 8
-        
-        vStack.addArrangedSubview(makeHorizontalStack())
-        vStack.addArrangedSubview(searchField)
-        
-        return vStack
-    }
-    
-    private func makeHorizontalStack() -> UIStackView {
+    private func makeHeaderStack() -> UIStackView {
         let hStack = UIStackView()
         
         hStack.axis = .horizontal
@@ -155,7 +143,15 @@ final class TrackersViewController: UIViewController {
         hStack.addArrangedSubview(titleLabel)
         hStack.addArrangedSubview(datePicker)
         
-        return hStack
+        let vStack = UIStackView()
+        
+        vStack.axis = .vertical
+        vStack.spacing = 8
+        
+        vStack.addArrangedSubview(hStack)
+        vStack.addArrangedSubview(searchField)
+        
+        return vStack
     }
 }
 
@@ -186,7 +182,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         }
         let number = Int.random(in: 0..<emojis.count)
         
-        trackerCell.setColor(value: UIColor(named: "YPSelection\(number % 18 + 1)")!)
+        trackerCell.setColor(value: UIColor(named: "YPSelection\(number % 18 + 1)"))
         trackerCell.setEmoji(value: emojis[number])
         trackerCell.setName(value: "Тестовый трекер номер \(number)")
         trackerCell.setCounter(value: number)

@@ -16,7 +16,7 @@ final class CreateEventViewController: UIViewController {
         return field
     }()
     
-    private let settingsTable: UITableView = {
+    private let settingTable: UITableView = {
         let table = UITableView(frame: .zero)
         
         table.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
@@ -67,10 +67,10 @@ final class CreateEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        settingsTable.dataSource = self
+        settingTable.dataSource = self
         
         setupNavigationBar()
-        makeCreateEventViewLayout()
+        makeViewLayout()
     }
     
     @objc private func cancel() {
@@ -88,46 +88,46 @@ final class CreateEventViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = "Новое нерегулярное событие"
     }
     
-    private func makeCreateEventViewLayout() {
+    private func makeViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
-        let footerStack = makeHorizontalStack()
+        let buttonStack = makeButtonStack()
         
         view.addSubview(nameField)
-        view.addSubview(settingsTable)
-        view.addSubview(footerStack)
+        view.addSubview(settingTable)
+        view.addSubview(buttonStack)
         
         nameField.translatesAutoresizingMaskIntoConstraints = false
-        settingsTable.translatesAutoresizingMaskIntoConstraints = false
-        footerStack.translatesAutoresizingMaskIntoConstraints = false
+        settingTable.translatesAutoresizingMaskIntoConstraints = false
+        buttonStack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             nameField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             nameField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             nameField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            settingsTable.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 24),
-            settingsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            settingsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            settingTable.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 24),
+            settingTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            settingTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            footerStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            footerStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            footerStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            buttonStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
-    private func makeHorizontalStack() -> UIStackView {
-        let hStack = UIStackView()
+    private func makeButtonStack() -> UIStackView {
+        let stack = UIStackView()
         
-        hStack.axis = .horizontal
-        hStack.distribution = .fillEqually
-        hStack.spacing = 10
-        hStack.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 10
+        stack.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        hStack.addArrangedSubview(cancelButton)
-        hStack.addArrangedSubview(createButton)
+        stack.addArrangedSubview(cancelButton)
+        stack.addArrangedSubview(createButton)
         
-        return hStack
+        return stack
     }
 }
 

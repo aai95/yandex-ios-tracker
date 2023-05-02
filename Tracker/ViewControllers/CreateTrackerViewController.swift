@@ -36,7 +36,7 @@ final class CreateTrackerViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationBar()
-        makeCreateTrackerViewLayout()
+        makeViewLayout()
     }
     
     @objc private func createHabitTracker() {
@@ -58,10 +58,10 @@ final class CreateTrackerViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = "Создание трекера"
     }
     
-    private func makeCreateTrackerViewLayout() {
+    private func makeViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
-        let buttonStack = makeVerticalStack()
+        let buttonStack = makeButtonStack()
         
         view.addSubview(buttonStack)
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
@@ -73,15 +73,15 @@ final class CreateTrackerViewController: UIViewController {
         ])
     }
     
-    private func makeVerticalStack() -> UIStackView {
-        let vStack = UIStackView()
+    private func makeButtonStack() -> UIStackView {
+        let stack = UIStackView()
         
-        vStack.axis = .vertical
-        vStack.spacing = 16
+        stack.axis = .vertical
+        stack.spacing = 16
         
-        vStack.addArrangedSubview(createHabitButton)
-        vStack.addArrangedSubview(createEventButton)
+        stack.addArrangedSubview(createHabitButton)
+        stack.addArrangedSubview(createEventButton)
         
-        return vStack
+        return stack
     }
 }

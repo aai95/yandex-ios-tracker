@@ -20,7 +20,7 @@ final class SettingTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        makeSettingTableViewCellLayout()
+        makeViewLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -31,7 +31,7 @@ final class SettingTableViewCell: UITableViewCell {
         nameLabel.text = model.name
     }
     
-    private func makeSettingTableViewCellLayout() {
+    private func makeViewLayout() {
         contentView.backgroundColor = .ypBackgroundDay
         contentView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
@@ -46,7 +46,7 @@ final class SettingTableViewCell: UITableViewCell {
             nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             accessoryImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            accessoryImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            accessoryImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }

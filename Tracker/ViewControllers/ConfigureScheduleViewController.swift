@@ -2,6 +2,20 @@ import UIKit
 
 final class ConfigureScheduleViewController: UIViewController {
     
+    private let settingTable: UITableView = {
+        let table = UITableView(frame: .zero)
+        
+        table.register(SwitchTableViewCell.self, forCellReuseIdentifier: SwitchTableViewCell.identifier)
+        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        table.isScrollEnabled = false
+        
+        table.layer.masksToBounds = true
+        table.layer.cornerRadius = 16
+        table.heightAnchor.constraint(equalToConstant: 525).isActive = true
+        
+        return table
+    }()
+    
     private let doneButton: UIButton = {
         let button = UIButton(type: .custom)
         
@@ -17,20 +31,6 @@ final class ConfigureScheduleViewController: UIViewController {
         return button
     }()
     
-    private let settingsTable: UITableView = {
-        let table = UITableView(frame: .zero)
-        
-        table.register(SwitchTableViewCell.self, forCellReuseIdentifier: SwitchTableViewCell.identifier)
-        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        table.isScrollEnabled = false
-        
-        table.layer.masksToBounds = true
-        table.layer.cornerRadius = 16
-        table.heightAnchor.constraint(equalToConstant: 525).isActive = true
-        
-        return table
-    }()
-    
     private let settings: Array<SettingModel> = [
         SettingModel(name: "Понедельник"),
         SettingModel(name: "Вторник"),
@@ -44,10 +44,10 @@ final class ConfigureScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        settingsTable.dataSource = self
+        settingTable.dataSource = self
         
         setupNavigationBar()
-        makeConfigureScheduleViewLayout()
+        makeViewLayout()
     }
     
     @objc private func done() {
@@ -63,19 +63,19 @@ final class ConfigureScheduleViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = "Расписание"
     }
     
-    private func makeConfigureScheduleViewLayout() {
+    private func makeViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
-        view.addSubview(settingsTable)
+        view.addSubview(settingTable)
         view.addSubview(doneButton)
         
-        settingsTable.translatesAutoresizingMaskIntoConstraints = false
+        settingTable.translatesAutoresizingMaskIntoConstraints = false
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            settingsTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            settingsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            settingsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            settingTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            settingTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            settingTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
             doneButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             doneButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

@@ -34,10 +34,10 @@ final class StatisticsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        makeStatisticsViewLayout()
+        makeViewLayout()
     }
     
-    private func makeStatisticsViewLayout() {
+    private func makeViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
         view.addSubview(titleLabel)
