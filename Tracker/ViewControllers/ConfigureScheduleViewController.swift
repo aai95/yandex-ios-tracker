@@ -31,20 +31,21 @@ final class ConfigureScheduleViewController: UIViewController {
         return button
     }()
     
-    private let settings: Array<SettingModel> = [
-        SettingModel(name: "Понедельник"),
-        SettingModel(name: "Вторник"),
-        SettingModel(name: "Среда"),
-        SettingModel(name: "Четверг"),
-        SettingModel(name: "Пятница"),
-        SettingModel(name: "Суббота"),
-        SettingModel(name: "Воскресенье")
+    private let settings: Array<SwitchOptions> = [
+        SwitchOptions(name: "Понедельник"),
+        SwitchOptions(name: "Вторник"),
+        SwitchOptions(name: "Среда"),
+        SwitchOptions(name: "Четверг"),
+        SwitchOptions(name: "Пятница"),
+        SwitchOptions(name: "Суббота"),
+        SwitchOptions(name: "Воскресенье")
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         settingTable.dataSource = self
+        settingTable.delegate = self
         
         setupNavigationBar()
         makeViewLayout()
@@ -96,12 +97,19 @@ extension ConfigureScheduleViewController: UITableViewDataSource {
         else {
             preconditionFailure("Failed to cast UITableViewCell as SwitchTableViewCell")
         }
-        settingCell.configure(model: settings[indexPath.row])
+        settingCell.configure(options: settings[indexPath.row])
         
         if indexPath.row == settings.count - 1 { // hide separator for last cell
             let centerX = settingCell.bounds.width / 2
             settingCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
         }
         return settingCell
+    }
+}
+
+extension ConfigureScheduleViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

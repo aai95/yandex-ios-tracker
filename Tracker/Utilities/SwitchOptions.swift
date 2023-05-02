@@ -1,5 +1,5 @@
 import Foundation
 
-struct SettingModel {
+struct SwitchOptions {
     let name: String
 }

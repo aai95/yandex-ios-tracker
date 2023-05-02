@@ -29,8 +29,8 @@ final class SwitchTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(model: SettingModel) {
-        nameLabel.text = model.name
+    func configure(options: SwitchOptions) {
+        nameLabel.text = options.name
     }
     
     private func makeViewLayout() {

@@ -60,15 +60,15 @@ final class CreateEventViewController: UIViewController {
         return button
     }()
     
-    private let settings: Array<SettingModel> = [
-        SettingModel(name: "Категория")
-    ]
+    private var settings: Array<SettingOptions> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         settingTable.dataSource = self
+        settingTable.delegate = self
         
+        appendSettingsToList()
         setupNavigationBar()
         makeViewLayout()
     }
@@ -78,6 +78,22 @@ final class CreateEventViewController: UIViewController {
     }
     
     @objc private func create() {}
+    
+    private func appendSettingsToList() {
+        settings.append(
+            SettingOptions(
+                name: "Категория",
+                handler: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    self.configureCategory()
+                }
+            )
+        )
+    }
+    
+    private func configureCategory() {}
     
     private func setupNavigationBar() {
         let titleAttributes = [
@@ -143,12 +159,20 @@ extension CreateEventViewController: UITableViewDataSource {
         else {
             preconditionFailure("Failed to cast UITableViewCell as SettingTableViewCell")
         }
-        settingCell.configure(model: settings[indexPath.row])
+        settingCell.configure(options: settings[indexPath.row])
         
         if indexPath.row == settings.count - 1 { // hide separator for last cell
             let centerX = settingCell.bounds.width / 2
             settingCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
         }
         return settingCell
+    }
+}
+
+extension CreateEventViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        settings[indexPath.row].handler()
     }
 }

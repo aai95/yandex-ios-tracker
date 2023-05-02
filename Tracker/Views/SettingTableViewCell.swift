@@ -27,8 +27,8 @@ final class SettingTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(model: SettingModel) {
-        nameLabel.text = model.name
+    func configure(options: SettingOptions) {
+        nameLabel.text = options.name
     }
     
     private func makeViewLayout() {
