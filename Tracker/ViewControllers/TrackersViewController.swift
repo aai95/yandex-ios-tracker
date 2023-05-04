@@ -17,6 +17,7 @@ final class TrackersViewController: UIViewController {
         
         picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .compact
+        picker.addTarget(self, action: #selector(changeCurrentDate), for: .valueChanged)
         
         return picker
     }()
@@ -96,6 +97,8 @@ final class TrackersViewController: UIViewController {
     ]
     
     private var visibleCategories: Array<CategoryModel> = []
+    
+    private var currentDate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,5 +236,54 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         let targetSize = CGSize(width: collectionView.bounds.width, height: 50)
         
         return headerView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .required)
+    }
+}
+
+private extension TrackersViewController {
+    
+    @objc func changeCurrentDate() {
+        currentDate = datePicker.date
+        updateVisibleTrackers()
+    }
+    
+    func updateVisibleTrackers() {
+        visibleCategories = []
+        
+        for category in categories {
+            var visibleTrackers: Array<TrackerModel> = []
+            
+            for tracker in category.trackers {
+                guard let weekDay = WeekDay(rawValue: calculateWeekDayNumber(for: currentDate)),
+                      let isInSchedule = tracker.schedule[weekDay]
+                else {
+                    continue
+                }
+                if isInSchedule {
+                    visibleTrackers.append(tracker)
+                }
+            }
+            if !visibleTrackers.isEmpty {
+                visibleCategories.append(CategoryModel(title: category.title, trackers: visibleTrackers))
+            }
+        }
+        visibleCategories.isEmpty ? showPlaceholder() : hidePlaceholder()
+        trackerCollection.reloadData()
+    }
+    
+    func calculateWeekDayNumber(for date: Date) -> Int {
+        let calendar = Calendar.current
+        let weekDayNumber = calendar.component(.weekday, from: date) // first day of week is Sunday
+        let daysInWeek = 7
+        return (weekDayNumber - calendar.firstWeekday + daysInWeek) % daysInWeek + 1
+    }
+    
+    func showPlaceholder() {
+        placeholderImage.isHidden = false
+        placeholderLabel.isHidden = false
+    }
+    
+    func hidePlaceholder() {
+        placeholderImage.isHidden = true
+        placeholderLabel.isHidden = true
     }
 }
