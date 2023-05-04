@@ -28,6 +28,10 @@
 		8E9973EE2A003E08007E8001 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973ED2A003E08007E8001 /* SwitchTableViewCell.swift */; };
 		8E9973F42A016196007E8001 /* SettingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973F32A016196007E8001 /* SettingOptions.swift */; };
 		8E9973F62A016261007E8001 /* SwitchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973F52A016261007E8001 /* SwitchOptions.swift */; };
+		8E9973F82A018798007E8001 /* TrackerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973F72A018798007E8001 /* TrackerModel.swift */; };
+		8E9973FA2A0187F7007E8001 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973F92A0187F7007E8001 /* CategoryModel.swift */; };
+		8E9973FC2A018830007E8001 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973FB2A018830007E8001 /* RecordModel.swift */; };
+		8E9973FE2A03BEC5007E8001 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973FD2A03BEC5007E8001 /* WeekDay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +58,10 @@
 		8E9973ED2A003E08007E8001 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		8E9973F32A016196007E8001 /* SettingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptions.swift; sourceTree = "<group>"; };
 		8E9973F52A016261007E8001 /* SwitchOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchOptions.swift; sourceTree = "<group>"; };
+		8E9973F72A018798007E8001 /* TrackerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerModel.swift; sourceTree = "<group>"; };
+		8E9973F92A0187F7007E8001 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		8E9973FB2A018830007E8001 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
+		8E9973FD2A03BEC5007E8001 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +149,7 @@
 				8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */,
 				8E9973F32A016196007E8001 /* SettingOptions.swift */,
 				8E9973F52A016261007E8001 /* SwitchOptions.swift */,
+				8E9973FD2A03BEC5007E8001 /* WeekDay.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -148,6 +157,9 @@
 		8E9973E629FFF3AF007E8001 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8E9973F92A0187F7007E8001 /* CategoryModel.swift */,
+				8E9973FB2A018830007E8001 /* RecordModel.swift */,
+				8E9973F72A018798007E8001 /* TrackerModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,6 +237,7 @@
 			files = (
 				8E9973E529FFF337007E8001 /* CustomTextField.swift in Sources */,
 				8E99737529F56EE8007E8001 /* TrackersViewController.swift in Sources */,
+				8E9973F82A018798007E8001 /* TrackerModel.swift in Sources */,
 				8E9973EA2A001081007E8001 /* CreateEventViewController.swift in Sources */,
 				8E9973DB29FD6D07007E8001 /* CollectionWidthParameters.swift in Sources */,
 				8E9973F62A016261007E8001 /* SwitchOptions.swift in Sources */,
@@ -236,8 +249,11 @@
 				8E9973F42A016196007E8001 /* SettingOptions.swift in Sources */,
 				8E9973E329FFB1E7007E8001 /* SettingTableViewCell.swift in Sources */,
 				8E9973D529FCFAA7007E8001 /* CreateTrackerViewController.swift in Sources */,
+				8E9973FE2A03BEC5007E8001 /* WeekDay.swift in Sources */,
+				8E9973FA2A0187F7007E8001 /* CategoryModel.swift in Sources */,
 				8E9973D729FD2998007E8001 /* TrackerCollectionViewCell.swift in Sources */,
 				8E9973D129FBEBED007E8001 /* MainTabBarController.swift in Sources */,
+				8E9973FC2A018830007E8001 /* RecordModel.swift in Sources */,
 				8E9973DF29FE7EA7007E8001 /* TrackerCollectionViewHeader.swift in Sources */,
 				8E9973EC2A0038F5007E8001 /* ConfigureScheduleViewController.swift in Sources */,
 				8E9973CF29FBD16C007E8001 /* UIColorExtension.swift in Sources */,

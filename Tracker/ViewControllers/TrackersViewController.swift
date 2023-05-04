@@ -72,11 +72,38 @@ final class TrackersViewController: UIViewController {
         "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅",
     ]
     
+    private var categories: Array<CategoryModel> = [
+        CategoryModel(
+            title: "Тестовая категория",
+            trackers: [
+                TrackerModel(
+                    id: UUID(),
+                    name: "Тестовый трекер",
+                    color: .ypSelection2,
+                    emoji: "🍏",
+                    schedule: [
+                        .monday: true,
+                        .tuesday: true,
+                        .wednesday: true,
+                        .thursday: true,
+                        .friday: true,
+                        .saturday: false,
+                        .sunday: false
+                    ]
+                )
+            ]
+        )
+    ]
+    
+    private var visibleCategories: Array<CategoryModel> = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         trackerCollection.dataSource = self
         trackerCollection.delegate = self
+        
+        visibleCategories.append(contentsOf: categories)
         
         setupNavigationBar()
         makeViewLayout()
@@ -158,20 +185,11 @@ final class TrackersViewController: UIViewController {
 extension TrackersViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return visibleCategories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return 3
-        case 2:
-            return 2
-        default:
-            return 0
-        }
+        return visibleCategories[section].trackers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -180,13 +198,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         else {
             preconditionFailure("Failed to cast UICollectionViewCell as TrackerCollectionViewCell")
         }
-        let number = Int.random(in: 0..<emojis.count)
-        
-        trackerCell.setColor(value: UIColor(named: "YPSelection\(number % 18 + 1)"))
-        trackerCell.setEmoji(value: emojis[number])
-        trackerCell.setName(value: "Тестовый трекер номер \(number)")
-        trackerCell.setCounter(value: number)
-        
+        trackerCell.configure(model: visibleCategories[indexPath.section].trackers[indexPath.item])
+        trackerCell.setCounter(value: 0)
         return trackerCell
     }
     
@@ -196,8 +209,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         else {
             preconditionFailure("Failed to cast UICollectionReusableView as TrackerCollectionViewHeader")
         }
-        trackerHeader.setTitle(value: "Тестовая категория \(indexPath.section)")
-        
+        trackerHeader.configure(model: visibleCategories[indexPath.section])
         return trackerHeader
     }
 }

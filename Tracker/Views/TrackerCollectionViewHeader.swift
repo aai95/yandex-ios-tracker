@@ -23,8 +23,8 @@ final class TrackerCollectionViewHeader: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setTitle(value: String) {
-        titleLabel.text = value
+    func configure(model: CategoryModel) {
+        titleLabel.text = model.title
     }
     
     private func makeViewLayout() {

@@ -70,25 +70,20 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setColor(value: UIColor?) {
-        canvasView.backgroundColor = value
-        incrementButton.backgroundColor = value
-    }
-    
-    func setEmoji(value: String) {
-        let label = UILabel()
+    func configure(model: TrackerModel) {
+        nameLabel.text = model.name
         
-        label.text = value
+        canvasView.backgroundColor = model.color
+        incrementButton.backgroundColor = model.color
+        
+        let label = UILabel()
+        label.text = model.emoji
         label.font = .systemFont(ofSize: 16, weight: .medium)
         
         emojiView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.centerXAnchor.constraint(equalTo: emojiView.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: emojiView.centerYAnchor).isActive = true
-    }
-    
-    func setName(value: String) {
-        nameLabel.text = value
     }
     
     func setCounter(value: Int) {
