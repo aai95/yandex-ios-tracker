@@ -27,6 +27,7 @@ final class TrackersViewController: UIViewController {
         
         field.placeholder = "Поиск"
         field.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        field.addTarget(self, action: #selector(changeSearchText), for: .editingChanged)
         
         return field
     }()
@@ -243,7 +244,34 @@ private extension TrackersViewController {
     
     @objc func changeCurrentDate() {
         currentDate = datePicker.date
+        changeSearchText()
+    }
+    
+    @objc func changeSearchText() {
         updateVisibleTrackers()
+        
+        guard let searchText = searchField.text,
+              !searchText.isEmpty
+        else {
+            return
+        }
+        var searchedCategories: Array<CategoryModel> = []
+        
+        for category in visibleCategories {
+            var searchedTrackers: Array<TrackerModel> = []
+            
+            for tracker in category.trackers {
+                if tracker.name.localizedCaseInsensitiveContains(searchText) {
+                    searchedTrackers.append(tracker)
+                }
+            }
+            if !searchedTrackers.isEmpty {
+                searchedCategories.append(CategoryModel(title: category.title, trackers: searchedTrackers))
+            }
+        }
+        visibleCategories = searchedCategories
+        visibleCategories.isEmpty ? showPlaceholder() : hidePlaceholder()
+        trackerCollection.reloadData()
     }
     
     func updateVisibleTrackers() {
@@ -254,13 +282,12 @@ private extension TrackersViewController {
             
             for tracker in category.trackers {
                 guard let weekDay = WeekDay(rawValue: calculateWeekDayNumber(for: currentDate)),
-                      let isInSchedule = tracker.schedule[weekDay]
+                      let isInSchedule = tracker.schedule[weekDay],
+                      isInSchedule
                 else {
                     continue
                 }
-                if isInSchedule {
-                    visibleTrackers.append(tracker)
-                }
+                visibleTrackers.append(tracker)
             }
             if !visibleTrackers.isEmpty {
                 visibleCategories.append(CategoryModel(title: category.title, trackers: visibleTrackers))
