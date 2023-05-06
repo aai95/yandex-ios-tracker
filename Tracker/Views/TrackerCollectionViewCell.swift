@@ -1,5 +1,10 @@
 import UIKit
 
+protocol TrackerCollectionViewCellDelegate: AnyObject {
+    func completeTracker(with id: UUID, at indexPath: IndexPath)
+    func uncompleteTracker(with id: UUID, at indexPath: IndexPath)
+}
+
 final class TrackerCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "TrackerCollectionViewCell"
@@ -48,9 +53,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private let incrementButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.setImage(UIImage(named: "PlusButton")?.withTintColor(.ypWhiteDay), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-        
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
         button.widthAnchor.constraint(equalToConstant: 34).isActive = true
@@ -59,6 +62,12 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(incrementDayCounter), for: .touchUpInside)
         return button
     }()
+    
+    private var trackerID: UUID?
+    private var indexPath: IndexPath?
+    private var isCompleted: Bool?
+    
+    weak var delegate: TrackerCollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,11 +79,18 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(model: TrackerModel) {
-        nameLabel.text = model.name
+    func configure(model: TrackerModel, at indexPath: IndexPath, isCompleted: Bool, completedDays: Int) {
+        self.trackerID = model.id
+        self.indexPath = indexPath
+        self.isCompleted = isCompleted
         
-        canvasView.backgroundColor = model.color
+        nameLabel.text = model.name
+        setCounter(value: completedDays)
+        
+        let image = isCompleted ? UIImage(named: "CheckMarkButton") : UIImage(named: "PlusButton")
+        incrementButton.setImage(image?.withTintColor(.ypWhiteDay), for: .normal)
         incrementButton.backgroundColor = model.color
+        canvasView.backgroundColor = model.color
         
         let label = UILabel()
         label.text = model.emoji
@@ -86,7 +102,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.centerYAnchor.constraint(equalTo: emojiView.centerYAnchor).isActive = true
     }
     
-    func setCounter(value: Int) {
+    private func setCounter(value: Int) {
         let remainder = value % 100
         
         if (11...14).contains(remainder) {
@@ -103,7 +119,19 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @objc private func incrementDayCounter() {}
+    @objc private func incrementDayCounter() {
+        guard let isCompleted = isCompleted,
+              let trackerID = trackerID,
+              let indexPath = indexPath
+        else {
+            return
+        }
+        if isCompleted {
+            delegate?.uncompleteTracker(with: trackerID, at: indexPath)
+        } else {
+            delegate?.completeTracker(with: trackerID, at: indexPath)
+        }
+    }
     
     private func makeViewLayout() {
         contentView.addSubview(canvasView)

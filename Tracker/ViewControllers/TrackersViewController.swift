@@ -99,6 +99,8 @@ final class TrackersViewController: UIViewController {
     
     private var visibleCategories: Array<CategoryModel> = []
     
+    private var completedRecords: Array<RecordModel> = []
+    
     private var currentDate = Date()
     
     override func viewDidLoad() {
@@ -107,10 +109,15 @@ final class TrackersViewController: UIViewController {
         trackerCollection.dataSource = self
         trackerCollection.delegate = self
         
-        visibleCategories.append(contentsOf: categories)
-        
         setupNavigationBar()
         makeViewLayout()
+        
+        visibleCategories.append(contentsOf: categories)
+        changeCurrentDate()
+    }
+    
+    private func isMatchRecord(model: RecordModel, with trackerID: UUID) -> Bool {
+        return model.trackerID == trackerID && Calendar.current.isDate(model.completionDate, inSameDayAs: currentDate)
     }
     
     @objc private func addTracker() {
@@ -202,8 +209,13 @@ extension TrackersViewController: UICollectionViewDataSource {
         else {
             preconditionFailure("Failed to cast UICollectionViewCell as TrackerCollectionViewCell")
         }
-        trackerCell.configure(model: visibleCategories[indexPath.section].trackers[indexPath.item])
-        trackerCell.setCounter(value: 0)
+        let tracker = visibleCategories[indexPath.section].trackers[indexPath.item]
+        let isCompleted = completedRecords.contains { isMatchRecord(model: $0, with: tracker.id) }
+        let completedDays = completedRecords.filter { $0.trackerID == tracker.id }.count
+        
+        trackerCell.delegate = self
+        trackerCell.configure(model: tracker, at: indexPath, isCompleted: isCompleted, completedDays: completedDays)
+        
         return trackerCell
     }
     
@@ -237,6 +249,19 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         let targetSize = CGSize(width: collectionView.bounds.width, height: 50)
         
         return headerView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .required)
+    }
+}
+
+extension TrackersViewController: TrackerCollectionViewCellDelegate {
+    
+    func completeTracker(with id: UUID, at indexPath: IndexPath) {
+        completedRecords.append(RecordModel(trackerID: id, completionDate: currentDate))
+        trackerCollection.reloadItems(at: [indexPath])
+    }
+    
+    func uncompleteTracker(with id: UUID, at indexPath: IndexPath) {
+        completedRecords.removeAll { isMatchRecord(model: $0, with: id) }
+        trackerCollection.reloadItems(at: [indexPath])
     }
 }
 
