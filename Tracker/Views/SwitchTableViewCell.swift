@@ -1,5 +1,9 @@
 import UIKit
 
+protocol SwitchTableViewCellDelegate: AnyObject {
+    func didChangeState(isOn: Bool, for weekDay: WeekDay)
+}
+
 final class SwitchTableViewCell: UITableViewCell {
     
     static let identifier = "SwitchTableViewCell"
@@ -15,9 +19,16 @@ final class SwitchTableViewCell: UITableViewCell {
     
     private let switchControl: UISwitch = {
         let switcher = UISwitch()
+        
         switcher.onTintColor = .ypBlue
+        switcher.addTarget(self, action: #selector(didSwitch), for: .valueChanged)
+        
         return switcher
     }()
+    
+    private var weekDay: WeekDay?
+    
+    weak var delegate: SwitchTableViewCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,7 +41,16 @@ final class SwitchTableViewCell: UITableViewCell {
     }
     
     func configure(options: SwitchOptions) {
+        weekDay = options.weekDay
         nameLabel.text = options.name
+        switchControl.isOn = options.isOn
+    }
+    
+    @objc private func didSwitch() {
+        guard let weekDay = weekDay else {
+            return
+        }
+        delegate?.didChangeState(isOn: switchControl.isOn, for: weekDay)
     }
     
     private func makeViewLayout() {

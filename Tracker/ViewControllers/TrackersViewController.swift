@@ -77,7 +77,7 @@ final class TrackersViewController: UIViewController {
                     name: "Тестовый трекер",
                     color: .ypSelection2,
                     emoji: "🍏",
-                    schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday,. sunday]
+                    schedule: [.monday, .tuesday, .wednesday, .thursday, .friday]
                 )
             ]
         )

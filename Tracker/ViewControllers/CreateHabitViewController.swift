@@ -74,6 +74,7 @@ final class CreateHabitViewController: UIViewController {
     ]
     
     private var settings: Array<SettingOptions> = []
+    private var configuredSchedule: Set<WeekDay> = []
     
     weak var delegate: CreateHabitViewControllerDelegate?
     
@@ -92,7 +93,7 @@ final class CreateHabitViewController: UIViewController {
         guard let habitName = nameField.text else {
             return
         }
-        if habitName.isEmpty {
+        if habitName.isEmpty || configuredSchedule.isEmpty {
             createButton.backgroundColor = .ypGray
             createButton.isEnabled = false
         } else {
@@ -116,7 +117,7 @@ final class CreateHabitViewController: UIViewController {
             name: habitName,
             color: UIColor(named: "YPSelection\(testNumber % 18 + 1)")!,
             emoji: testEmojis[testNumber],
-            schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday,. sunday]
+            schedule: configuredSchedule
         )
         delegate?.didCreateNewHabit(model: tracker)
     }
@@ -149,8 +150,9 @@ final class CreateHabitViewController: UIViewController {
     private func configureCategory() {}
     
     private func configureSchedule() {
-        let configureScheduleController = UINavigationController(rootViewController: ConfigureScheduleViewController())
-        present(configureScheduleController, animated: true)
+        let configureScheduleController = ConfigureScheduleViewController()
+        configureScheduleController.delegate = self
+        present(UINavigationController(rootViewController: configureScheduleController), animated: true)
     }
     
     private func setupNavigationBar() {
@@ -232,5 +234,13 @@ extension CreateHabitViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         settings[indexPath.row].handler()
+    }
+}
+
+extension CreateHabitViewController: ConfigureScheduleViewControllerDelegate {
+    
+    func didConfigure(schedule: Set<WeekDay>) {
+        configuredSchedule = schedule
+        dismiss(animated: true)
     }
 }
