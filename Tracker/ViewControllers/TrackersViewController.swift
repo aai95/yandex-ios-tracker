@@ -68,12 +68,6 @@ final class TrackersViewController: UIViewController {
     
     private let widthParameters = CollectionWidthParameters(cellsNumber: 2, leftInset: 16, rightInset: 16, interCellSpacing: 10)
     
-    private let emojis: Array<String> = [
-        "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏",
-        "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥", "🥑", "🍆",
-        "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅",
-    ]
-    
     private var categories: Array<CategoryModel> = [
         CategoryModel(
             title: "Тестовая категория",
@@ -120,9 +114,10 @@ final class TrackersViewController: UIViewController {
         return model.trackerID == trackerID && Calendar.current.isDate(model.completionDate, inSameDayAs: currentDate)
     }
     
-    @objc private func addTracker() {
-        let createTrackerController = UINavigationController(rootViewController: CreateTrackerViewController())
-        present(createTrackerController, animated: true)
+    @objc private func didTapAddButton() {
+        let createTrackerController = CreateTrackerViewController()
+        createTrackerController.delegate = self
+        present(UINavigationController(rootViewController: createTrackerController), animated: true)
     }
     
     private func setupNavigationBar() {
@@ -130,7 +125,7 @@ final class TrackersViewController: UIViewController {
             image: UIImage(named: "PlusButton"),
             style: .plain,
             target: self,
-            action: #selector(addTracker)
+            action: #selector(didTapAddButton)
         )
         navigationController?.navigationBar.topItem?.setLeftBarButton(addButton, animated: false)
         navigationController?.navigationBar.tintColor = .ypBlackDay
@@ -262,6 +257,20 @@ extension TrackersViewController: TrackerCollectionViewCellDelegate {
     func uncompleteTracker(with id: UUID, at indexPath: IndexPath) {
         completedRecords.removeAll { isMatchRecord(model: $0, with: id) }
         trackerCollection.reloadItems(at: [indexPath])
+    }
+}
+
+extension TrackersViewController: CreateTrackerViewControllerDelegate {
+    
+    func didCreateNewTracker(model: TrackerModel) {
+        let testIndex = 0
+        
+        var updatedTrackers = categories[testIndex].trackers
+        updatedTrackers.append(model)
+        categories[testIndex] = CategoryModel(title: categories[testIndex].title, trackers: updatedTrackers)
+        
+        changeCurrentDate()
+        dismiss(animated: true)
     }
 }
 

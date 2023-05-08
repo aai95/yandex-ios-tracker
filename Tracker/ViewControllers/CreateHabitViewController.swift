@@ -1,5 +1,10 @@
 import UIKit
 
+protocol CreateHabitViewControllerDelegate: AnyObject {
+    func didCreateNewHabit(model: TrackerModel)
+    func didCancelNewHabit()
+}
+
 final class CreateHabitViewController: UIViewController {
     
     private let nameField: CustomTextField = {
@@ -13,6 +18,7 @@ final class CreateHabitViewController: UIViewController {
         field.layer.cornerRadius = 16
         field.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
+        field.addTarget(self, action: #selector(didChangeHabitName), for: .editingChanged)
         return field
     }()
     
@@ -42,7 +48,7 @@ final class CreateHabitViewController: UIViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.ypRed.cgColor
         
-        button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         return button
     }()
     
@@ -52,15 +58,24 @@ final class CreateHabitViewController: UIViewController {
         button.setTitle("Создать", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .ypGray
+        button.isEnabled = false
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
         
-        button.addTarget(self, action: #selector(create), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapCreateButton), for: .touchUpInside)
         return button
     }()
     
+    private let testEmojis: Array<String> = [
+        "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏",
+        "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥", "🥑", "🍆",
+        "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅",
+    ]
+    
     private var settings: Array<SettingOptions> = []
+    
+    weak var delegate: CreateHabitViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,11 +88,46 @@ final class CreateHabitViewController: UIViewController {
         makeViewLayout()
     }
     
-    @objc private func cancel() {
-        dismiss(animated: true)
+    @objc private func didChangeHabitName() {
+        guard let habitName = nameField.text else {
+            return
+        }
+        if habitName.isEmpty {
+            createButton.backgroundColor = .ypGray
+            createButton.isEnabled = false
+        } else {
+            createButton.backgroundColor = .ypBlackDay
+            createButton.isEnabled = true
+        }
     }
     
-    @objc private func create() {}
+    @objc private func didTapCancelButton() {
+        delegate?.didCancelNewHabit()
+    }
+    
+    @objc private func didTapCreateButton() {
+        guard let habitName = nameField.text else {
+            return
+        }
+        let testNumber = Int.random(in: 0..<testEmojis.count)
+        
+        let tracker = TrackerModel(
+            id: UUID(),
+            name: habitName,
+            color: UIColor(named: "YPSelection\(testNumber % 18 + 1)")!,
+            emoji: testEmojis[testNumber],
+            schedule: [
+                .monday: true,
+                .tuesday: true,
+                .wednesday: true,
+                .thursday: true,
+                .friday: true,
+                .saturday: true,
+                .sunday: true
+            ]
+        )
+        delegate?.didCreateNewHabit(model: tracker)
+    }
     
     private func appendSettingsToList() {
         settings.append(

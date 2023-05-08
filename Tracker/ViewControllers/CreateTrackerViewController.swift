@@ -1,5 +1,9 @@
 import UIKit
 
+protocol CreateTrackerViewControllerDelegate: AnyObject {
+    func didCreateNewTracker(model: TrackerModel)
+}
+
 final class CreateTrackerViewController: UIViewController {
     
     private let createHabitButton: UIButton = {
@@ -13,7 +17,7 @@ final class CreateTrackerViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        button.addTarget(self, action: #selector(createHabitTracker), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapHabitButton), for: .touchUpInside)
         return button
     }()
     
@@ -28,9 +32,11 @@ final class CreateTrackerViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        button.addTarget(self, action: #selector(createEventTracker), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapEventButton), for: .touchUpInside)
         return button
     }()
+    
+    weak var delegate: CreateTrackerViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,14 +45,15 @@ final class CreateTrackerViewController: UIViewController {
         makeViewLayout()
     }
     
-    @objc private func createHabitTracker() {
-        let createHabitController = UINavigationController(rootViewController: CreateHabitViewController())
-        present(createHabitController, animated: true)
+    @objc private func didTapHabitButton() {
+        let createHabitController = CreateHabitViewController()
+        createHabitController.delegate = self
+        present(UINavigationController(rootViewController: createHabitController), animated: true)
     }
     
-    @objc private func createEventTracker() {
-        let createEventController = UINavigationController(rootViewController: CreateEventViewController())
-        present(createEventController, animated: true)
+    @objc private func didTapEventButton() {
+        let createEventController = CreateEventViewController()
+        present(UINavigationController(rootViewController: createEventController), animated: true)
     }
     
     private func setupNavigationBar() {
@@ -83,5 +90,16 @@ final class CreateTrackerViewController: UIViewController {
         stack.addArrangedSubview(createEventButton)
         
         return stack
+    }
+}
+
+extension CreateTrackerViewController: CreateHabitViewControllerDelegate {
+    
+    func didCreateNewHabit(model: TrackerModel) {
+        delegate?.didCreateNewTracker(model: model)
+    }
+    
+    func didCancelNewHabit() {
+        dismiss(animated: true)
     }
 }
