@@ -2,7 +2,7 @@ import UIKit
 
 final class ConfigureScheduleViewController: UIViewController {
     
-    private let settingTable: UITableView = {
+    private let switchTable: UITableView = {
         let table = UITableView(frame: .zero)
         
         table.register(SwitchTableViewCell.self, forCellReuseIdentifier: SwitchTableViewCell.identifier)
@@ -31,7 +31,7 @@ final class ConfigureScheduleViewController: UIViewController {
         return button
     }()
     
-    private let settings: Array<SwitchOptions> = [
+    private let switches: Array<SwitchOptions> = [
         SwitchOptions(name: "Понедельник"),
         SwitchOptions(name: "Вторник"),
         SwitchOptions(name: "Среда"),
@@ -44,8 +44,8 @@ final class ConfigureScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        settingTable.dataSource = self
-        settingTable.delegate = self
+        switchTable.dataSource = self
+        switchTable.delegate = self
         
         setupNavigationBar()
         makeViewLayout()
@@ -67,16 +67,16 @@ final class ConfigureScheduleViewController: UIViewController {
     private func makeViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
-        view.addSubview(settingTable)
+        view.addSubview(switchTable)
         view.addSubview(doneButton)
         
-        settingTable.translatesAutoresizingMaskIntoConstraints = false
+        switchTable.translatesAutoresizingMaskIntoConstraints = false
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            settingTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            settingTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            settingTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            switchTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            switchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            switchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
             doneButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             doneButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -88,22 +88,22 @@ final class ConfigureScheduleViewController: UIViewController {
 extension ConfigureScheduleViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settings.count
+        return switches.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let settingCell = tableView
+        guard let switchCell = tableView
             .dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier, for: indexPath) as? SwitchTableViewCell
         else {
             preconditionFailure("Failed to cast UITableViewCell as SwitchTableViewCell")
         }
-        settingCell.configure(options: settings[indexPath.row])
+        switchCell.configure(options: switches[indexPath.row])
         
-        if indexPath.row == settings.count - 1 { // hide separator for last cell
-            let centerX = settingCell.bounds.width / 2
-            settingCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
+        if indexPath.row == switches.count - 1 { // hide separator for last cell
+            let centerX = switchCell.bounds.width / 2
+            switchCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
         }
-        return settingCell
+        return switchCell
     }
 }
 

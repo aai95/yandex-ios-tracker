@@ -77,15 +77,7 @@ final class TrackersViewController: UIViewController {
                     name: "Тестовый трекер",
                     color: .ypSelection2,
                     emoji: "🍏",
-                    schedule: [
-                        .monday: true,
-                        .tuesday: true,
-                        .wednesday: true,
-                        .thursday: true,
-                        .friday: true,
-                        .saturday: false,
-                        .sunday: false
-                    ]
+                    schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday,. sunday]
                 )
             ]
         )
@@ -316,8 +308,7 @@ private extension TrackersViewController {
             
             for tracker in category.trackers {
                 guard let weekDay = WeekDay(rawValue: calculateWeekDayNumber(for: currentDate)),
-                      let isInSchedule = tracker.schedule[weekDay],
-                      isInSchedule
+                      tracker.schedule.contains(weekDay)
                 else {
                     continue
                 }

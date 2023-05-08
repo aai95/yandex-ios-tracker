@@ -5,5 +5,5 @@ struct TrackerModel {
     let name: String
     let color: UIColor
     let emoji: String
-    let schedule: Dictionary<WeekDay, Bool>
+    let schedule: Set<WeekDay>
 }

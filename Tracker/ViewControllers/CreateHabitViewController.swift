@@ -116,15 +116,7 @@ final class CreateHabitViewController: UIViewController {
             name: habitName,
             color: UIColor(named: "YPSelection\(testNumber % 18 + 1)")!,
             emoji: testEmojis[testNumber],
-            schedule: [
-                .monday: true,
-                .tuesday: true,
-                .wednesday: true,
-                .thursday: true,
-                .friday: true,
-                .saturday: true,
-                .sunday: true
-            ]
+            schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday,. sunday]
         )
         delegate?.didCreateNewHabit(model: tracker)
     }
