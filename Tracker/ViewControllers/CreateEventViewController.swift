@@ -30,7 +30,7 @@ final class CreateEventViewController: UIViewController {
         return table
     }()
     
-    private let cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Отменить", for: .normal)
@@ -46,7 +46,7 @@ final class CreateEventViewController: UIViewController {
         return button
     }()
     
-    private let createButton: UIButton = {
+    private lazy var createButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Создать", for: .normal)
@@ -71,6 +71,7 @@ final class CreateEventViewController: UIViewController {
         appendSettingsToList()
         setupNavigationBar()
         makeViewLayout()
+        hideKeyboardWhenDidTap()
     }
     
     @objc private func cancel() {

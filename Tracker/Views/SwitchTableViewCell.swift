@@ -17,7 +17,7 @@ final class SwitchTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let switchControl: UISwitch = {
+    private lazy var switchControl: UISwitch = {
         let switcher = UISwitch()
         
         switcher.onTintColor = .ypBlue

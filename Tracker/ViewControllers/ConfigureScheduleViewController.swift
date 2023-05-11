@@ -20,7 +20,7 @@ final class ConfigureScheduleViewController: UIViewController {
         return table
     }()
     
-    private let doneButton: UIButton = {
+    private lazy var doneButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Готово", for: .normal)

@@ -50,10 +50,10 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let incrementButton: UIButton = {
+    private lazy var incrementButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.imageEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        button.imageEdgeInsets = UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 11)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
         button.widthAnchor.constraint(equalToConstant: 34).isActive = true
@@ -89,7 +89,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         
         let image = isCompleted ? UIImage(named: "CheckMarkButton") : UIImage(named: "PlusButton")
         incrementButton.setImage(image?.withTintColor(.ypWhiteDay), for: .normal)
-        incrementButton.backgroundColor = model.color
+        incrementButton.backgroundColor = isCompleted ? model.color.withAlphaComponent(0.3) : model.color
         canvasView.backgroundColor = model.color
         
         let label = UILabel()

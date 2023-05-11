@@ -7,7 +7,7 @@ protocol CreateHabitViewControllerDelegate: AnyObject {
 
 final class CreateHabitViewController: UIViewController {
     
-    private let nameField: CustomTextField = {
+    private lazy var nameField: CustomTextField = {
         let field = CustomTextField()
         
         field.placeholder = "Введите название трекера"
@@ -36,7 +36,7 @@ final class CreateHabitViewController: UIViewController {
         return table
     }()
     
-    private let cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Отменить", for: .normal)
@@ -52,7 +52,7 @@ final class CreateHabitViewController: UIViewController {
         return button
     }()
     
-    private let createButton: UIButton = {
+    private lazy var createButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Создать", for: .normal)
@@ -87,6 +87,7 @@ final class CreateHabitViewController: UIViewController {
         appendSettingsToList()
         setupNavigationBar()
         makeViewLayout()
+        hideKeyboardWhenDidTap()
     }
     
     @objc private func didChangeHabitName() {
@@ -114,7 +115,7 @@ final class CreateHabitViewController: UIViewController {
         
         let tracker = TrackerModel(
             id: UUID(),
-            name: habitName,
+            name: habitName.trimmingCharacters(in: .whitespaces),
             color: UIColor(named: "YPSelection\(testNumber % 18 + 1)")!,
             emoji: testEmojis[testNumber],
             schedule: configuredSchedule
@@ -241,6 +242,7 @@ extension CreateHabitViewController: ConfigureScheduleViewControllerDelegate {
     
     func didConfigure(schedule: Set<WeekDay>) {
         configuredSchedule = schedule
+        didChangeHabitName()
         dismiss(animated: true)
     }
 }

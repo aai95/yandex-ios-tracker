@@ -6,7 +6,7 @@ protocol CreateTrackerViewControllerDelegate: AnyObject {
 
 final class CreateTrackerViewController: UIViewController {
     
-    private let createHabitButton: UIButton = {
+    private lazy var createHabitButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Привычка", for: .normal)
@@ -21,7 +21,7 @@ final class CreateTrackerViewController: UIViewController {
         return button
     }()
     
-    private let createEventButton: UIButton = {
+    private lazy var createEventButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Нерегулярное событие", for: .normal)

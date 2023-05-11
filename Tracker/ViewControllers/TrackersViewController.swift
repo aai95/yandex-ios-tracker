@@ -12,7 +12,7 @@ final class TrackersViewController: UIViewController {
         return label
     }()
     
-    private let datePicker: UIDatePicker = {
+    private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         
         picker.datePickerMode = .date
@@ -22,7 +22,7 @@ final class TrackersViewController: UIViewController {
         return picker
     }()
     
-    private let searchField: UISearchTextField = {
+    private lazy var searchField: UISearchTextField = {
         let field = UISearchTextField()
         
         field.placeholder = "Поиск"
@@ -97,7 +97,7 @@ final class TrackersViewController: UIViewController {
         
         setupNavigationBar()
         makeViewLayout()
-        
+        hideKeyboardWhenDidTap()
         visibleCategories.append(contentsOf: categories)
         changeCurrentDate()
     }
@@ -242,6 +242,9 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 extension TrackersViewController: TrackerCollectionViewCellDelegate {
     
     func completeTracker(with id: UUID, at indexPath: IndexPath) {
+        guard currentDate <= Date() else {
+            return
+        }
         completedRecords.append(RecordModel(trackerID: id, completionDate: currentDate))
         trackerCollection.reloadItems(at: [indexPath])
     }
@@ -269,6 +272,7 @@ extension TrackersViewController: CreateTrackerViewControllerDelegate {
 private extension TrackersViewController {
     
     @objc func changeCurrentDate() {
+        presentedViewController?.dismiss(animated: false)
         currentDate = datePicker.date
         changeSearchText()
     }
