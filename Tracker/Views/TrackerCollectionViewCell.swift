@@ -161,7 +161,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
             counterLabel.centerYAnchor.constraint(equalTo: incrementButton.centerYAnchor),
             counterLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             
-            incrementButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            incrementButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             incrementButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
         ])
     }

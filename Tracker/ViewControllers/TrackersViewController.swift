@@ -143,7 +143,7 @@ final class TrackersViewController: UIViewController {
             headerStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             headerStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            trackerCollection.topAnchor.constraint(equalTo: headerStack.bottomAnchor),
+            trackerCollection.topAnchor.constraint(equalTo: headerStack.bottomAnchor, constant: 10),
             trackerCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             trackerCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             trackerCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -222,18 +222,22 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableWidth = collectionView.bounds.width - widthParameters.widthInsets
         let cellWidth =  availableWidth / CGFloat(widthParameters.cellsNumber)
-        return CGSize(width: cellWidth, height: 144)
+        return CGSize(width: cellWidth, height: 132)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: widthParameters.leftInset, bottom: 10, right: widthParameters.rightInset)
+        return UIEdgeInsets(top: 12, left: widthParameters.leftInset, bottom: 8, right: widthParameters.rightInset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
         let indexPath = IndexPath(row: 0, section: section)
         let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
-        let targetSize = CGSize(width: collectionView.bounds.width, height: 50)
+        let targetSize = CGSize(width: collectionView.bounds.width, height: 42)
         
         return headerView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .required)
     }
