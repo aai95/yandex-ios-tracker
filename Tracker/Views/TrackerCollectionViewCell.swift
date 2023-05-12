@@ -85,7 +85,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         self.isCompleted = isCompleted
         
         nameLabel.text = model.name
-        setCounter(value: completedDays)
+        setCounter(days: completedDays)
         
         let image = isCompleted ? UIImage(named: "CheckMarkButton") : UIImage(named: "PlusButton")
         incrementButton.setImage(image?.withTintColor(.ypWhiteDay), for: .normal)
@@ -102,19 +102,19 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.centerYAnchor.constraint(equalTo: emojiView.centerYAnchor).isActive = true
     }
     
-    private func setCounter(value: Int) {
-        let remainder = value % 100
+    private func setCounter(days: Int) {
+        let remainder = days % 100
         
         if (11...14).contains(remainder) {
-            counterLabel.text = "\(value) дней"
+            counterLabel.text = "\(days) дней"
         } else {
             switch remainder % 10 {
             case 1:
-                counterLabel.text = "\(value) день"
+                counterLabel.text = "\(days) день"
             case 2...4:
-                counterLabel.text = "\(value) дня"
+                counterLabel.text = "\(days) дня"
             default:
-                counterLabel.text = "\(value) дней"
+                counterLabel.text = "\(days) дней"
             }
         }
     }

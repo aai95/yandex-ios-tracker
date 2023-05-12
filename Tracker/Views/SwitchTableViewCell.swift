@@ -21,7 +21,7 @@ final class SwitchTableViewCell: UITableViewCell {
         let switcher = UISwitch()
         
         switcher.onTintColor = .ypBlue
-        switcher.addTarget(self, action: #selector(didSwitch), for: .valueChanged)
+        switcher.addTarget(self, action: #selector(didToggleSwitch), for: .valueChanged)
         
         return switcher
     }()
@@ -46,7 +46,7 @@ final class SwitchTableViewCell: UITableViewCell {
         switchControl.isOn = options.isOn
     }
     
-    @objc private func didSwitch() {
+    @objc private func didToggleSwitch() {
         guard let weekDay = weekDay else {
             return
         }

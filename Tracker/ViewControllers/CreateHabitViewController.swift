@@ -18,7 +18,7 @@ final class CreateHabitViewController: UIViewController {
         field.layer.cornerRadius = 16
         field.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
-        field.addTarget(self, action: #selector(didChangeHabitName), for: .editingChanged)
+        field.addTarget(self, action: #selector(setCreateButtonState), for: .editingChanged)
         return field
     }()
     
@@ -90,7 +90,7 @@ final class CreateHabitViewController: UIViewController {
         hideKeyboardWhenDidTap()
     }
     
-    @objc private func didChangeHabitName() {
+    @objc private func setCreateButtonState() {
         guard let habitName = nameField.text else {
             return
         }
@@ -242,7 +242,7 @@ extension CreateHabitViewController: ConfigureScheduleViewControllerDelegate {
     
     func didConfigure(schedule: Set<WeekDay>) {
         configuredSchedule = schedule
-        didChangeHabitName()
+        setCreateButtonState()
         dismiss(animated: true)
     }
 }

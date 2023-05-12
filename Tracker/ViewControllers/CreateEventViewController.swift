@@ -42,7 +42,7 @@ final class CreateEventViewController: UIViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.ypRed.cgColor
         
-        button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         return button
     }()
     
@@ -56,7 +56,7 @@ final class CreateEventViewController: UIViewController {
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
         
-        button.addTarget(self, action: #selector(create), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapCreateButton), for: .touchUpInside)
         return button
     }()
     
@@ -74,11 +74,11 @@ final class CreateEventViewController: UIViewController {
         hideKeyboardWhenDidTap()
     }
     
-    @objc private func cancel() {
+    @objc private func didTapCancelButton() {
         dismiss(animated: true)
     }
     
-    @objc private func create() {}
+    @objc private func didTapCreateButton() {}
     
     private func appendSettingsToList() {
         settings.append(

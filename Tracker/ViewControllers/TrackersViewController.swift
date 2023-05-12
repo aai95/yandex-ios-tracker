@@ -17,7 +17,7 @@ final class TrackersViewController: UIViewController {
         
         picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .compact
-        picker.addTarget(self, action: #selector(changeCurrentDate), for: .valueChanged)
+        picker.addTarget(self, action: #selector(didChangeSelectedDate), for: .valueChanged)
         
         return picker
     }()
@@ -27,7 +27,7 @@ final class TrackersViewController: UIViewController {
         
         field.placeholder = "Поиск"
         field.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        field.addTarget(self, action: #selector(changeSearchText), for: .editingChanged)
+        field.addTarget(self, action: #selector(didChangeSearchText), for: .editingChanged)
         
         return field
     }()
@@ -87,7 +87,7 @@ final class TrackersViewController: UIViewController {
     
     private var completedRecords: Array<RecordModel> = []
     
-    private var currentDate = Date()
+    private var selectedDate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,11 +99,11 @@ final class TrackersViewController: UIViewController {
         makeViewLayout()
         hideKeyboardWhenDidTap()
         visibleCategories.append(contentsOf: categories)
-        changeCurrentDate()
+        didChangeSelectedDate()
     }
     
     private func isMatchRecord(model: RecordModel, with trackerID: UUID) -> Bool {
-        return model.trackerID == trackerID && Calendar.current.isDate(model.completionDate, inSameDayAs: currentDate)
+        return model.trackerID == trackerID && Calendar.current.isDate(model.completionDate, inSameDayAs: selectedDate)
     }
     
     @objc private func didTapAddButton() {
@@ -246,10 +246,10 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 extension TrackersViewController: TrackerCollectionViewCellDelegate {
     
     func completeTracker(with id: UUID, at indexPath: IndexPath) {
-        guard currentDate <= Date() else {
+        guard selectedDate <= Date() else {
             return
         }
-        completedRecords.append(RecordModel(trackerID: id, completionDate: currentDate))
+        completedRecords.append(RecordModel(trackerID: id, completionDate: selectedDate))
         trackerCollection.reloadItems(at: [indexPath])
     }
     
@@ -268,20 +268,20 @@ extension TrackersViewController: CreateTrackerViewControllerDelegate {
         updatedTrackers.append(model)
         categories[testIndex] = CategoryModel(title: categories[testIndex].title, trackers: updatedTrackers)
         
-        changeCurrentDate()
+        didChangeSelectedDate()
         dismiss(animated: true)
     }
 }
 
 private extension TrackersViewController {
     
-    @objc func changeCurrentDate() {
+    @objc func didChangeSelectedDate() {
         presentedViewController?.dismiss(animated: false)
-        currentDate = datePicker.date
-        changeSearchText()
+        selectedDate = datePicker.date
+        didChangeSearchText()
     }
     
-    @objc func changeSearchText() {
+    @objc func didChangeSearchText() {
         updateVisibleTrackers()
         
         guard let searchText = searchField.text,
@@ -315,7 +315,7 @@ private extension TrackersViewController {
             var visibleTrackers: Array<TrackerModel> = []
             
             for tracker in category.trackers {
-                guard let weekDay = WeekDay(rawValue: calculateWeekDayNumber(for: currentDate)),
+                guard let weekDay = WeekDay(rawValue: calculateWeekDayNumber(for: selectedDate)),
                       tracker.schedule.contains(weekDay)
                 else {
                     continue
