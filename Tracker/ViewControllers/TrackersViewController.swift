@@ -59,9 +59,9 @@ final class TrackersViewController: UIViewController {
             forCellWithReuseIdentifier: TrackerCollectionViewCell.identifier
         )
         collection.register(
-            TrackerCollectionViewHeader.self,
+            CollectionViewHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: TrackerCollectionViewHeader.identifier
+            withReuseIdentifier: CollectionViewHeader.identifier
         )
         return collection
     }()
@@ -207,13 +207,13 @@ extension TrackersViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let trackerHeader = collectionView
-            .dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrackerCollectionViewHeader.identifier, for: indexPath) as? TrackerCollectionViewHeader
+        guard let header = collectionView
+            .dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionViewHeader.identifier, for: indexPath) as? CollectionViewHeader
         else {
-            preconditionFailure("Failed to cast UICollectionReusableView as TrackerCollectionViewHeader")
+            preconditionFailure("Failed to cast UICollectionReusableView as CollectionViewHeader")
         }
-        trackerHeader.configure(model: visibleCategories[indexPath.section])
-        return trackerHeader
+        header.configure(model: visibleCategories[indexPath.section])
+        return header
     }
 }
 

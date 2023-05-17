@@ -36,6 +36,25 @@ final class CreateHabitViewController: UIViewController {
         return table
     }()
     
+    private let emojiColorCollection: UICollectionView = {
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        collection.register(
+            EmojiCollectionViewCell.self,
+            forCellWithReuseIdentifier: EmojiCollectionViewCell.identifier
+        )
+        collection.register(
+            ColorCollectionViewCell.self,
+            forCellWithReuseIdentifier: ColorCollectionViewCell.identifier
+        )
+        collection.register(
+            CollectionViewHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: CollectionViewHeader.identifier
+        )
+        return collection
+    }()
+    
     private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .custom)
         
@@ -67,10 +86,18 @@ final class CreateHabitViewController: UIViewController {
         return button
     }()
     
-    private let testEmojis: Array<String> = [
-        "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏",
-        "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥", "🥑", "🍆",
-        "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬", "🥦", "🧄", "🧅",
+    private let widthParameters = CollectionWidthParameters(cellsNumber: 6, leftInset: 20, rightInset: 20, interCellSpacing: 10)
+    
+    private let emojis: Array<String> = [
+        "🙂", "😻", "🌺", "🐶", "❤️", "😱",
+        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
+        "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
+    ]
+    
+    private let colors: Array<UIColor> = [
+        .ypSelection1, .ypSelection2, .ypSelection3, .ypSelection4, .ypSelection5, .ypSelection6,
+        .ypSelection7, .ypSelection8, .ypSelection9, .ypSelection10, .ypSelection11, .ypSelection12,
+        .ypSelection13, .ypSelection14, .ypSelection15, .ypSelection16, .ypSelection17, .ypSelection18
     ]
     
     private var settings: Array<SettingOptions> = []
@@ -83,6 +110,9 @@ final class CreateHabitViewController: UIViewController {
         
         settingTable.dataSource = self
         settingTable.delegate = self
+        
+        emojiColorCollection.dataSource = self
+        emojiColorCollection.delegate = self
         
         appendSettingsToList()
         setupNavigationBar()
@@ -111,13 +141,11 @@ final class CreateHabitViewController: UIViewController {
         guard let habitName = nameField.text else {
             return
         }
-        let testNumber = Int.random(in: 0..<testEmojis.count)
-        
         let tracker = TrackerModel(
             id: UUID(),
             name: habitName.trimmingCharacters(in: .whitespaces),
-            color: UIColor(named: "YPSelection\(testNumber % 18 + 1)")!,
-            emoji: testEmojis[testNumber],
+            color: colors[Int.random(in: 0..<colors.count)],
+            emoji: emojis[Int.random(in: 0..<emojis.count)],
             schedule: configuredSchedule
         )
         delegate?.didCreateNewHabit(model: tracker)
@@ -172,10 +200,12 @@ final class CreateHabitViewController: UIViewController {
         
         view.addSubview(nameField)
         view.addSubview(settingTable)
+        view.addSubview(emojiColorCollection)
         view.addSubview(buttonStack)
         
         nameField.translatesAutoresizingMaskIntoConstraints = false
         settingTable.translatesAutoresizingMaskIntoConstraints = false
+        emojiColorCollection.translatesAutoresizingMaskIntoConstraints = false
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -186,6 +216,11 @@ final class CreateHabitViewController: UIViewController {
             settingTable.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 24),
             settingTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             settingTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            emojiColorCollection.topAnchor.constraint(equalTo: settingTable.bottomAnchor, constant: 32),
+            emojiColorCollection.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -24),
+            emojiColorCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emojiColorCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             buttonStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -235,6 +270,90 @@ extension CreateHabitViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         settings[indexPath.row].handler()
+    }
+}
+
+extension CreateHabitViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return emojis.count
+        case 1:
+            return colors.count
+        default:
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.section {
+        case 0:
+            guard let emojiCell = collectionView
+                .dequeueReusableCell(withReuseIdentifier: EmojiCollectionViewCell.identifier, for: indexPath) as? EmojiCollectionViewCell
+            else {
+                preconditionFailure("Failed to cast UICollectionViewCell as EmojiCollectionViewCell")
+            }
+            emojiCell.configure(emoji: emojis[indexPath.item])
+            return emojiCell
+        case 1:
+            guard let colorCell = collectionView
+                .dequeueReusableCell(withReuseIdentifier: ColorCollectionViewCell.identifier, for: indexPath) as? ColorCollectionViewCell
+            else {
+                preconditionFailure("Failed to cast UICollectionViewCell as ColorCollectionViewCell")
+            }
+            colorCell.configure(color: colors[indexPath.item])
+            return colorCell
+        default:
+            return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView
+            .dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionViewHeader.identifier, for: indexPath) as? CollectionViewHeader
+        else {
+            preconditionFailure("Failed to cast UICollectionReusableView as CollectionViewHeader")
+        }
+        switch indexPath.section {
+        case 0:
+            header.configure(title: "Emoji")
+        case 1:
+            header.configure(title: "Цвет")
+        default:
+            return UICollectionReusableView()
+        }
+        return header
+    }
+}
+
+extension CreateHabitViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let availableWidth = collectionView.bounds.width - widthParameters.widthInsets
+        let cellWidth =  availableWidth / CGFloat(widthParameters.cellsNumber)
+        return CGSize(width: cellWidth, height: 52)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 24, left: widthParameters.leftInset, bottom: 40, right: widthParameters.rightInset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        let indexPath = IndexPath(row: 0, section: section)
+        let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+        let targetSize = CGSize(width: collectionView.bounds.width, height: 18)
+        
+        return headerView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .required)
     }
 }
 
