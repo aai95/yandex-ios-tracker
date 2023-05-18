@@ -196,36 +196,65 @@ final class CreateHabitViewController: UIViewController {
     private func makeViewLayout() {
         view.backgroundColor = .ypWhiteDay
         
-        let buttonStack = makeButtonStack()
+        let scrollView = UIScrollView()
+        let mainStack = makeMainStack()
         
-        view.addSubview(nameField)
-        view.addSubview(settingTable)
-        view.addSubview(emojiColorCollection)
-        view.addSubview(buttonStack)
+        view.addSubview(scrollView)
+        scrollView.addSubview(mainStack)
         
-        nameField.translatesAutoresizingMaskIntoConstraints = false
-        settingTable.translatesAutoresizingMaskIntoConstraints = false
-        emojiColorCollection.translatesAutoresizingMaskIntoConstraints = false
-        buttonStack.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            nameField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            nameField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            nameField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            settingTable.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 24),
-            settingTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            settingTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            scrollView.contentLayoutGuide.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollView.contentLayoutGuide.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            scrollView.contentLayoutGuide.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             
-            emojiColorCollection.topAnchor.constraint(equalTo: settingTable.bottomAnchor, constant: 32),
-            emojiColorCollection.bottomAnchor.constraint(equalTo: buttonStack.topAnchor, constant: -24),
-            emojiColorCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            emojiColorCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            buttonStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            mainStack.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 24),
+            mainStack.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -16),
+            mainStack.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            mainStack.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor)
         ])
+        
+        view.layoutIfNeeded()
+        let contentHeight = emojiColorCollection.collectionViewLayout.collectionViewContentSize.height
+        emojiColorCollection.heightAnchor.constraint(equalToConstant: contentHeight).isActive = true
+    }
+    
+    private func makeMainStack() -> UIStackView {
+        let mainStack = UIStackView()
+        let buttonStack = makeButtonStack()
+        
+        mainStack.axis = .vertical
+        mainStack.alignment = .center
+        
+        mainStack.addArrangedSubview(nameField)
+        mainStack.addArrangedSubview(settingTable)
+        mainStack.addArrangedSubview(emojiColorCollection)
+        mainStack.addArrangedSubview(buttonStack)
+        
+        mainStack.setCustomSpacing(24, after: nameField)
+        mainStack.setCustomSpacing(32, after: settingTable)
+        
+        NSLayoutConstraint.activate([
+            nameField.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor, constant: 16),
+            nameField.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: -16),
+            
+            settingTable.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor, constant: 16),
+            settingTable.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: -16),
+            
+            emojiColorCollection.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+            emojiColorCollection.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+            
+            buttonStack.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor, constant: 20),
+            buttonStack.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor, constant: -20)
+        ])
+        return mainStack
     }
     
     private func makeButtonStack() -> UIStackView {
