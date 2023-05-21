@@ -12,6 +12,9 @@ final class ColorCollectionViewCell: UICollectionViewCell {
         view.widthAnchor.constraint(equalToConstant: 52).isActive = true
         view.heightAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
+        view.layer.borderWidth = 3
+        view.layer.borderColor = UIColor.ypWhiteDay.cgColor
+        
         return view
     }()
     
@@ -37,9 +40,15 @@ final class ColorCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(color: UIColor) {
-        canvasView.layer.borderWidth = 3
-        canvasView.layer.borderColor = color.withAlphaComponent(0.3).cgColor
         colorView.backgroundColor = color
+    }
+    
+    func selectColor() {
+        canvasView.layer.borderColor = colorView.backgroundColor?.withAlphaComponent(0.3).cgColor
+    }
+    
+    func deselectColor() {
+        canvasView.layer.borderColor = UIColor.ypWhiteDay.cgColor
     }
     
     private func makeViewLayout() {

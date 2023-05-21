@@ -38,6 +38,7 @@ final class CreateHabitViewController: UIViewController {
     
     private let emojiColorCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collection.allowsMultipleSelection = true
         
         collection.register(
             EmojiCollectionViewCell.self,
@@ -103,6 +104,9 @@ final class CreateHabitViewController: UIViewController {
     private var settings: Array<SettingOptions> = []
     private var configuredSchedule: Set<WeekDay> = []
     
+    private var currentEmojiIndexPath: IndexPath?
+    private var currentColorIndexPath: IndexPath?
+    
     weak var delegate: CreateHabitViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -124,7 +128,11 @@ final class CreateHabitViewController: UIViewController {
         guard let habitName = nameField.text else {
             return
         }
-        if habitName.isEmpty || configuredSchedule.isEmpty {
+        if habitName.isEmpty
+            || configuredSchedule.isEmpty
+            || currentEmojiIndexPath == nil
+            || currentColorIndexPath == nil
+        {
             createButton.backgroundColor = .ypGray
             createButton.isEnabled = false
         } else {
@@ -144,8 +152,8 @@ final class CreateHabitViewController: UIViewController {
         let tracker = TrackerModel(
             id: UUID(),
             name: habitName.trimmingCharacters(in: .whitespaces),
-            color: colors[Int.random(in: 0..<colors.count)],
-            emoji: emojis[Int.random(in: 0..<emojis.count)],
+            color: colors[currentColorIndexPath?.item ?? 0],
+            emoji: emojis[currentEmojiIndexPath?.item ?? 0],
             schedule: configuredSchedule
         )
         delegate?.didCreateNewHabit(model: tracker)
@@ -383,6 +391,35 @@ extension CreateHabitViewController: UICollectionViewDelegateFlowLayout {
         let targetSize = CGSize(width: collectionView.bounds.width, height: 18)
         
         return headerView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .required)
+    }
+}
+
+extension CreateHabitViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            if let currentIndexPath = currentEmojiIndexPath {
+                emojiColorCollection.deselectItem(at: currentIndexPath, animated: true)
+                (collectionView.cellForItem(at: currentIndexPath) as? EmojiCollectionViewCell)?.deselectEmoji()
+            }
+            (collectionView.cellForItem(at: indexPath) as? EmojiCollectionViewCell)?.selectEmoji()
+            currentEmojiIndexPath = indexPath
+        case 1:
+            if let currentIndexPath = currentColorIndexPath {
+                emojiColorCollection.deselectItem(at: currentIndexPath, animated: true)
+                (collectionView.cellForItem(at: currentIndexPath) as? ColorCollectionViewCell)?.deselectColor()
+            }
+            (collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell)?.selectColor()
+            currentColorIndexPath = indexPath
+        default:
+            return
+        }
+        setCreateButtonState()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        emojiColorCollection.selectItem(at: indexPath, animated: false, scrollPosition: .top)
     }
 }
 

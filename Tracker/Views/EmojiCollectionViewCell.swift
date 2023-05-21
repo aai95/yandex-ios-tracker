@@ -32,8 +32,15 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(emoji: String) {
-        canvasView.backgroundColor = .ypLightGray
         emojiLabel.text = emoji
+    }
+    
+    func selectEmoji() {
+        canvasView.backgroundColor = .ypLightGray
+    }
+    
+    func deselectEmoji() {
+        canvasView.backgroundColor = .ypWhiteDay
     }
     
     private func makeViewLayout() {
