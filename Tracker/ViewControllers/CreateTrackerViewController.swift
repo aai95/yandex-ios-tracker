@@ -1,11 +1,11 @@
 import UIKit
 
-protocol CreateHabitViewControllerDelegate: AnyObject {
-    func didCreateNewHabit(model: TrackerModel)
-    func didCancelNewHabit()
+protocol CreateTrackerViewControllerDelegate: AnyObject {
+    func didCreateNewTracker(model: TrackerModel)
+    func didCancelNewTracker()
 }
 
-final class CreateHabitViewController: UIViewController {
+final class CreateTrackerViewController: UIViewController {
     
     private lazy var nameField: CustomTextField = {
         let field = CustomTextField()
@@ -106,7 +106,7 @@ final class CreateHabitViewController: UIViewController {
     private var currentEmojiIndexPath: IndexPath?
     private var currentColorIndexPath: IndexPath?
     
-    weak var delegate: CreateHabitViewControllerDelegate?
+    weak var delegate: CreateTrackerViewControllerDelegate?
     
     var isIrregularEventView: Bool = false
     
@@ -143,7 +143,7 @@ final class CreateHabitViewController: UIViewController {
     }
     
     @objc private func didTapCancelButton() {
-        delegate?.didCancelNewHabit()
+        delegate?.didCancelNewTracker()
     }
     
     @objc private func didTapCreateButton() {
@@ -157,7 +157,7 @@ final class CreateHabitViewController: UIViewController {
             emoji: emojis[currentEmojiIndexPath?.item ?? 0],
             schedule: configuredSchedule
         )
-        delegate?.didCreateNewHabit(model: tracker)
+        delegate?.didCreateNewTracker(model: tracker)
     }
     
     private func setupNavigationBar() {
@@ -282,13 +282,13 @@ final class CreateHabitViewController: UIViewController {
     private func didTapSettingCategory() {}
     
     private func didTapSettingSchedule() {
-        let configureScheduleController = ConfigureScheduleViewController()
-        configureScheduleController.delegate = self
-        present(UINavigationController(rootViewController: configureScheduleController), animated: true)
+        let scheduleController = ConfigureScheduleViewController()
+        scheduleController.delegate = self
+        present(UINavigationController(rootViewController: scheduleController), animated: true)
     }
 }
 
-extension CreateHabitViewController: UITableViewDataSource {
+extension CreateTrackerViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settings.count
@@ -310,7 +310,7 @@ extension CreateHabitViewController: UITableViewDataSource {
     }
 }
 
-extension CreateHabitViewController: UITableViewDelegate {
+extension CreateTrackerViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -318,7 +318,7 @@ extension CreateHabitViewController: UITableViewDelegate {
     }
 }
 
-extension CreateHabitViewController: UICollectionViewDataSource {
+extension CreateTrackerViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -376,7 +376,7 @@ extension CreateHabitViewController: UICollectionViewDataSource {
     }
 }
 
-extension CreateHabitViewController: UICollectionViewDelegateFlowLayout {
+extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableWidth = collectionView.bounds.width - widthParameters.widthInsets
@@ -402,7 +402,7 @@ extension CreateHabitViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension CreateHabitViewController: UICollectionViewDelegate {
+extension CreateTrackerViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
@@ -431,7 +431,7 @@ extension CreateHabitViewController: UICollectionViewDelegate {
     }
 }
 
-extension CreateHabitViewController: ConfigureScheduleViewControllerDelegate {
+extension CreateTrackerViewController: ConfigureScheduleViewControllerDelegate {
     
     func didConfigure(schedule: Set<WeekDay>) {
         configuredSchedule = schedule

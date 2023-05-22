@@ -20,7 +20,7 @@
 		8E9973D729FD2998007E8001 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */; };
 		8E9973DB29FD6D07007E8001 /* CollectionWidthParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */; };
 		8E9973DF29FE7EA7007E8001 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973DE29FE7EA7007E8001 /* CollectionViewHeader.swift */; };
-		8E9973E129FEAF94007E8001 /* CreateHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973E029FEAF94007E8001 /* CreateHabitViewController.swift */; };
+		8E9973E129FEAF94007E8001 /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973E029FEAF94007E8001 /* CreateTrackerViewController.swift */; };
 		8E9973E329FFB1E7007E8001 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973E229FFB1E7007E8001 /* SettingTableViewCell.swift */; };
 		8E9973E529FFF337007E8001 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973E429FFF337007E8001 /* CustomTextField.swift */; };
 		8E9973EC2A0038F5007E8001 /* ConfigureScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9973EB2A0038F5007E8001 /* ConfigureScheduleViewController.swift */; };
@@ -52,7 +52,7 @@
 		8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
 		8E9973DA29FD6D07007E8001 /* CollectionWidthParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWidthParameters.swift; sourceTree = "<group>"; };
 		8E9973DE29FE7EA7007E8001 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
-		8E9973E029FEAF94007E8001 /* CreateHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHabitViewController.swift; sourceTree = "<group>"; };
+		8E9973E029FEAF94007E8001 /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
 		8E9973E229FFB1E7007E8001 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		8E9973E429FFF337007E8001 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		8E9973EB2A0038F5007E8001 /* ConfigureScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureScheduleViewController.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 			children = (
 				8E9973D429FCFAA7007E8001 /* AddTrackerViewController.swift */,
 				8E9973EB2A0038F5007E8001 /* ConfigureScheduleViewController.swift */,
-				8E9973E029FEAF94007E8001 /* CreateHabitViewController.swift */,
+				8E9973E029FEAF94007E8001 /* CreateTrackerViewController.swift */,
 				8E9973D029FBEBED007E8001 /* MainTabBarController.swift */,
 				8E9973D229FBFC26007E8001 /* StatisticsViewController.swift */,
 				8E99737429F56EE8007E8001 /* TrackersViewController.swift */,
@@ -252,7 +252,7 @@
 				8E99737329F56EE8007E8001 /* SceneDelegate.swift in Sources */,
 				8E9973EE2A003E08007E8001 /* SwitchTableViewCell.swift in Sources */,
 				8E9973D329FBFC26007E8001 /* StatisticsViewController.swift in Sources */,
-				8E9973E129FEAF94007E8001 /* CreateHabitViewController.swift in Sources */,
+				8E9973E129FEAF94007E8001 /* CreateTrackerViewController.swift in Sources */,
 				8E9973F42A016196007E8001 /* SettingOptions.swift in Sources */,
 				8E9973E329FFB1E7007E8001 /* SettingTableViewCell.swift in Sources */,
 				8E9973D529FCFAA7007E8001 /* AddTrackerViewController.swift in Sources */,

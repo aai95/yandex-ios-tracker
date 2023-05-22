@@ -46,14 +46,14 @@ final class AddTrackerViewController: UIViewController {
     }
     
     @objc private func didTapHabitButton() {
-        let habitController = CreateHabitViewController()
+        let habitController = CreateTrackerViewController()
         habitController.delegate = self
         habitController.isIrregularEventView = false
         present(UINavigationController(rootViewController: habitController), animated: true)
     }
     
     @objc private func didTapEventButton() {
-        let eventController = CreateHabitViewController()
+        let eventController = CreateTrackerViewController()
         eventController.delegate = self
         eventController.isIrregularEventView = true
         present(UINavigationController(rootViewController: eventController), animated: true)
@@ -96,13 +96,13 @@ final class AddTrackerViewController: UIViewController {
     }
 }
 
-extension AddTrackerViewController: CreateHabitViewControllerDelegate {
+extension AddTrackerViewController: CreateTrackerViewControllerDelegate {
     
-    func didCreateNewHabit(model: TrackerModel) {
+    func didCreateNewTracker(model: TrackerModel) {
         delegate?.didAddNewTracker(model: model)
     }
     
-    func didCancelNewHabit() {
+    func didCancelNewTracker() {
         dismiss(animated: true)
     }
 }
