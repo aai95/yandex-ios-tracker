@@ -1,12 +1,12 @@
 import UIKit
 
-protocol CreateTrackerViewControllerDelegate: AnyObject {
-    func didCreateNewTracker(model: TrackerModel)
+protocol AddTrackerViewControllerDelegate: AnyObject {
+    func didAddNewTracker(model: TrackerModel)
 }
 
-final class CreateTrackerViewController: UIViewController {
+final class AddTrackerViewController: UIViewController {
     
-    private lazy var createHabitButton: UIButton = {
+    private lazy var habitButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Привычка", for: .normal)
@@ -21,7 +21,7 @@ final class CreateTrackerViewController: UIViewController {
         return button
     }()
     
-    private lazy var createEventButton: UIButton = {
+    private lazy var eventButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle("Нерегулярное событие", for: .normal)
@@ -36,7 +36,7 @@ final class CreateTrackerViewController: UIViewController {
         return button
     }()
     
-    weak var delegate: CreateTrackerViewControllerDelegate?
+    weak var delegate: AddTrackerViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,17 +46,17 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @objc private func didTapHabitButton() {
-        let createHabitController = CreateHabitViewController()
-        createHabitController.delegate = self
-        createHabitController.isIrregularEventView = false
-        present(UINavigationController(rootViewController: createHabitController), animated: true)
+        let habitController = CreateHabitViewController()
+        habitController.delegate = self
+        habitController.isIrregularEventView = false
+        present(UINavigationController(rootViewController: habitController), animated: true)
     }
     
     @objc private func didTapEventButton() {
-        let createEventController = CreateHabitViewController()
-        createEventController.delegate = self
-        createEventController.isIrregularEventView = true
-        present(UINavigationController(rootViewController: createEventController), animated: true)
+        let eventController = CreateHabitViewController()
+        eventController.delegate = self
+        eventController.isIrregularEventView = true
+        present(UINavigationController(rootViewController: eventController), animated: true)
     }
     
     private func setupNavigationBar() {
@@ -89,17 +89,17 @@ final class CreateTrackerViewController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 16
         
-        stack.addArrangedSubview(createHabitButton)
-        stack.addArrangedSubview(createEventButton)
+        stack.addArrangedSubview(habitButton)
+        stack.addArrangedSubview(eventButton)
         
         return stack
     }
 }
 
-extension CreateTrackerViewController: CreateHabitViewControllerDelegate {
+extension AddTrackerViewController: CreateHabitViewControllerDelegate {
     
     func didCreateNewHabit(model: TrackerModel) {
-        delegate?.didCreateNewTracker(model: model)
+        delegate?.didAddNewTracker(model: model)
     }
     
     func didCancelNewHabit() {

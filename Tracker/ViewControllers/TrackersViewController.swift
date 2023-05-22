@@ -107,9 +107,9 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc private func didTapAddButton() {
-        let createTrackerController = CreateTrackerViewController()
-        createTrackerController.delegate = self
-        present(UINavigationController(rootViewController: createTrackerController), animated: true)
+        let trackerController = AddTrackerViewController()
+        trackerController.delegate = self
+        present(UINavigationController(rootViewController: trackerController), animated: true)
     }
     
     private func setupNavigationBar() {
@@ -259,9 +259,9 @@ extension TrackersViewController: TrackerCollectionViewCellDelegate {
     }
 }
 
-extension TrackersViewController: CreateTrackerViewControllerDelegate {
+extension TrackersViewController: AddTrackerViewControllerDelegate {
     
-    func didCreateNewTracker(model: TrackerModel) {
+    func didAddNewTracker(model: TrackerModel) {
         let testIndex = 0
         
         var updatedTrackers = categories[testIndex].trackers
