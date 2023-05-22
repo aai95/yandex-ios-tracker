@@ -31,7 +31,6 @@ final class CreateHabitViewController: UIViewController {
         
         table.layer.masksToBounds = true
         table.layer.cornerRadius = 16
-        table.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
         return table
     }()
@@ -109,6 +108,8 @@ final class CreateHabitViewController: UIViewController {
     
     weak var delegate: CreateHabitViewControllerDelegate?
     
+    var isIrregularEventView: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,9 +119,9 @@ final class CreateHabitViewController: UIViewController {
         emojiColorCollection.dataSource = self
         emojiColorCollection.delegate = self
         
-        appendSettingsToList()
         setupNavigationBar()
         makeViewLayout()
+        customizeView()
         hideKeyboardWhenDidTap()
     }
     
@@ -157,39 +158,6 @@ final class CreateHabitViewController: UIViewController {
             schedule: configuredSchedule
         )
         delegate?.didCreateNewHabit(model: tracker)
-    }
-    
-    private func appendSettingsToList() {
-        settings.append(
-            SettingOptions(
-                name: "Категория",
-                handler: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    self.configureCategory()
-                }
-            )
-        )
-        settings.append(
-            SettingOptions(
-                name: "Расписание",
-                handler: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    self.configureSchedule()
-                }
-            )
-        )
-    }
-    
-    private func configureCategory() {}
-    
-    private func configureSchedule() {
-        let configureScheduleController = ConfigureScheduleViewController()
-        configureScheduleController.delegate = self
-        present(UINavigationController(rootViewController: configureScheduleController), animated: true)
     }
     
     private func setupNavigationBar() {
@@ -277,6 +245,46 @@ final class CreateHabitViewController: UIViewController {
         stack.addArrangedSubview(createButton)
         
         return stack
+    }
+    
+    private func customizeView() {
+        settings.append(
+            SettingOptions(
+                name: "Категория",
+                handler: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    self.didTapSettingCategory()
+                }
+            )
+        )
+        if isIrregularEventView {
+            navigationController?.navigationBar.topItem?.title = "Новое нерегулярное событие"
+        } else {
+            navigationController?.navigationBar.topItem?.title = "Новая привычка"
+            settings.append(
+                SettingOptions(
+                    name: "Расписание",
+                    handler: { [weak self] in
+                        guard let self = self else {
+                            return
+                        }
+                        self.didTapSettingSchedule()
+                    }
+                )
+            )
+        }
+        settingTable.heightAnchor.constraint(equalToConstant: CGFloat(settings.count * 75)).isActive = true
+        settingTable.reloadData()
+    }
+    
+    private func didTapSettingCategory() {}
+    
+    private func didTapSettingSchedule() {
+        let configureScheduleController = ConfigureScheduleViewController()
+        configureScheduleController.delegate = self
+        present(UINavigationController(rootViewController: configureScheduleController), animated: true)
     }
 }
 
