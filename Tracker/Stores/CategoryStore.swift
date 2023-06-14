@@ -1,6 +1,12 @@
 import UIKit
 import CoreData
 
+enum CategoryStoreError: Error {
+    case convertTitleError
+    case convertTrackerError
+    case convertTrackersError
+}
+
 struct CategoryStoreChange {
     
     struct Move: Hashable {
@@ -20,6 +26,7 @@ protocol CategoryStoreDelegate: AnyObject {
 
 final class CategoryStore: NSObject {
     
+    private let trackerStore = TrackerStore()
     private let context: NSManagedObjectContext
     
     private var resultsController: NSFetchedResultsController<CategoryEntity>!
@@ -55,6 +62,33 @@ final class CategoryStore: NSObject {
             preconditionFailure("Failed to cast UIApplicationDelegate as AppDelegate")
         }
         try! self.init(context: delegate.persistentContainer.viewContext)
+    }
+    
+    var fetchedCategories: Array<CategoryModel> {
+        guard let entities = resultsController.fetchedObjects,
+              let models = try? entities.map({ try convert(entity: $0) })
+        else {
+            return []
+        }
+        return models
+    }
+    
+    private func convert(entity: CategoryEntity) throws -> CategoryModel {
+        guard let title = entity.title else {
+            throw CategoryStoreError.convertTitleError
+        }
+        guard let trackers = try entity.trackers?.map({ element in
+            guard let entity = element as? TrackerEntity else {
+                throw CategoryStoreError.convertTrackerError
+            }
+            return try trackerStore.convert(entity: entity)
+        }) else {
+            throw CategoryStoreError.convertTrackersError
+        }
+        return CategoryModel(
+            title: title,
+            trackers: trackers
+        )
     }
 }
 

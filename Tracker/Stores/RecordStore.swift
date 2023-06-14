@@ -1,6 +1,11 @@
 import UIKit
 import CoreData
 
+enum RecordStoreError: Error {
+    case convertTrackerIDError
+    case convertCompletionDateError
+}
+
 struct RecordStoreChange {
     
     struct Move: Hashable {
@@ -55,6 +60,28 @@ final class RecordStore: NSObject {
             preconditionFailure("Failed to cast UIApplicationDelegate as AppDelegate")
         }
         try! self.init(context: delegate.persistentContainer.viewContext)
+    }
+    
+    var fetchedRecords: Array<RecordModel> {
+        guard let entities = resultsController.fetchedObjects,
+              let models = try? entities.map({ try convert(entity: $0) })
+        else {
+            return []
+        }
+        return models
+    }
+    
+    private func convert(entity: RecordEntity) throws -> RecordModel {
+        guard let trackerID = entity.trackerID else {
+            throw RecordStoreError.convertTrackerIDError
+        }
+        guard let completionDate = entity.completionDate else {
+            throw RecordStoreError.convertCompletionDateError
+        }
+        return RecordModel(
+            trackerID: trackerID,
+            completionDate: completionDate
+        )
     }
 }
 

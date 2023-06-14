@@ -67,26 +67,12 @@ final class TrackersViewController: UIViewController {
     }()
     
     private let widthParameters = CollectionWidthParameters(cellsNumber: 2, leftInset: 16, rightInset: 16, interCellSpacing: 10)
+    private let categoryStore = CategoryStore()
+    private let recordStore = RecordStore()
     
-    private var categories: Array<CategoryModel> = [
-        CategoryModel(
-            title: "Тестовая категория",
-            trackers: [
-                TrackerModel(
-                    id: UUID(),
-                    name: "Тестовый трекер",
-                    color: .ypSelection2,
-                    emoji: "🍏",
-                    schedule: [.monday, .tuesday, .wednesday, .thursday, .friday]
-                )
-            ]
-        )
-    ]
-    
+    private var categories: Array<CategoryModel> = []
     private var visibleCategories: Array<CategoryModel> = []
-    
     private var completedRecords: Array<RecordModel> = []
-    
     private var selectedDate = Date()
     
     override func viewDidLoad() {
@@ -98,6 +84,10 @@ final class TrackersViewController: UIViewController {
         setupNavigationBar()
         makeViewLayout()
         hideKeyboardWhenDidTap()
+        
+        TestDataLoader().loadTestData()
+        categories = categoryStore.fetchedCategories
+        completedRecords = recordStore.fetchedRecords
         visibleCategories.append(contentsOf: categories)
         didChangeSelectedDate()
     }
