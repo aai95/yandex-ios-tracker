@@ -68,6 +68,7 @@ final class TrackersViewController: UIViewController {
     
     private let widthParameters = CollectionWidthParameters(cellsNumber: 2, leftInset: 16, rightInset: 16, interCellSpacing: 10)
     private let categoryStore = CategoryStore()
+    private let trackerStore = TrackerStore()
     private let recordStore = RecordStore()
     
     private var categories: Array<CategoryModel> = []
@@ -81,9 +82,10 @@ final class TrackersViewController: UIViewController {
         trackerCollection.dataSource = self
         trackerCollection.delegate = self
         
+        trackerStore.delegate = self
         recordStore.delegate = self
         
-        TestDataLoader().loadTestData()
+        TestDataLoader.shared.loadTestData()
         
         setupNavigationBar()
         makeViewLayout()
@@ -256,14 +258,16 @@ extension TrackersViewController: TrackerCollectionViewCellDelegate {
 extension TrackersViewController: AddTrackerViewControllerDelegate {
     
     func didAddNewTracker(model: TrackerModel) {
-        let testIndex = 0
-        
-        var updatedTrackers = categories[testIndex].trackers
-        updatedTrackers.append(model)
-        categories[testIndex] = CategoryModel(title: categories[testIndex].title, trackers: updatedTrackers)
-        
+        try! trackerStore.addTracker(model: model, to: categories[0].title)
         didChangeSelectedDate()
         dismiss(animated: true)
+    }
+}
+
+extension TrackersViewController: TrackerStoreDelegate {
+    
+    func storeDid(change: TrackerStoreChange) {
+        categories = categoryStore.fetchedCategories
     }
 }
 

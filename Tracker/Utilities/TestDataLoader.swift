@@ -3,6 +3,8 @@ import CoreData
 
 final class TestDataLoader {
     
+    static let shared = TestDataLoader()
+    
     private let colorSerializer = UIColorSerializer()
     private let scheduleSerializer = ScheduleSerializer()
     
@@ -12,6 +14,8 @@ final class TestDataLoader {
         }
         return delegate.persistentContainer.viewContext
     }()
+    
+    private init() {}
     
     func loadTestData() {
         let storedCategories = try! context.fetch(CategoryEntity.fetchRequest())

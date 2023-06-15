@@ -75,6 +75,21 @@ final class TrackerStore: NSObject {
         return models
     }
     
+    func addTracker(model: TrackerModel, to category: String) throws {
+        try updateTracker(entity: TrackerEntity(context: context), using: model, in: category)
+        try context.save()
+    }
+    
+    func updateTracker(entity: TrackerEntity, using model: TrackerModel, in title: String) throws {
+        entity.id = model.id
+        entity.name = model.name
+        entity.hexColor = colorSerializer.serialize(color: model.color)
+        entity.emoji = model.emoji
+        entity.weekDays = scheduleSerializer.serialize(schedule: model.schedule)
+        entity.category = try fetchCategory(by: title)
+        entity.records = NSSet()
+    }
+    
     func convert(entity: TrackerEntity) throws -> TrackerModel {
         guard let id = entity.id else {
             throw TrackerStoreError.convertIDError
@@ -95,6 +110,12 @@ final class TrackerStore: NSObject {
             emoji: emoji,
             schedule: scheduleSerializer.deserialize(days: entity.weekDays)
         )
+    }
+    
+    private func fetchCategory(by title: String) throws -> CategoryEntity {
+        let request = NSFetchRequest<CategoryEntity>(entityName: "CategoryEntity")
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(CategoryEntity.title), title)
+        return try context.fetch(request)[0]
     }
 }
 
