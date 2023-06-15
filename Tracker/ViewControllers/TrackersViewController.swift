@@ -266,14 +266,14 @@ extension TrackersViewController: AddTrackerViewControllerDelegate {
 
 extension TrackersViewController: TrackerStoreDelegate {
     
-    func storeDid(change: TrackerStoreChange) {
+    func storeDidChangeTrackers() {
         categories = categoryStore.fetchedCategories
     }
 }
 
 extension TrackersViewController: RecordStoreDelegate {
     
-    func storeDid(change: RecordStoreChange) {
+    func storeDidChangeRecords() {
         completedRecords = recordStore.fetchedRecords
     }
 }
