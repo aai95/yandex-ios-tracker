@@ -71,6 +71,22 @@ final class RecordStore: NSObject {
         return models
     }
     
+    func addRecord(model: RecordModel) throws {
+        try updateRecord(entity: RecordEntity(context: context), using: model)
+        try context.save()
+    }
+    
+    func updateRecord(entity: RecordEntity, using model: RecordModel) throws {
+        entity.trackerID = model.trackerID
+        entity.completionDate = model.completionDate
+        entity.tracker = try fetchTracker(by: model.trackerID)
+    }
+    
+    func deleteRecord(model: RecordModel) throws {
+        context.delete(try fetchRecord(using: model))
+        try context.save()
+    }
+    
     private func convert(entity: RecordEntity) throws -> RecordModel {
         guard let trackerID = entity.trackerID else {
             throw RecordStoreError.convertTrackerIDError
@@ -82,6 +98,22 @@ final class RecordStore: NSObject {
             trackerID: trackerID,
             completionDate: completionDate
         )
+    }
+    
+    private func fetchTracker(by id: UUID) throws -> TrackerEntity {
+        let request = NSFetchRequest<TrackerEntity>(entityName: "TrackerEntity")
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        return try context.fetch(request)[0]
+    }
+    
+    private func fetchRecord(using model: RecordModel) throws -> RecordEntity {
+        let request = NSFetchRequest<RecordEntity>(entityName: "RecordEntity")
+        request.predicate = NSPredicate(
+            format: "%K == %@ AND %K == %@",
+            #keyPath(RecordEntity.trackerID), model.trackerID as CVarArg,
+            #keyPath(RecordEntity.completionDate), model.completionDate as CVarArg
+        )
+        return try context.fetch(request)[0]
     }
 }
 

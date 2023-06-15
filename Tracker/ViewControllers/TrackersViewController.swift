@@ -81,14 +81,18 @@ final class TrackersViewController: UIViewController {
         trackerCollection.dataSource = self
         trackerCollection.delegate = self
         
+        recordStore.delegate = self
+        
+        TestDataLoader().loadTestData()
+        
         setupNavigationBar()
         makeViewLayout()
         hideKeyboardWhenDidTap()
         
-        TestDataLoader().loadTestData()
         categories = categoryStore.fetchedCategories
         completedRecords = recordStore.fetchedRecords
         visibleCategories.append(contentsOf: categories)
+        
         didChangeSelectedDate()
     }
     
@@ -239,12 +243,12 @@ extension TrackersViewController: TrackerCollectionViewCellDelegate {
         guard selectedDate <= Date() else {
             return
         }
-        completedRecords.append(RecordModel(trackerID: id, completionDate: selectedDate))
+        try! recordStore.addRecord(model: RecordModel(trackerID: id, completionDate: selectedDate))
         trackerCollection.reloadItems(at: [indexPath])
     }
     
     func uncompleteTracker(with id: UUID, at indexPath: IndexPath) {
-        completedRecords.removeAll { isMatchRecord(model: $0, with: id) }
+        try! recordStore.deleteRecord(model: completedRecords.filter( { isMatchRecord(model: $0, with: id) } )[0])
         trackerCollection.reloadItems(at: [indexPath])
     }
 }
@@ -260,6 +264,13 @@ extension TrackersViewController: AddTrackerViewControllerDelegate {
         
         didChangeSelectedDate()
         dismiss(animated: true)
+    }
+}
+
+extension TrackersViewController: RecordStoreDelegate {
+    
+    func storeDid(change: RecordStoreChange) {
+        completedRecords = recordStore.fetchedRecords
     }
 }
 
