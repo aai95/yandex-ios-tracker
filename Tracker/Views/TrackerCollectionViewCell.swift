@@ -66,6 +66,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private var trackerID: UUID?
     private var indexPath: IndexPath?
     private var isCompleted: Bool?
+    private var isHabit: Bool?
     
     weak var delegate: TrackerCollectionViewCellDelegate?
     
@@ -83,13 +84,9 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         self.trackerID = model.id
         self.indexPath = indexPath
         self.isCompleted = isCompleted
+        self.isHabit = !model.schedule.isEmpty
         
         nameLabel.text = model.name
-        setCounter(days: completedDays)
-        
-        let image = isCompleted ? UIImage(named: "CheckMarkButton") : UIImage(named: "PlusButton")
-        incrementButton.setImage(image?.withTintColor(.ypWhiteDay), for: .normal)
-        incrementButton.backgroundColor = isCompleted ? model.color.withAlphaComponent(0.3) : model.color
         canvasView.backgroundColor = model.color
         
         let label = UILabel()
@@ -100,6 +97,16 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.centerXAnchor.constraint(equalTo: emojiView.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: emojiView.centerYAnchor).isActive = true
+        
+        if isHabit == true {
+            setCounter(days: completedDays)
+            
+            let image = isCompleted ? UIImage(named: "CheckMarkButton") : UIImage(named: "PlusButton")
+            incrementButton.setImage(image?.withTintColor(.ypWhiteDay), for: .normal)
+            incrementButton.backgroundColor = isCompleted ? model.color.withAlphaComponent(0.3) : model.color
+        } else {
+            incrementButton.backgroundColor = model.color
+        }
     }
     
     private func setCounter(days: Int) {
@@ -120,7 +127,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func incrementDayCounter() {
-        guard let isCompleted = isCompleted,
+        guard isHabit == true,
+              let isCompleted = isCompleted,
               let trackerID = trackerID,
               let indexPath = indexPath
         else {

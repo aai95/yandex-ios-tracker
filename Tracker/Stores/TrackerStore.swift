@@ -69,6 +69,7 @@ final class TrackerStore: NSObject {
         entity.hexColor = colorSerializer.serialize(color: model.color)
         entity.emoji = model.emoji
         entity.weekDays = scheduleSerializer.serialize(schedule: model.schedule)
+        entity.date = model.date
         entity.category = try fetchCategory(by: title)
         entity.records = NSSet()
     }
@@ -91,7 +92,8 @@ final class TrackerStore: NSObject {
             name: name,
             color: colorSerializer.deserialize(hex: hexColor),
             emoji: emoji,
-            schedule: scheduleSerializer.deserialize(days: entity.weekDays)
+            schedule: scheduleSerializer.deserialize(days: entity.weekDays),
+            date: entity.date
         )
     }
     

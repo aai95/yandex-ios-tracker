@@ -126,11 +126,11 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @objc private func setCreateButtonState() {
-        guard let habitName = nameField.text else {
+        guard let trackerName = nameField.text else {
             return
         }
-        if habitName.isEmpty
-            || configuredSchedule.isEmpty
+        if trackerName.isEmpty
+            || configuredSchedule.isEmpty && !isIrregularEventView
             || currentEmojiIndexPath == nil
             || currentColorIndexPath == nil
         {
@@ -147,12 +147,12 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     @objc private func didTapCreateButton() {
-        guard let habitName = nameField.text else {
+        guard let trackerName = nameField.text else {
             return
         }
         let tracker = TrackerModel(
             id: UUID(),
-            name: habitName.trimmingCharacters(in: .whitespaces),
+            name: trackerName.trimmingCharacters(in: .whitespaces),
             color: colors[currentColorIndexPath?.item ?? 0],
             emoji: emojis[currentEmojiIndexPath?.item ?? 0],
             schedule: configuredSchedule

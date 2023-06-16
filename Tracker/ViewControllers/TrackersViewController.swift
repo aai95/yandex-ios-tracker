@@ -258,6 +258,10 @@ extension TrackersViewController: TrackerCollectionViewCellDelegate {
 extension TrackersViewController: AddTrackerViewControllerDelegate {
     
     func didAddNewTracker(model: TrackerModel) {
+        var model = model
+        if model.schedule.isEmpty {
+            model.date = selectedDate
+        }
         try! trackerStore.addTracker(model: model, to: categories[0].title)
         didChangeSelectedDate()
         dismiss(animated: true)
@@ -320,12 +324,9 @@ private extension TrackersViewController {
             var visibleTrackers: Array<TrackerModel> = []
             
             for tracker in category.trackers {
-                guard let weekDay = WeekDay(rawValue: calculateWeekDayNumber(for: selectedDate)),
-                      tracker.schedule.contains(weekDay)
-                else {
-                    continue
+                if isVisibleHabit(model: tracker) || isVisibleEvent(model: tracker) {
+                    visibleTrackers.append(tracker)
                 }
-                visibleTrackers.append(tracker)
             }
             if !visibleTrackers.isEmpty {
                 visibleCategories.append(CategoryModel(title: category.title, trackers: visibleTrackers))
@@ -333,6 +334,24 @@ private extension TrackersViewController {
         }
         visibleCategories.isEmpty ? showPlaceholder() : hidePlaceholder()
         trackerCollection.reloadData()
+    }
+    
+    func isVisibleHabit(model: TrackerModel) -> Bool {
+        if let weekDay = WeekDay(rawValue: calculateWeekDayNumber(for: selectedDate)),
+           model.schedule.contains(weekDay)
+        {
+            return true
+        }
+        return false
+    }
+    
+    func isVisibleEvent(model: TrackerModel) -> Bool {
+        if let date = model.date,
+           Calendar.current.isDate(date, inSameDayAs: selectedDate)
+        {
+            return true
+        }
+        return false
     }
     
     func calculateWeekDayNumber(for date: Date) -> Int {
