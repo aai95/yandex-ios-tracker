@@ -32,25 +32,6 @@ final class TrackersViewController: UIViewController {
         return field
     }()
     
-    private let placeholderImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "TrackersPlaceholder"))
-        
-        image.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        image.heightAnchor.constraint(equalTo: image.widthAnchor).isActive = true
-        
-        return image
-    }()
-    
-    private let placeholderLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "Что будем отслеживать?"
-        label.textColor = .ypBlackDay
-        label.font = .systemFont(ofSize: 12, weight: .medium)
-        
-        return label
-    }()
-    
     private let trackerCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
@@ -66,6 +47,7 @@ final class TrackersViewController: UIViewController {
         return collection
     }()
     
+    private let placeholderView = PlaceholderView()
     private let widthParameters = CollectionWidthParameters(cellsNumber: 2, leftInset: 16, rightInset: 16, interCellSpacing: 10)
     private let categoryStore = CategoryStore()
     private let trackerStore = TrackerStore()
@@ -126,13 +108,11 @@ final class TrackersViewController: UIViewController {
         
         view.addSubview(headerStack)
         view.addSubview(trackerCollection)
-        view.addSubview(placeholderImage)
-        view.addSubview(placeholderLabel)
+        view.addSubview(placeholderView)
         
         headerStack.translatesAutoresizingMaskIntoConstraints = false
         trackerCollection.translatesAutoresizingMaskIntoConstraints = false
-        placeholderImage.translatesAutoresizingMaskIntoConstraints = false
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        placeholderView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             headerStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -144,15 +124,11 @@ final class TrackersViewController: UIViewController {
             trackerCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             trackerCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            placeholderImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            placeholderImage.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            
-            placeholderLabel.centerXAnchor.constraint(equalTo: placeholderImage.centerXAnchor),
-            placeholderLabel.topAnchor.constraint(equalTo: placeholderImage.bottomAnchor, constant: 8)
+            placeholderView.topAnchor.constraint(equalTo: headerStack.bottomAnchor),
+            placeholderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            placeholderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeholderView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        
-        placeholderImage.isHidden = true
-        placeholderLabel.isHidden = true
     }
     
     private func makeHeaderStack() -> UIStackView {
@@ -313,7 +289,7 @@ private extension TrackersViewController {
             }
         }
         visibleCategories = searchedCategories
-        visibleCategories.isEmpty ? showPlaceholder() : hidePlaceholder()
+        showAppropriatePlaceholder()
         trackerCollection.reloadData()
     }
     
@@ -332,7 +308,7 @@ private extension TrackersViewController {
                 visibleCategories.append(CategoryModel(title: category.title, trackers: visibleTrackers))
             }
         }
-        visibleCategories.isEmpty ? showPlaceholder() : hidePlaceholder()
+        showAppropriatePlaceholder()
         trackerCollection.reloadData()
     }
     
@@ -361,13 +337,21 @@ private extension TrackersViewController {
         return (weekDayNumber - calendar.firstWeekday + daysInWeek) % daysInWeek + 1
     }
     
-    func showPlaceholder() {
-        placeholderImage.isHidden = false
-        placeholderLabel.isHidden = false
-    }
-    
-    func hidePlaceholder() {
-        placeholderImage.isHidden = true
-        placeholderLabel.isHidden = true
+    func showAppropriatePlaceholder() {
+        if categories.isEmpty {
+            placeholderView.isHidden = false
+            placeholderView.configure(
+                image: UIImage(named: "TrackersPlaceholder"),
+                caption: "Что будем отслеживать?"
+            )
+        } else if visibleCategories.isEmpty {
+            placeholderView.isHidden = false
+            placeholderView.configure(
+                image: UIImage(named: "SearchPlaceholder"),
+                caption: "Ничего не найдено"
+            )
+        } else {
+            placeholderView.isHidden = true
+        }
     }
 }
