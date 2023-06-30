@@ -11,6 +11,8 @@
 		8E27CDE02A39D2CB0079D55C /* UIColorSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E27CDDF2A39D2CB0079D55C /* UIColorSerializer.swift */; };
 		8E27CDE22A39D38D0079D55C /* ScheduleSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E27CDE12A39D38D0079D55C /* ScheduleSerializer.swift */; };
 		8E27CDE42A404FD90079D55C /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E27CDE32A404FD90079D55C /* PlaceholderView.swift */; };
+		8E4FECF12A4ECCBE001B2FF5 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4FECF02A4ECCBE001B2FF5 /* OnboardingPageViewController.swift */; };
+		8E4FECF32A4ED174001B2FF5 /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4FECF22A4ED174001B2FF5 /* OnboardingPageView.swift */; };
 		8E99737129F56EE8007E8001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99737029F56EE8007E8001 /* AppDelegate.swift */; };
 		8E99737529F56EE8007E8001 /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99737429F56EE8007E8001 /* TrackersViewController.swift */; };
 		8E99737A29F56EE9007E8001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E99737929F56EE9007E8001 /* Assets.xcassets */; };
@@ -47,6 +49,8 @@
 		8E27CDDF2A39D2CB0079D55C /* UIColorSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorSerializer.swift; sourceTree = "<group>"; };
 		8E27CDE12A39D38D0079D55C /* ScheduleSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSerializer.swift; sourceTree = "<group>"; };
 		8E27CDE32A404FD90079D55C /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		8E4FECF02A4ECCBE001B2FF5 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		8E4FECF22A4ED174001B2FF5 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
 		8E99736D29F56EE8007E8001 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E99737029F56EE8007E8001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E99737429F56EE8007E8001 /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 				8E9973EB2A0038F5007E8001 /* ConfigureScheduleViewController.swift */,
 				8E9973E029FEAF94007E8001 /* CreateTrackerViewController.swift */,
 				8E9973D029FBEBED007E8001 /* MainTabBarController.swift */,
+				8E4FECF02A4ECCBE001B2FF5 /* OnboardingPageViewController.swift */,
 				8E9973D229FBFC26007E8001 /* StatisticsViewController.swift */,
 				8E99737429F56EE8007E8001 /* TrackersViewController.swift */,
 			);
@@ -154,6 +159,7 @@
 				8E9974032A13DCF2007E8001 /* ColorCollectionViewCell.swift */,
 				8E9973E429FFF337007E8001 /* CustomTextField.swift */,
 				8E9974012A125654007E8001 /* EmojiCollectionViewCell.swift */,
+				8E4FECF22A4ED174001B2FF5 /* OnboardingPageView.swift */,
 				8E27CDE32A404FD90079D55C /* PlaceholderView.swift */,
 				8E9973E229FFB1E7007E8001 /* SettingTableViewCell.swift */,
 				8E9973ED2A003E08007E8001 /* SwitchTableViewCell.swift */,
@@ -293,6 +299,8 @@
 				8ED0195E2A35D39100843865 /* DataModel.xcdatamodeld in Sources */,
 				8ED019652A360E9F00843865 /* CategoryStore.swift in Sources */,
 				8E27CDE02A39D2CB0079D55C /* UIColorSerializer.swift in Sources */,
+				8E4FECF32A4ED174001B2FF5 /* OnboardingPageView.swift in Sources */,
+				8E4FECF12A4ECCBE001B2FF5 /* OnboardingPageViewController.swift in Sources */,
 				8E9973DF29FE7EA7007E8001 /* CollectionViewHeader.swift in Sources */,
 				8E9973EC2A0038F5007E8001 /* ConfigureScheduleViewController.swift in Sources */,
 				8ED019612A35E7D500843865 /* TrackerStore.swift in Sources */,
