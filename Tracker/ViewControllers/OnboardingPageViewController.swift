@@ -66,6 +66,8 @@ final class OnboardingPageViewController: UIPageViewController {
     }
     
     @objc private func didTapNextButton() {
+        OnboardingPageStorage.shared.isOnboardingPagePassed = true
+        
         let mainController = MainTabBarController()
         mainController.modalPresentationStyle = .fullScreen
         present(mainController, animated: true)
