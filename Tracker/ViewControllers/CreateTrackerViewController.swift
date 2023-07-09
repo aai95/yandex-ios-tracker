@@ -279,7 +279,10 @@ final class CreateTrackerViewController: UIViewController {
         settingTable.reloadData()
     }
     
-    private func didTapSettingCategory() {}
+    private func didTapSettingCategory() {
+        let categoryController = SelectCategoryViewController()
+        present(UINavigationController(rootViewController: categoryController), animated: true)
+    }
     
     private func didTapSettingSchedule() {
         let scheduleController = ConfigureScheduleViewController()
