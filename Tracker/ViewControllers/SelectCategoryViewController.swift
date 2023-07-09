@@ -19,7 +19,7 @@ final class SelectCategoryViewController: UIViewController {
         let view = PlaceholderView()
         
         view.configure(
-            image: UIImage(named: "TrackersPlaceholder"),
+            image: UIImage(named: "CategoriesPlaceholder"),
             caption: "Привычки и события можно\nобъединить по смыслу"
         )
         return view

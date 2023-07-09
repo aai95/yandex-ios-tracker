@@ -87,7 +87,7 @@ final class ConfigureScheduleViewController: UIViewController {
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            switchTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            switchTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             switchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             switchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             

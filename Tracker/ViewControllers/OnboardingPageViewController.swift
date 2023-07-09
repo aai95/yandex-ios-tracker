@@ -12,11 +12,11 @@ final class OnboardingPageViewController: UIPageViewController {
         
         viewBlue.configure(
             background: UIImage(named: "OnboardingBackgroundBlue"),
-            title: "Отслеживайте только то, что хотите"
+            title: "Отслеживайте только\nто, что хотите"
         )
         viewRed.configure(
             background: UIImage(named: "OnboardingBackgroundRed"),
-            title: "Даже если это не литры воды и йога"
+            title: "Даже если это\nне литры воды и йога"
         )
         controllerBlue.view = viewBlue
         controllerRed.view = viewRed
