@@ -1,5 +1,9 @@
 import UIKit
 
+protocol SelectCategoryViewControllerDelegate: AnyObject {
+    func didSelect(category title: String)
+}
+
 final class SelectCategoryViewController: UIViewController {
     
     private let checkTable: UITableView = {
@@ -42,6 +46,8 @@ final class SelectCategoryViewController: UIViewController {
     
     private let viewModel = CategoryListViewModel()
     private var currentCategoryIndexPath: IndexPath?
+    
+    weak var delegate: SelectCategoryViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,6 +153,6 @@ extension SelectCategoryViewController: UITableViewDelegate {
         viewModel.selectCategory(at: indexPath.row)
         currentCategoryIndexPath = indexPath
         
-        dismiss(animated: true)
+        delegate?.didSelect(category: viewModel.categoryList[indexPath.row].title)
     }
 }

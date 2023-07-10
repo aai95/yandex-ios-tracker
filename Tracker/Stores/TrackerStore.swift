@@ -59,11 +59,11 @@ final class TrackerStore: NSObject {
     }
     
     func addTracker(model: TrackerModel, to category: String) throws {
-        try updateTracker(entity: TrackerEntity(context: context), using: model, in: category)
+        try updateTracker(entity: TrackerEntity(context: context), using: model, under: category)
         try context.save()
     }
     
-    func updateTracker(entity: TrackerEntity, using model: TrackerModel, in title: String) throws {
+    func updateTracker(entity: TrackerEntity, using model: TrackerModel, under title: String) throws {
         entity.id = model.id
         entity.name = model.name
         entity.hexColor = colorSerializer.serialize(color: model.color)
