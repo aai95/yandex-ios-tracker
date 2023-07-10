@@ -40,7 +40,8 @@ final class SelectCategoryViewController: UIViewController {
         return button
     }()
     
-    private var titles: Array<String> = []
+    private let viewModel = CategoryListViewModel()
+    private var currentCategoryIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,9 +51,14 @@ final class SelectCategoryViewController: UIViewController {
         
         setupNavigationBar()
         makeViewLayout()
+        reloadTableData()
         
-        fetchCategories()
-        showOrHidePlaceholder()
+        viewModel.$categoryList.bind { [weak self] _ in
+            guard let self = self else {
+                return
+            }
+            self.reloadTableData()
+        }
     }
     
     @objc private func didTapAddButton() {
@@ -96,19 +102,14 @@ final class SelectCategoryViewController: UIViewController {
         ])
     }
     
-    private func fetchCategories() {
-        titles.append(contentsOf: [
-            "Важное",
-            "Неважное"
-        ])
-    }
-    
-    private func showOrHidePlaceholder() {
-        if titles.isEmpty {
+    private func reloadTableData() {
+        if viewModel.categoryList.isEmpty {
             placeholderView.isHidden = false
         } else {
             placeholderView.isHidden = true
-            checkTable.heightAnchor.constraint(equalToConstant: CGFloat(titles.count * 75)).isActive = true
+            
+            let tableHeight = CGFloat(viewModel.categoryList.count * 75)
+            checkTable.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
             checkTable.reloadData()
         }
     }
@@ -117,7 +118,7 @@ final class SelectCategoryViewController: UIViewController {
 extension SelectCategoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titles.count
+        return viewModel.categoryList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -126,11 +127,9 @@ extension SelectCategoryViewController: UITableViewDataSource {
         else {
             preconditionFailure("Failed to cast UITableViewCell as CheckTableViewCell")
         }
-        checkCell.configure(
-            name: titles[indexPath.row],
-            isChecked: indexPath.row % 2 == 0
-        )
-        if indexPath.row == titles.count - 1 { // hide separator for last cell
+        checkCell.viewModel = viewModel.categoryList[indexPath.row]
+        
+        if indexPath.row == viewModel.categoryList.count - 1 { // hide separator for last cell
             let centerX = checkCell.bounds.width / 2
             checkCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
         }
@@ -141,6 +140,13 @@ extension SelectCategoryViewController: UITableViewDataSource {
 extension SelectCategoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        if let currentIndexPath = currentCategoryIndexPath {
+            tableView.deselectRow(at: currentIndexPath, animated: true)
+            viewModel.deselectCategory(at: currentIndexPath.row)
+        }
+        viewModel.selectCategory(at: indexPath.row)
+        currentCategoryIndexPath = indexPath
+        
+        dismiss(animated: true)
     }
 }

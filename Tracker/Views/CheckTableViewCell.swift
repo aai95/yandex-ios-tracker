@@ -4,6 +4,13 @@ final class CheckTableViewCell: UITableViewCell {
     
     static let identifier = "CheckTableViewCell"
     
+    var viewModel: CategoryViewModel! {
+        didSet {
+            nameLabel.text = viewModel.title
+            checkImage.image = viewModel.isChecked ? UIImage(systemName: "checkmark") : UIImage()
+        }
+    }
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         
@@ -23,11 +30,6 @@ final class CheckTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(name: String, isChecked: Bool) {
-        nameLabel.text = name
-        checkImage.image = isChecked ? UIImage(systemName: "checkmark") : UIImage()
     }
     
     private func makeViewLayout() {
