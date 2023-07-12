@@ -286,6 +286,7 @@ final class CreateTrackerViewController: UIViewController {
     private func didTapSettingCategory() {
         let categoryController = SelectCategoryViewController()
         categoryController.delegate = self
+        categoryController.currentCategoryTitle = selectedCategoryTitle
         present(UINavigationController(rootViewController: categoryController), animated: true)
     }
     
@@ -293,6 +294,16 @@ final class CreateTrackerViewController: UIViewController {
         let scheduleController = ConfigureScheduleViewController()
         scheduleController.delegate = self
         present(UINavigationController(rootViewController: scheduleController), animated: true)
+    }
+    
+    private func configureSettingCell(caption text: String, at index: Int) {
+        guard let settingCell = settingTable
+            .cellForRow(at: IndexPath(row: index, section: 0)) as? SettingTableViewCell
+        else {
+            preconditionFailure("Failed to cast UITableViewCell as SettingTableViewCell")
+        }
+        settingCell.configure(caption: text)
+        settingTable.reloadData()
     }
 }
 
@@ -442,8 +453,9 @@ extension CreateTrackerViewController: UICollectionViewDelegate {
 extension CreateTrackerViewController: SelectCategoryViewControllerDelegate {
     
     func didSelect(category title: String) {
-        selectedCategoryTitle = title
+        configureSettingCell(caption: title, at: 0)
         setCreateButtonState()
+        selectedCategoryTitle = title
         dismiss(animated: true)
     }
 }

@@ -51,9 +51,9 @@ final class SelectCategoryViewController: UIViewController {
     }()
     
     private let viewModel = CategoryListViewModel()
-    private var currentCategoryIndexPath: IndexPath?
     
     weak var delegate: SelectCategoryViewControllerDelegate?
+    var currentCategoryTitle: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +71,17 @@ final class SelectCategoryViewController: UIViewController {
             }
             self.reloadTableData()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let currentTitle = currentCategoryTitle,
+              let index = viewModel.categoryList.firstIndex(where: { $0.title == currentTitle })
+        else {
+            return
+        }
+        viewModel.selectCategory(at: index)
     }
     
     @objc private func didTapAddButton() {
@@ -152,13 +163,7 @@ extension SelectCategoryViewController: UITableViewDataSource {
 extension SelectCategoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let currentIndexPath = currentCategoryIndexPath {
-            tableView.deselectRow(at: currentIndexPath, animated: true)
-            viewModel.deselectCategory(at: currentIndexPath.row)
-        }
         viewModel.selectCategory(at: indexPath.row)
-        currentCategoryIndexPath = indexPath
-        
         delegate?.didSelect(category: viewModel.categoryList[indexPath.row].title)
     }
 }
