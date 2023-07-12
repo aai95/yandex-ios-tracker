@@ -44,6 +44,12 @@ final class SelectCategoryViewController: UIViewController {
         return button
     }()
     
+    private lazy var tableHeightConstraint: NSLayoutConstraint = {
+        let constraint = checkTable.heightAnchor.constraint(equalToConstant: 0)
+        constraint.isActive = true
+        return constraint
+    }()
+    
     private let viewModel = CategoryListViewModel()
     private var currentCategoryIndexPath: IndexPath?
     
@@ -69,6 +75,7 @@ final class SelectCategoryViewController: UIViewController {
     
     @objc private func didTapAddButton() {
         let createController = CreateCategoryViewController()
+        createController.delegate = self
         present(UINavigationController(rootViewController: createController), animated: true)
     }
     
@@ -114,8 +121,7 @@ final class SelectCategoryViewController: UIViewController {
         } else {
             placeholderView.isHidden = true
             
-            let tableHeight = CGFloat(viewModel.categoryList.count * 75)
-            checkTable.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
+            tableHeightConstraint.constant = CGFloat(viewModel.categoryList.count * 75)
             checkTable.reloadData()
         }
     }
@@ -154,5 +160,17 @@ extension SelectCategoryViewController: UITableViewDelegate {
         currentCategoryIndexPath = indexPath
         
         delegate?.didSelect(category: viewModel.categoryList[indexPath.row].title)
+    }
+}
+
+extension SelectCategoryViewController: CreateCategoryViewControllerDelegate {
+    
+    func didCreate(category title: String) {
+        guard let index = viewModel.categoryList.firstIndex(where: { $0.title == title }) else {
+            return
+        }
+        viewModel.selectCategory(at: index)
+        reloadTableData()
+        dismiss(animated: true)
     }
 }

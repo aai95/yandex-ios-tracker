@@ -1,5 +1,9 @@
 import UIKit
 
+protocol CreateCategoryViewControllerDelegate: AnyObject {
+    func didCreate(category title: String)
+}
+
 final class CreateCategoryViewController: UIViewController {
     
     private lazy var titleField: CustomTextField = {
@@ -33,6 +37,10 @@ final class CreateCategoryViewController: UIViewController {
         return button
     }()
     
+    private let categoryStore = CategoryStore()
+    
+    weak var delegate: CreateCategoryViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +62,18 @@ final class CreateCategoryViewController: UIViewController {
         }
     }
     
-    @objc private func didTapDoneButton() {}
+    @objc private func didTapDoneButton() {
+        guard let categoryTitle = titleField.text?.trimmingCharacters(in: .whitespaces) else {
+            return
+        }
+        try! categoryStore.addCategory(
+            model: CategoryModel(
+                title: categoryTitle,
+                trackers: []
+            )
+        )
+        delegate?.didCreate(category: categoryTitle)
+    }
     
     private func setupNavigationBar() {
         let titleAttributes = [
