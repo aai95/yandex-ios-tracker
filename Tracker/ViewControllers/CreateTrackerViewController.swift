@@ -293,6 +293,7 @@ final class CreateTrackerViewController: UIViewController {
     private func didTapSettingSchedule() {
         let scheduleController = ConfigureScheduleViewController()
         scheduleController.delegate = self
+        scheduleController.currentSchedule = configuredSchedule
         present(UINavigationController(rootViewController: scheduleController), animated: true)
     }
     
@@ -463,8 +464,37 @@ extension CreateTrackerViewController: SelectCategoryViewControllerDelegate {
 extension CreateTrackerViewController: ConfigureScheduleViewControllerDelegate {
     
     func didConfigure(schedule: Set<WeekDay>) {
-        configuredSchedule = schedule
+        configureSettingCell(caption: makeCaption(from: schedule), at: 1)
         setCreateButtonState()
+        configuredSchedule = schedule
         dismiss(animated: true)
+    }
+    
+    private func makeCaption(from schedule: Set<WeekDay>) -> String {
+        if schedule.count == 7 {
+            return "Каждый день"
+        }
+        let weekDays = schedule.sorted { $0.rawValue < $1.rawValue }
+        var names: Array<String> = []
+        
+        for day in weekDays {
+            switch day {
+            case .monday:
+                names.append("Пн")
+            case .tuesday:
+                names.append("Вт")
+            case .wednesday:
+                names.append("Ср")
+            case .thursday:
+                names.append("Чт")
+            case .friday:
+                names.append("Пт")
+            case .saturday:
+                names.append("Сб")
+            case .sunday:
+                names.append("Вс")
+            }
+        }
+        return names.joined(separator: ", ")
     }
 }
