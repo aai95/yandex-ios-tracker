@@ -48,14 +48,14 @@ final class AddTrackerViewController: UIViewController {
     @objc private func didTapHabitButton() {
         let habitController = CreateTrackerViewController()
         habitController.delegate = self
-        habitController.isIrregularEventView = false
+        habitController.isHabitView = true
         present(UINavigationController(rootViewController: habitController), animated: true)
     }
     
     @objc private func didTapEventButton() {
         let eventController = CreateTrackerViewController()
         eventController.delegate = self
-        eventController.isIrregularEventView = true
+        eventController.isHabitView = false
         present(UINavigationController(rootViewController: eventController), animated: true)
     }
     

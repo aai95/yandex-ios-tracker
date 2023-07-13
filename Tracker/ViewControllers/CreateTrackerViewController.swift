@@ -108,8 +108,7 @@ final class CreateTrackerViewController: UIViewController {
     private var currentColorIndexPath: IndexPath?
     
     weak var delegate: CreateTrackerViewControllerDelegate?
-    
-    var isIrregularEventView: Bool = false
+    var isHabitView: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +131,7 @@ final class CreateTrackerViewController: UIViewController {
         }
         if trackerName.isEmpty
             || selectedCategoryTitle == nil
-            || configuredSchedule.isEmpty && !isIrregularEventView
+            || configuredSchedule.isEmpty && isHabitView
             || currentEmojiIndexPath == nil
             || currentColorIndexPath == nil
         {
@@ -263,9 +262,7 @@ final class CreateTrackerViewController: UIViewController {
                 }
             )
         )
-        if isIrregularEventView {
-            navigationController?.navigationBar.topItem?.title = "Новое нерегулярное событие"
-        } else {
+        if isHabitView {
             navigationController?.navigationBar.topItem?.title = "Новая привычка"
             settings.append(
                 SettingOptions(
@@ -278,6 +275,8 @@ final class CreateTrackerViewController: UIViewController {
                     }
                 )
             )
+        } else {
+            navigationController?.navigationBar.topItem?.title = "Новое нерегулярное событие"
         }
         settingTable.heightAnchor.constraint(equalToConstant: CGFloat(settings.count * 75)).isActive = true
         settingTable.reloadData()

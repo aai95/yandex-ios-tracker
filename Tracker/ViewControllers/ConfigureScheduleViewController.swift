@@ -25,8 +25,6 @@ final class ConfigureScheduleViewController: UIViewController {
         
         button.setTitle("Готово", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .ypGray
-        button.isEnabled = false
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
@@ -50,6 +48,12 @@ final class ConfigureScheduleViewController: UIViewController {
         appendSwitches()
         setupNavigationBar()
         makeViewLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setDoneButtonState()
     }
     
     @objc private func didTapDoneButton() {
