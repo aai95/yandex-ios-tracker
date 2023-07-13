@@ -56,6 +56,16 @@ final class CategoryStore: NSObject {
         return models
     }
     
+    func addCategory(model: CategoryModel) throws {
+        try updateCategory(entity: CategoryEntity(context: context), using: model)
+        try context.save()
+    }
+    
+    func updateCategory(entity: CategoryEntity, using model: CategoryModel) throws {
+        entity.title = model.title
+        entity.trackers = NSSet()
+    }
+    
     private func convert(entity: CategoryEntity) throws -> CategoryModel {
         guard let title = entity.title else {
             throw CategoryStoreError.convertTitleError

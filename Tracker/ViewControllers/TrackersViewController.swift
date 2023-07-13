@@ -233,12 +233,12 @@ extension TrackersViewController: TrackerCollectionViewCellDelegate {
 
 extension TrackersViewController: AddTrackerViewControllerDelegate {
     
-    func didAddNewTracker(model: TrackerModel) {
+    func didAddNewTracker(model: TrackerModel, to category: String) {
         var model = model
         if model.schedule.isEmpty {
             model.date = selectedDate
         }
-        try! trackerStore.addTracker(model: model, to: categories[0].title)
+        try! trackerStore.addTracker(model: model, to: category)
         didChangeSelectedDate()
         dismiss(animated: true)
     }
@@ -341,7 +341,7 @@ private extension TrackersViewController {
         if categories.isEmpty {
             placeholderView.isHidden = false
             placeholderView.configure(
-                image: UIImage(named: "TrackersPlaceholder"),
+                image: UIImage(named: "CategoriesPlaceholder"),
                 caption: "Что будем отслеживать?"
             )
         } else if visibleCategories.isEmpty {
