@@ -1,7 +1,7 @@
 import UIKit
 
 protocol AddTrackerViewControllerDelegate: AnyObject {
-    func didAddNewTracker(model: TrackerModel)
+    func didAddNewTracker(model: TrackerModel, to category: String)
 }
 
 final class AddTrackerViewController: UIViewController {
@@ -48,14 +48,14 @@ final class AddTrackerViewController: UIViewController {
     @objc private func didTapHabitButton() {
         let habitController = CreateTrackerViewController()
         habitController.delegate = self
-        habitController.isIrregularEventView = false
+        habitController.isHabitView = true
         present(UINavigationController(rootViewController: habitController), animated: true)
     }
     
     @objc private func didTapEventButton() {
         let eventController = CreateTrackerViewController()
         eventController.delegate = self
-        eventController.isIrregularEventView = true
+        eventController.isHabitView = false
         present(UINavigationController(rootViewController: eventController), animated: true)
     }
     
@@ -98,8 +98,8 @@ final class AddTrackerViewController: UIViewController {
 
 extension AddTrackerViewController: CreateTrackerViewControllerDelegate {
     
-    func didCreateNewTracker(model: TrackerModel) {
-        delegate?.didAddNewTracker(model: model)
+    func didCreateNewTracker(model: TrackerModel, in category: String) {
+        delegate?.didAddNewTracker(model: model, to: category)
     }
     
     func didCancelNewTracker() {

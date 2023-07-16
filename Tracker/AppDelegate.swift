@@ -22,7 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         
         window = UIWindow()
-        window?.rootViewController = MainTabBarController()
+        
+        if OnboardingPageStorage.shared.isOnboardingPagePassed {
+            window?.rootViewController = MainTabBarController()
+        } else {
+            window?.rootViewController = OnboardingPageViewController(
+                transitionStyle: .scroll,
+                navigationOrientation: .horizontal
+            )
+        }
         window?.makeKeyAndVisible()
         
         return true
