@@ -320,11 +320,6 @@ extension CreateTrackerViewController: UITableViewDataSource {
             preconditionFailure("Failed to cast UITableViewCell as SettingTableViewCell")
         }
         settingCell.configure(options: settings[indexPath.row])
-        
-        if indexPath.row == settings.count - 1 { // hide separator for last cell
-            let centerX = settingCell.bounds.width / 2
-            settingCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
-        }
         return settingCell
     }
 }

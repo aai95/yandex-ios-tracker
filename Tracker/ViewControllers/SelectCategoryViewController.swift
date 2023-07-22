@@ -11,6 +11,8 @@ final class SelectCategoryViewController: UIViewController {
         
         table.register(CheckTableViewCell.self, forCellReuseIdentifier: CheckTableViewCell.identifier)
         table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        table.tableHeaderView = UIView() // remove separator above first cell
+        
         table.isScrollEnabled = false
         
         table.layer.masksToBounds = true
@@ -151,11 +153,6 @@ extension SelectCategoryViewController: UITableViewDataSource {
             preconditionFailure("Failed to cast UITableViewCell as CheckTableViewCell")
         }
         checkCell.viewModel = viewModel.categoryList[indexPath.row]
-        
-        if indexPath.row == viewModel.categoryList.count - 1 { // hide separator for last cell
-            let centerX = checkCell.bounds.width / 2
-            checkCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
-        }
         return checkCell
     }
 }

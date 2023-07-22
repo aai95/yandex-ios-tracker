@@ -49,6 +49,7 @@ final class TrackersViewController: UIViewController {
     
     private let placeholderView = PlaceholderView()
     private let widthParameters = CollectionWidthParameters(cellsNumber: 2, leftInset: 16, rightInset: 16, interCellSpacing: 10)
+    
     private let categoryStore = CategoryStore()
     private let trackerStore = TrackerStore()
     private let recordStore = RecordStore()
@@ -56,7 +57,8 @@ final class TrackersViewController: UIViewController {
     private var categories: Array<CategoryModel> = []
     private var visibleCategories: Array<CategoryModel> = []
     private var completedRecords: Array<RecordModel> = []
-    private var selectedDate = Date()
+    
+    private lazy var selectedDate = datePicker.date
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,15 +69,14 @@ final class TrackersViewController: UIViewController {
         trackerStore.delegate = self
         recordStore.delegate = self
         
-        TestDataLoader.shared.loadTestData()
-        
         setupNavigationBar()
         makeViewLayout()
         hideKeyboardWhenDidTap()
         
+        TestDataLoader.shared.loadTestData()
+        
         categories = categoryStore.fetchedCategories
         completedRecords = recordStore.fetchedRecords
-        visibleCategories.append(contentsOf: categories)
         
         reloadVisibleCategories()
     }
@@ -226,7 +227,7 @@ extension TrackersViewController: TrackerCollectionViewCellDelegate {
     }
     
     func uncompleteTracker(with id: UUID, at indexPath: IndexPath) {
-        try! recordStore.deleteRecord(model: completedRecords.filter( { isMatchRecord(model: $0, with: id) } )[0])
+        try! recordStore.deleteRecord(model: completedRecords.filter({ isMatchRecord(model: $0, with: id) })[0])
         trackerCollection.reloadItems(at: [indexPath])
     }
 }
