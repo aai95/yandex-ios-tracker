@@ -36,16 +36,16 @@ final class TestDataLoader {
         let trackerModels = [
             TrackerModel(
                 id: testID,
-                name: "Тестовый трекер",
+                name: NSLocalizedString("testTracker.name", comment: ""),
                 color: .systemOrange,
-                emoji: "🍏",
+                emoji: NSLocalizedString("testTracker.emoji", comment: ""),
                 schedule: [.monday, .tuesday, .wednesday, .thursday, .friday]
             )
         ]
         
         let categoryModels = [
             CategoryModel(
-                title: "Тестовая категория",
+                title: NSLocalizedString("testCategory.title", comment: ""),
                 trackers: trackerModels
             )
         ]

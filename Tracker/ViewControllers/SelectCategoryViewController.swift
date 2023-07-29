@@ -26,7 +26,7 @@ final class SelectCategoryViewController: UIViewController {
         
         view.configure(
             image: UIImage(named: "CategoriesPlaceholder"),
-            caption: "Привычки и события можно\nобъединить по смыслу"
+            caption: NSLocalizedString("categoriesPlaceholder.caption", comment: "")
         )
         return view
     }()
@@ -34,7 +34,7 @@ final class SelectCategoryViewController: UIViewController {
     private lazy var addButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.setTitle("Добавить категорию", for: .normal)
+        button.setTitle(NSLocalizedString("addCategoryButton.title", comment: ""), for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .ypBlackDay
         
@@ -98,7 +98,7 @@ final class SelectCategoryViewController: UIViewController {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
-        navigationController?.navigationBar.topItem?.title = "Категория"
+        navigationController?.navigationBar.topItem?.title = NSLocalizedString("category.title", comment: "")
     }
     
     private func makeViewLayout() {
