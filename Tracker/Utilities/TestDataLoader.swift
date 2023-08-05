@@ -39,7 +39,7 @@ final class TestDataLoader {
                 name: NSLocalizedString("testTracker.name", comment: ""),
                 color: .ypGray,
                 emoji: NSLocalizedString("testTracker.emoji", comment: ""),
-                schedule: [.monday, .tuesday, .wednesday, .thursday, .friday]
+                schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
             )
         ]
         
