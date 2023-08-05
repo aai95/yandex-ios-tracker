@@ -1,0 +1,62 @@
+// MARK: OnboardingPage
+blueOnboarding.title = "Track only what\nyou want";
+redOnboarding.title = "Even if it's not liters of\nwater and yoga";
+
+// MARK: PlaceholderView
+trackersPlaceholder.caption = "What will we track?";
+statisticsPlaceholder.caption = "There is nothing to analyze";
+searchPlaceholder.caption = "Nothing found";
+categoriesPlaceholder.caption = "Habits and events can be\ncombined in meaning";
+
+// MARK: ViewController
+trackers.title = "Trackers";
+statistics.title = "Statistics";
+
+addTracker.title = "Select tracker type";
+createHabit.title = "New habit";
+createIrregularEvent.title = "New irregular event";
+createCategory.title = "New category";
+
+category.title = "Category";
+schedule.title = "Schedule";
+emoji.title = "Emoji";
+color.title = "Color";
+
+// MARK: TextField
+searchField.placeholder = "Search";
+trackerNameField.placeholder = "Enter tracker name";
+categoryTitleField.placeholder = "Enter category title";
+
+// MARK: Button
+onboardingNextButton.title = "Amazing technology!";
+habitButton.title = "Habit";
+irregularEventButton.title = "Irregular event";
+cancelButton.title = "Cancel";
+createButton.title = "Create";
+addCategoryButton.title = "Add category";
+doneButton.title = "Done";
+
+// MARK: WeekDay
+weekDay.all = "Every day";
+weekDay.separator = ", ";
+
+monday.full = "Monday";
+tuesday.full = "Tuesday";
+wednesday.full = "Wednesday";
+thursday.full = "Thursday";
+friday.full = "Friday";
+saturday.full = "Saturday";
+sunday.full = "Sunday";
+
+monday.short = "Mon";
+tuesday.short = "Tue";
+wednesday.short = "Wed";
+thursday.short = "Thu";
+friday.short = "Fri";
+saturday.short = "Sat";
+sunday.short = "Sun";
+
+// MARK: TestData
+testTracker.emoji = "🇺🇸";
+testTracker.name = "Test tracker";
+testCategory.title = "Test category";

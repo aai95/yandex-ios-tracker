@@ -60,8 +60,10 @@
 		8E27CDE32A404FD90079D55C /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		8E4FECF02A4ECCBE001B2FF5 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		8E4FECF22A4ED174001B2FF5 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
-		8E6D5B1C2A7586840008BFCA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8E6D5B202A7588630008BFCA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8E72D1592A7D77A600564FAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8E72D15A2A7D77D700564FAA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8E72D15B2A7D780F00564FAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8E72D15C2A7D783300564FAA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		8E99736D29F56EE8007E8001 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E99737029F56EE8007E8001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E99737429F56EE8007E8001 /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
@@ -367,7 +369,8 @@
 		8E6D5B1B2A7586080008BFCA /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8E6D5B1C2A7586840008BFCA /* ru */,
+				8E72D1592A7D77A600564FAA /* en */,
+				8E72D15A2A7D77D700564FAA /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -375,7 +378,8 @@
 		8E6D5B212A7588630008BFCA /* Localizable.stringsdict */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8E6D5B202A7588630008BFCA /* ru */,
+				8E72D15B2A7D780F00564FAA /* en */,
+				8E72D15C2A7D783300564FAA /* ru */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";

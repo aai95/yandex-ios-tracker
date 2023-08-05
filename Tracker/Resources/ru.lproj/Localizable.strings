@@ -19,7 +19,7 @@ createCategory.title = "Новая категория";
 
 category.title = "Категория";
 schedule.title = "Расписание";
-emoji.title = "Emoji";
+emoji.title = "Эмодзи";
 color.title = "Цвет";
 
 // MARK: TextField
@@ -57,6 +57,6 @@ saturday.short = "Сб";
 sunday.short = "Вс";
 
 // MARK: TestData
-testTracker.emoji = "🍏";
+testTracker.emoji = "🇷🇺";
 testTracker.name = "Тестовый трекер";
 testCategory.title = "Тестовая категория";

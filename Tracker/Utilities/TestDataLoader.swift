@@ -37,7 +37,7 @@ final class TestDataLoader {
             TrackerModel(
                 id: testID,
                 name: NSLocalizedString("testTracker.name", comment: ""),
-                color: .systemOrange,
+                color: .ypGray,
                 emoji: NSLocalizedString("testTracker.emoji", comment: ""),
                 schedule: [.monday, .tuesday, .wednesday, .thursday, .friday]
             )
