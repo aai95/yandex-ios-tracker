@@ -54,9 +54,11 @@ final class CreateCategoryViewController: UIViewController {
             return
         }
         if categoryTitle.isEmpty {
+            doneButton.setTitleColor(.ypWhite, for: .normal)
             doneButton.backgroundColor = .ypGray
             doneButton.isEnabled = false
         } else {
+            doneButton.setTitleColor(.ypWhiteAdaptive, for: .normal)
             doneButton.backgroundColor = .ypBlackAdaptive
             doneButton.isEnabled = true
         }

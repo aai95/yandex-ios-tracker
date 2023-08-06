@@ -34,6 +34,7 @@ final class TrackersViewController: UIViewController {
     
     private let trackerCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collection.backgroundColor = .ypWhiteAdaptive
         
         collection.register(
             TrackerCollectionViewCell.self,

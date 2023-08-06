@@ -10,6 +10,7 @@ final class AddTrackerViewController: UIViewController {
         let button = UIButton(type: .custom)
         
         button.setTitle(NSLocalizedString("habitButton.title", comment: ""), for: .normal)
+        button.setTitleColor(.ypWhiteAdaptive, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .ypBlackAdaptive
         
@@ -25,6 +26,7 @@ final class AddTrackerViewController: UIViewController {
         let button = UIButton(type: .custom)
         
         button.setTitle(NSLocalizedString("irregularEventButton.title", comment: ""), for: .normal)
+        button.setTitleColor(.ypWhiteAdaptive, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .ypBlackAdaptive
         

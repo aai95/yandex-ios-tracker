@@ -5,6 +5,9 @@ extension UIColor {
     static let ypBlackAdaptive = UIColor(named: "YPBlackAdaptive")!
     static let ypWhiteAdaptive = UIColor(named: "YPWhiteAdaptive")!
     
+    static let ypBackground = UIColor(named: "YPBackground")!
+    static let ypBlack = UIColor(named: "YPBlack")!
+    static let ypWhite = UIColor(named: "YPWhite")!
     static let ypGray = UIColor(named: "YPGray")!
     static let ypLightGray = UIColor(named: "YPLightGray")!
     static let ypRed = UIColor(named: "YPRed")!
@@ -28,4 +31,8 @@ extension UIColor {
     static let ypSelection16 = UIColor(named: "YPSelection16")!
     static let ypSelection17 = UIColor(named: "YPSelection17")!
     static let ypSelection18 = UIColor(named: "YPSelection18")!
+    
+    static var tabBarBorderColor: UIColor = UIColor { trait in
+        return trait.userInterfaceStyle == .light ? .ypGray : .ypBlack
+    }
 }

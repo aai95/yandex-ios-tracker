@@ -10,11 +10,12 @@ final class ConfigureScheduleViewController: UIViewController {
         let table = UITableView(frame: .zero)
         
         table.register(SwitchTableViewCell.self, forCellReuseIdentifier: SwitchTableViewCell.identifier)
-        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        table.tableHeaderView = UIView() // remove separator above first cell
-        
         table.isScrollEnabled = false
         table.allowsSelection = false
+        
+        table.separatorColor = .ypGray
+        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        table.tableHeaderView = UIView() // remove separator above first cell
         
         table.layer.masksToBounds = true
         table.layer.cornerRadius = 16
@@ -105,9 +106,11 @@ final class ConfigureScheduleViewController: UIViewController {
     
     private func setDoneButtonState() {
         if currentSchedule.isEmpty {
+            doneButton.setTitleColor(.ypWhite, for: .normal)
             doneButton.backgroundColor = .ypGray
             doneButton.isEnabled = false
         } else {
+            doneButton.setTitleColor(.ypWhiteAdaptive, for: .normal)
             doneButton.backgroundColor = .ypBlackAdaptive
             doneButton.isEnabled = true
         }

@@ -26,8 +26,10 @@ final class CreateTrackerViewController: UIViewController {
         let table = UITableView(frame: .zero)
         
         table.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
-        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         table.isScrollEnabled = false
+        
+        table.separatorColor = .ypGray
+        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
         table.layer.masksToBounds = true
         table.layer.cornerRadius = 16
@@ -59,8 +61,8 @@ final class CreateTrackerViewController: UIViewController {
         let button = UIButton(type: .custom)
         
         button.setTitle(NSLocalizedString("cancelButton.title", comment: ""), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.ypRed, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
@@ -135,9 +137,11 @@ final class CreateTrackerViewController: UIViewController {
             || currentEmojiIndexPath == nil
             || currentColorIndexPath == nil
         {
+            createButton.setTitleColor(.ypWhite, for: .normal)
             createButton.backgroundColor = .ypGray
             createButton.isEnabled = false
         } else {
+            createButton.setTitleColor(.ypWhiteAdaptive, for: .normal)
             createButton.backgroundColor = .ypBlackAdaptive
             createButton.isEnabled = true
         }

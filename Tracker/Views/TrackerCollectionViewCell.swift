@@ -21,7 +21,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     
     private let emojiView: UIView = {
         let view = UIView()
-        view.backgroundColor = .ypBackgroundAdaptive
+        view.backgroundColor = .ypBackground
         
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
@@ -40,7 +40,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private let nameLabel: UILabel = {
         let label = UILabel()
         
-        label.textColor = .ypWhiteAdaptive
+        label.textColor = .ypWhite
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.numberOfLines = 2
         
