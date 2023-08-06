@@ -1,13 +1,9 @@
 import UIKit
 
 extension UIColor {
-    static let ypBackgroundDay = UIColor(named: "YPBackgroundDay")!
-    static let ypBlackDay = UIColor(named: "YPBlackDay")!
-    static let ypWhiteDay = UIColor(named: "YPWhiteDay")!
-    
-    static let ypBackgroundNight = UIColor(named: "YPBackgroundNight")!
-    static let ypBlackNight = UIColor(named: "YPBlackNight")!
-    static let ypWhiteNight = UIColor(named: "YPWhiteNight")!
+    static let ypBackgroundAdaptive = UIColor(named: "YPBackgroundAdaptive")!
+    static let ypBlackAdaptive = UIColor(named: "YPBlackAdaptive")!
+    static let ypWhiteAdaptive = UIColor(named: "YPWhiteAdaptive")!
     
     static let ypGray = UIColor(named: "YPGray")!
     static let ypLightGray = UIColor(named: "YPLightGray")!

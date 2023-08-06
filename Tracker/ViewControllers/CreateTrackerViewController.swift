@@ -12,7 +12,7 @@ final class CreateTrackerViewController: UIViewController {
         
         field.placeholder = NSLocalizedString("trackerNameField.placeholder", comment: "")
         field.font = .systemFont(ofSize: 17, weight: .regular)
-        field.backgroundColor = .ypBackgroundDay
+        field.backgroundColor = .ypBackgroundAdaptive
         
         field.layer.masksToBounds = true
         field.layer.cornerRadius = 16
@@ -138,7 +138,7 @@ final class CreateTrackerViewController: UIViewController {
             createButton.backgroundColor = .ypGray
             createButton.isEnabled = false
         } else {
-            createButton.backgroundColor = .ypBlackDay
+            createButton.backgroundColor = .ypBlackAdaptive
             createButton.isEnabled = true
         }
     }
@@ -165,7 +165,7 @@ final class CreateTrackerViewController: UIViewController {
     
     private func setupNavigationBar() {
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay,
+            NSAttributedString.Key.foregroundColor: UIColor.ypBlackAdaptive,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -173,7 +173,7 @@ final class CreateTrackerViewController: UIViewController {
     }
     
     private func makeViewLayout() {
-        view.backgroundColor = .ypWhiteDay
+        view.backgroundColor = .ypWhiteAdaptive
         
         let scrollView = UIScrollView()
         let mainStack = makeMainStack()

@@ -76,7 +76,7 @@ final class ConfigureScheduleViewController: UIViewController {
     
     private func setupNavigationBar() {
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay,
+            NSAttributedString.Key.foregroundColor: UIColor.ypBlackAdaptive,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -84,7 +84,7 @@ final class ConfigureScheduleViewController: UIViewController {
     }
     
     private func makeViewLayout() {
-        view.backgroundColor = .ypWhiteDay
+        view.backgroundColor = .ypWhiteAdaptive
         
         view.addSubview(switchTable)
         view.addSubview(doneButton)
@@ -108,7 +108,7 @@ final class ConfigureScheduleViewController: UIViewController {
             doneButton.backgroundColor = .ypGray
             doneButton.isEnabled = false
         } else {
-            doneButton.backgroundColor = .ypBlackDay
+            doneButton.backgroundColor = .ypBlackAdaptive
             doneButton.isEnabled = true
         }
     }

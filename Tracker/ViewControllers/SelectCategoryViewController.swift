@@ -36,7 +36,7 @@ final class SelectCategoryViewController: UIViewController {
         
         button.setTitle(NSLocalizedString("addCategoryButton.title", comment: ""), for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .ypBlackDay
+        button.backgroundColor = .ypBlackAdaptive
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
@@ -94,7 +94,7 @@ final class SelectCategoryViewController: UIViewController {
     
     private func setupNavigationBar() {
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay,
+            NSAttributedString.Key.foregroundColor: UIColor.ypBlackAdaptive,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -102,7 +102,7 @@ final class SelectCategoryViewController: UIViewController {
     }
     
     private func makeViewLayout() {
-        view.backgroundColor = .ypWhiteDay
+        view.backgroundColor = .ypWhiteAdaptive
         
         view.addSubview(checkTable)
         view.addSubview(placeholderView)
