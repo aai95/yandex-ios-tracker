@@ -82,11 +82,25 @@ final class TrackersViewController: UIViewController {
         reloadVisibleCategories()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        AnalyticService.shared.report(event: "open", with: ["screen": "Main"])
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        AnalyticService.shared.report(event: "close", with: ["screen": "Main"])
+    }
+    
     private func isMatchRecord(model: RecordModel, with trackerID: UUID) -> Bool {
         return model.trackerID == trackerID && Calendar.current.isDate(model.completionDate, inSameDayAs: selectedDate)
     }
     
     @objc private func didTapAddButton() {
+        AnalyticService.shared.report(event: "click", with: ["screen": "Main", "item": "add_track"])
+        
         let trackerController = AddTrackerViewController()
         trackerController.delegate = self
         present(UINavigationController(rootViewController: trackerController), animated: true)
