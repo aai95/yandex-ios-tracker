@@ -74,6 +74,11 @@ final class TrackerStore: NSObject {
         entity.records = NSSet()
     }
     
+    func deleteTracker(model: TrackerModel) throws {
+        context.delete(try fetchTracker(by: model.id))
+        try context.save()
+    }
+    
     func convert(entity: TrackerEntity) throws -> TrackerModel {
         guard let trackerID = entity.trackerID else {
             throw TrackerStoreError.convertIDError
@@ -100,6 +105,12 @@ final class TrackerStore: NSObject {
     private func fetchCategory(by title: String) throws -> CategoryEntity {
         let request = NSFetchRequest<CategoryEntity>(entityName: "CategoryEntity")
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(CategoryEntity.title), title)
+        return try context.fetch(request)[0]
+    }
+    
+    private func fetchTracker(by id: UUID) throws -> TrackerEntity {
+        let request = NSFetchRequest<TrackerEntity>(entityName: "TrackerEntity")
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerEntity.trackerID), id as CVarArg)
         return try context.fetch(request)[0]
     }
 }

@@ -36,6 +36,13 @@ createButton.title = "Create";
 addCategoryButton.title = "Add category";
 doneButton.title = "Done";
 
+// MARK: ContextMenu
+deleteItem.title = "Delete";
+deleteConfirmation.title = "Are you sure you want to delete the tracker?";
+
+// MARK: Statistics
+completedStatistic.caption = "Trackers completed";
+
 // MARK: WeekDay
 weekDay.all = "Every day";
 weekDay.separator = ", ";
@@ -55,9 +62,6 @@ thursday.short = "Thu";
 friday.short = "Fri";
 saturday.short = "Sat";
 sunday.short = "Sun";
-
-// MARK: Statistics
-completedStatistic.caption = "Trackers completed";
 
 // MARK: TestData
 testTracker.emoji = "🇺🇸";

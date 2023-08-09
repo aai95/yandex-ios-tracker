@@ -205,6 +205,63 @@ extension TrackersViewController: UICollectionViewDataSource {
     }
 }
 
+extension TrackersViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        guard indexPaths.count > 0 else {
+            return nil
+        }
+        let indexPath = indexPaths[0]
+        
+        return UIContextMenuConfiguration(actionProvider: { menuElements in
+            return UIMenu(children: [
+                UIAction(
+                    title: NSLocalizedString("deleteItem.title", comment: ""),
+                    attributes: .destructive,
+                    handler: { [weak self] _ in
+                        guard let self = self else {
+                            return
+                        }
+                        self.deleteTracker(at: indexPath)
+                    }
+                )
+            ])
+        })
+    }
+    
+    private func deleteTracker(at indexPath: IndexPath) {
+        AnalyticService.shared.report(event: "click", with: ["screen": "Main", "item": "delete"])
+        
+        let controller = UIAlertController(
+            title: NSLocalizedString("deleteConfirmation.title", comment: ""),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        controller.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("deleteItem.title", comment: ""),
+                style: .destructive,
+                handler: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    try! self.trackerStore.deleteTracker(
+                        model: self.categories[indexPath.section].trackers[indexPath.item]
+                    )
+                    self.reloadVisibleCategories()
+                }
+            )
+        )
+        controller.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("cancelButton.title", comment: ""),
+                style: .cancel
+            )
+        )
+        present(controller, animated: true)
+    }
+}
+
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

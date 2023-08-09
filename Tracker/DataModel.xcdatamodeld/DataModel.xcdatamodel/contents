@@ -17,6 +17,6 @@
         <attribute name="trackerID" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="weekDays" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="CategoryEntity" inverseName="trackers" inverseEntity="CategoryEntity"/>
-        <relationship name="records" toMany="YES" deletionRule="Nullify" destinationEntity="RecordEntity" inverseName="tracker" inverseEntity="RecordEntity"/>
+        <relationship name="records" toMany="YES" deletionRule="Cascade" destinationEntity="RecordEntity" inverseName="tracker" inverseEntity="RecordEntity"/>
     </entity>
 </model>

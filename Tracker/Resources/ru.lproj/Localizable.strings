@@ -36,6 +36,13 @@ createButton.title = "Создать";
 addCategoryButton.title = "Добавить категорию";
 doneButton.title = "Готово";
 
+// MARK: ContextMenu
+deleteItem.title = "Удалить";
+deleteConfirmation.title = "Уверены что хотите удалить трекер?";
+
+// MARK: Statistics
+completedStatistic.caption = "Трекеров завершено";
+
 // MARK: WeekDay
 weekDay.all = "Каждый день";
 weekDay.separator = ", ";
@@ -55,9 +62,6 @@ thursday.short = "Чт";
 friday.short = "Пт";
 saturday.short = "Сб";
 sunday.short = "Вс";
-
-// MARK: Statistics
-completedStatistic.caption = "Трекеров завершено";
 
 // MARK: TestData
 testTracker.emoji = "🇷🇺";
