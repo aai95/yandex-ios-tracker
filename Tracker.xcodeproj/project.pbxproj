@@ -16,6 +16,7 @@
 		8E4FECF12A4ECCBE001B2FF5 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4FECF02A4ECCBE001B2FF5 /* OnboardingPageViewController.swift */; };
 		8E4FECF32A4ED174001B2FF5 /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4FECF22A4ED174001B2FF5 /* OnboardingPageView.swift */; };
 		8E51A6D32A813B220021203D /* AnalyticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E51A6D22A813B220021203D /* AnalyticService.swift */; };
+		8E51A6D92A8283F40021203D /* StatisticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E51A6D82A8283F40021203D /* StatisticView.swift */; };
 		8E6D5B192A7586080008BFCA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E6D5B1B2A7586080008BFCA /* Localizable.strings */; };
 		8E6D5B1F2A7588630008BFCA /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 8E6D5B212A7588630008BFCA /* Localizable.stringsdict */; };
 		8E72D1642A7E565300564FAA /* MainTabBarControllerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E72D1632A7E565300564FAA /* MainTabBarControllerTestCase.swift */; };
@@ -80,6 +81,7 @@
 		8E4FECF02A4ECCBE001B2FF5 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		8E4FECF22A4ED174001B2FF5 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
 		8E51A6D22A813B220021203D /* AnalyticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticService.swift; sourceTree = "<group>"; };
+		8E51A6D82A8283F40021203D /* StatisticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticView.swift; sourceTree = "<group>"; };
 		8E72D1592A7D77A600564FAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E72D15A2A7D77D700564FAA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E72D15B2A7D780F00564FAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				8E4FECF22A4ED174001B2FF5 /* OnboardingPageView.swift */,
 				8E27CDE32A404FD90079D55C /* PlaceholderView.swift */,
 				8E9973E229FFB1E7007E8001 /* SettingTableViewCell.swift */,
+				8E51A6D82A8283F40021203D /* StatisticView.swift */,
 				8E9973ED2A003E08007E8001 /* SwitchTableViewCell.swift */,
 				8E9973D629FD2998007E8001 /* TrackerCollectionViewCell.swift */,
 			);
@@ -513,6 +516,7 @@
 				8E9973F82A018798007E8001 /* TrackerModel.swift in Sources */,
 				8E9973DB29FD6D07007E8001 /* CollectionWidthParameters.swift in Sources */,
 				8E9974042A13DCF2007E8001 /* ColorCollectionViewCell.swift in Sources */,
+				8E51A6D92A8283F40021203D /* StatisticView.swift in Sources */,
 				8E9973F62A016261007E8001 /* SwitchOptions.swift in Sources */,
 				8E9974002A0C1B81007E8001 /* UIViewControllerExtension.swift in Sources */,
 				8E99737129F56EE8007E8001 /* AppDelegate.swift in Sources */,

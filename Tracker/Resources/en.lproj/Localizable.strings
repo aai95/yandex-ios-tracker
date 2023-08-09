@@ -12,7 +12,7 @@ categoriesPlaceholder.caption = "Habits and events can be\ncombined in meaning";
 trackers.title = "Trackers";
 statistics.title = "Statistics";
 
-addTracker.title = "Select tracker type";
+addTracker.title = "Create tracker";
 createHabit.title = "New habit";
 createIrregularEvent.title = "New irregular event";
 createCategory.title = "New category";
@@ -55,6 +55,9 @@ thursday.short = "Thu";
 friday.short = "Fri";
 saturday.short = "Sat";
 sunday.short = "Sun";
+
+// MARK: Statistics
+completedStatistic.caption = "Trackers completed";
 
 // MARK: TestData
 testTracker.emoji = "🇺🇸";

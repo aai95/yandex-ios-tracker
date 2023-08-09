@@ -56,6 +56,9 @@ friday.short = "Пт";
 saturday.short = "Сб";
 sunday.short = "Вс";
 
+// MARK: Statistics
+completedStatistic.caption = "Трекеров завершено";
+
 // MARK: TestData
 testTracker.emoji = "🇷🇺";
 testTracker.name = "Тестовый трекер";

@@ -13,6 +13,10 @@ extension UIColor {
     static let ypRed = UIColor(named: "YPRed")!
     static let ypBlue = UIColor(named: "YPBlue")!
     
+    static let ypRedGradient = UIColor(named: "YPRedGradient")!
+    static let ypGreenGradient = UIColor(named: "YPGreenGradient")!
+    static let ypBlueGradient = UIColor(named: "YPBlueGradient")!
+    
     static let ypSelection1 = UIColor(named: "YPSelection1")!
     static let ypSelection2 = UIColor(named: "YPSelection2")!
     static let ypSelection3 = UIColor(named: "YPSelection3")!
