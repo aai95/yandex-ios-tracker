@@ -17,6 +17,9 @@ createHabit.title = "Новая привычка";
 createIrregularEvent.title = "Новое нерегулярное событие";
 createCategory.title = "Новая категория";
 
+editHabit.title = "Редактирование привычки";
+editIrregularEvent.title = "Редактирование нерегулярного события";
+
 category.title = "Категория";
 schedule.title = "Расписание";
 emoji.title = "Эмодзи";
@@ -33,10 +36,12 @@ habitButton.title = "Привычка";
 irregularEventButton.title = "Нерегулярное событие";
 cancelButton.title = "Отменить";
 createButton.title = "Создать";
+saveButton.title = "Сохранить";
 addCategoryButton.title = "Добавить категорию";
 doneButton.title = "Готово";
 
 // MARK: ContextMenu
+editItem.title = "Редактировать";
 deleteItem.title = "Удалить";
 deleteConfirmation.title = "Уверены что хотите удалить трекер?";
 
@@ -64,6 +69,6 @@ saturday.short = "Сб";
 sunday.short = "Вс";
 
 // MARK: TestData
-testTracker.emoji = "🇷🇺";
+testTracker.emoji = "🙂";
 testTracker.name = "Тестовый трекер";
 testCategory.title = "Тестовая категория";

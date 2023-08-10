@@ -17,6 +17,9 @@ createHabit.title = "New habit";
 createIrregularEvent.title = "New irregular event";
 createCategory.title = "New category";
 
+editHabit.title = "Edit habit";
+editIrregularEvent.title = "Edit irregular event";
+
 category.title = "Category";
 schedule.title = "Schedule";
 emoji.title = "Emoji";
@@ -33,10 +36,12 @@ habitButton.title = "Habit";
 irregularEventButton.title = "Irregular event";
 cancelButton.title = "Cancel";
 createButton.title = "Create";
+saveButton.title = "Save";
 addCategoryButton.title = "Add category";
 doneButton.title = "Done";
 
 // MARK: ContextMenu
+editItem.title = "Edit";
 deleteItem.title = "Delete";
 deleteConfirmation.title = "Are you sure you want to delete the tracker?";
 
@@ -64,6 +69,6 @@ saturday.short = "Sat";
 sunday.short = "Sun";
 
 // MARK: TestData
-testTracker.emoji = "🇺🇸";
+testTracker.emoji = "🙂";
 testTracker.name = "Test tracker";
 testCategory.title = "Test category";

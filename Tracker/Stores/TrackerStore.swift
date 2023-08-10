@@ -63,6 +63,11 @@ final class TrackerStore: NSObject {
         try context.save()
     }
     
+    func saveTracker(model: TrackerModel, in category: String) throws {
+        try updateTracker(entity: fetchTracker(by: model.id), using: model, under: category)
+        try context.save()
+    }
+    
     func updateTracker(entity: TrackerEntity, using model: TrackerModel, under title: String) throws {
         entity.trackerID = model.id
         entity.name = model.name
@@ -71,7 +76,7 @@ final class TrackerStore: NSObject {
         entity.weekDays = scheduleSerializer.serialize(schedule: model.schedule)
         entity.eventDate = model.date
         entity.category = try fetchCategory(by: title)
-        entity.records = NSSet()
+        entity.records = entity.records
     }
     
     func deleteTracker(model: TrackerModel) throws {

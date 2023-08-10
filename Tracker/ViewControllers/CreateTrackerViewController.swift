@@ -5,9 +5,9 @@ protocol CreateTrackerViewControllerDelegate: AnyObject {
     func didCancelNewTracker()
 }
 
-final class CreateTrackerViewController: UIViewController {
+class CreateTrackerViewController: UIViewController {
     
-    private lazy var nameField: CustomTextField = {
+    fileprivate lazy var nameField: CustomTextField = {
         let field = CustomTextField()
         
         field.placeholder = NSLocalizedString("trackerNameField.placeholder", comment: "")
@@ -37,7 +37,7 @@ final class CreateTrackerViewController: UIViewController {
         return table
     }()
     
-    private let emojiColorCollection: UICollectionView = {
+    fileprivate let emojiColorCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.allowsMultipleSelection = true
         
@@ -73,7 +73,7 @@ final class CreateTrackerViewController: UIViewController {
         return button
     }()
     
-    private lazy var createButton: UIButton = {
+    fileprivate lazy var createButton: UIButton = {
         let button = UIButton(type: .custom)
         
         button.setTitle(NSLocalizedString("createButton.title", comment: ""), for: .normal)
@@ -90,24 +90,24 @@ final class CreateTrackerViewController: UIViewController {
     
     private let widthParameters = CollectionWidthParameters(cellsNumber: 6, leftInset: 20, rightInset: 20, interCellSpacing: 10)
     
-    private let emojis: Array<String> = [
+    fileprivate let emojis: Array<String> = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
         "😇", "😡", "🥶", "🤔", "🙌", "🍔",
         "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
     ]
     
-    private let colors: Array<UIColor> = [
+    fileprivate let colors: Array<UIColor> = [
         .ypSelection1, .ypSelection2, .ypSelection3, .ypSelection4, .ypSelection5, .ypSelection6,
         .ypSelection7, .ypSelection8, .ypSelection9, .ypSelection10, .ypSelection11, .ypSelection12,
         .ypSelection13, .ypSelection14, .ypSelection15, .ypSelection16, .ypSelection17, .ypSelection18
     ]
     
     private var settings: Array<SettingOptions> = []
-    private var selectedCategoryTitle: String?
-    private var configuredSchedule: Set<WeekDay> = []
+    fileprivate var selectedCategoryTitle: String?
+    fileprivate var configuredSchedule: Set<WeekDay> = []
     
-    private var currentEmojiIndexPath: IndexPath?
-    private var currentColorIndexPath: IndexPath?
+    fileprivate var currentEmojiIndexPath: IndexPath?
+    fileprivate var currentColorIndexPath: IndexPath?
     
     weak var delegate: CreateTrackerViewControllerDelegate?
     var isHabitView: Bool = true
@@ -147,11 +147,11 @@ final class CreateTrackerViewController: UIViewController {
         }
     }
     
-    @objc private func didTapCancelButton() {
+    @objc fileprivate func didTapCancelButton() {
         delegate?.didCancelNewTracker()
     }
     
-    @objc private func didTapCreateButton() {
+    @objc fileprivate func didTapCreateButton() {
         guard let trackerName = nameField.text,
               let categoryTitle = selectedCategoryTitle
         else {
@@ -299,7 +299,7 @@ final class CreateTrackerViewController: UIViewController {
         present(UINavigationController(rootViewController: scheduleController), animated: true)
     }
     
-    private func configureSettingCell(caption text: String, at index: Int) {
+    fileprivate func configureSettingCell(caption text: String, at index: Int) {
         guard let settingCell = settingTable
             .cellForRow(at: IndexPath(row: index, section: 0)) as? SettingTableViewCell
         else {
@@ -467,7 +467,7 @@ extension CreateTrackerViewController: ConfigureScheduleViewControllerDelegate {
         dismiss(animated: true)
     }
     
-    private func makeCaption(from schedule: Set<WeekDay>) -> String {
+    fileprivate func makeCaption(from schedule: Set<WeekDay>) -> String {
         if schedule.count == 7 {
             return NSLocalizedString("weekDay.all", comment: "")
         }
@@ -493,5 +493,81 @@ extension CreateTrackerViewController: ConfigureScheduleViewControllerDelegate {
             }
         }
         return names.joined(separator: NSLocalizedString("weekDay.separator", comment: ""))
+    }
+}
+
+protocol EditTrackerViewControllerDelegate: AnyObject {
+    func didSaveEditedTracker(model: TrackerModel, in category: String)
+    func didCancelEditTracker()
+}
+
+class EditTrackerViewController: CreateTrackerViewController {
+    
+    private let colorSerializer = UIColorSerializer()
+    
+    private var trackerID: UUID?
+    private var eventDate: Date?
+    
+    weak var editDelegate: EditTrackerViewControllerDelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        customizeEditView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        configureSettingCell(caption: selectedCategoryTitle ?? "", at: 0)
+        if isHabitView {
+            configureSettingCell(caption: makeCaption(from: configuredSchedule), at: 1)
+        }
+        collectionView(emojiColorCollection, didSelectItemAt: currentEmojiIndexPath ?? IndexPath(item: 0, section: 0))
+        collectionView(emojiColorCollection, didSelectItemAt: currentColorIndexPath ?? IndexPath(item: 0, section: 1))
+    }
+    
+    override func didTapCancelButton() {
+        editDelegate?.didCancelEditTracker()
+    }
+    
+    override func didTapCreateButton() {
+        guard let trackerName = nameField.text,
+              let categoryTitle = selectedCategoryTitle
+        else {
+            return
+        }
+        let tracker = TrackerModel(
+            id: trackerID ?? UUID(),
+            name: trackerName.trimmingCharacters(in: .whitespaces),
+            color: colors[currentColorIndexPath?.item ?? 0],
+            emoji: emojis[currentEmojiIndexPath?.item ?? 0],
+            schedule: configuredSchedule,
+            date: eventDate
+        )
+        editDelegate?.didSaveEditedTracker(model: tracker, in: categoryTitle)
+    }
+    
+    func setTrackerToEdit(model: TrackerModel, in category: String) {
+        trackerID = model.id
+        eventDate = model.date
+        
+        nameField.text = model.name
+        selectedCategoryTitle = category
+        configuredSchedule = model.schedule
+        
+        let emojIndex = emojis.firstIndex(where: { $0 == model.emoji }) ?? 0
+        currentEmojiIndexPath = IndexPath(item: emojIndex, section: 0)
+        
+        let hexColors = colors.map({ colorSerializer.serialize(color: $0) })
+        let modelColor = colorSerializer.serialize(color: model.color)
+        let colorIndex = hexColors.firstIndex(where: { $0 == modelColor }) ?? 0
+        currentColorIndexPath = IndexPath(item: colorIndex, section: 1)
+    }
+    
+    private func customizeEditView() {
+        let titleKey = isHabitView ? "editHabit.title" : "editIrregularEvent.title"
+        navigationController?.navigationBar.topItem?.title = NSLocalizedString(titleKey, comment: "")
+        createButton.setTitle(NSLocalizedString("saveButton.title", comment: ""), for: .normal)
     }
 }

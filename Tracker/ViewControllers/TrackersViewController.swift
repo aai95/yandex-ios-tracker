@@ -216,6 +216,15 @@ extension TrackersViewController: UICollectionViewDelegate {
         return UIContextMenuConfiguration(actionProvider: { menuElements in
             return UIMenu(children: [
                 UIAction(
+                    title: NSLocalizedString("editItem.title", comment: ""),
+                    handler: { [weak self] _ in
+                        guard let self = self else {
+                            return
+                        }
+                        self.editTracker(at: indexPath)
+                    }
+                ),
+                UIAction(
                     title: NSLocalizedString("deleteItem.title", comment: ""),
                     attributes: .destructive,
                     handler: { [weak self] _ in
@@ -227,6 +236,20 @@ extension TrackersViewController: UICollectionViewDelegate {
                 )
             ])
         })
+    }
+    
+    private func editTracker(at indexPath: IndexPath) {
+        AnalyticService.shared.report(event: "click", with: ["screen": "Main", "item": "edit"])
+        
+        let category = categories[indexPath.section]
+        let tracker = category.trackers[indexPath.item]
+        let controller = EditTrackerViewController()
+        
+        controller.editDelegate = self
+        controller.isHabitView = !tracker.schedule.isEmpty
+        controller.setTrackerToEdit(model: tracker, in: category.title)
+        
+        present(UINavigationController(rootViewController: controller), animated: true)
     }
     
     private func deleteTracker(at indexPath: IndexPath) {
@@ -313,6 +336,19 @@ extension TrackersViewController: AddTrackerViewControllerDelegate {
         }
         try! trackerStore.addTracker(model: model, to: category)
         reloadVisibleCategories()
+        dismiss(animated: true)
+    }
+}
+
+extension TrackersViewController: EditTrackerViewControllerDelegate {
+    
+    func didSaveEditedTracker(model: TrackerModel, in category: String) {
+        try! trackerStore.saveTracker(model: model, in: category)
+        reloadVisibleCategories()
+        dismiss(animated: true)
+    }
+    
+    func didCancelEditTracker() {
         dismiss(animated: true)
     }
 }
