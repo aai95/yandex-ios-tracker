@@ -213,8 +213,20 @@ extension TrackersViewController: UICollectionViewDelegate {
         }
         let indexPath = indexPaths[0]
         
+        let tracker = visibleCategories[indexPath.section].trackers[indexPath.item]
+        let pinTitleKey = tracker.isPinned ? "unpinItem.title" : "pinItem.title"
+        
         return UIContextMenuConfiguration(actionProvider: { menuElements in
             return UIMenu(children: [
+                UIAction(
+                    title: NSLocalizedString(pinTitleKey, comment: ""),
+                    handler: { [weak self] _ in
+                        guard let self = self else {
+                            return
+                        }
+                        self.pinTracker(at: indexPath)
+                    }
+                ),
                 UIAction(
                     title: NSLocalizedString("editItem.title", comment: ""),
                     handler: { [weak self] _ in
@@ -241,15 +253,22 @@ extension TrackersViewController: UICollectionViewDelegate {
     private func editTracker(at indexPath: IndexPath) {
         AnalyticService.shared.report(event: "click", with: ["screen": "Main", "item": "edit"])
         
-        let category = categories[indexPath.section]
-        let tracker = category.trackers[indexPath.item]
+        let tracker = visibleCategories[indexPath.section].trackers[indexPath.item]
         let controller = EditTrackerViewController()
         
         controller.editDelegate = self
         controller.isHabitView = !tracker.schedule.isEmpty
-        controller.setTrackerToEdit(model: tracker, in: category.title)
+        controller.setTrackerToEdit(model: tracker, in: findCategoryTitle(by: tracker.id) ?? "")
         
         present(UINavigationController(rootViewController: controller), animated: true)
+    }
+    
+    private func pinTracker(at indexPath: IndexPath) {
+        var tracker = visibleCategories[indexPath.section].trackers[indexPath.item]
+        tracker.isPinned = !tracker.isPinned
+        
+        try! trackerStore.saveTracker(model: tracker, in: findCategoryTitle(by: tracker.id) ?? "")
+        reloadVisibleCategories()
     }
     
     private func deleteTracker(at indexPath: IndexPath) {
@@ -269,7 +288,7 @@ extension TrackersViewController: UICollectionViewDelegate {
                         return
                     }
                     try! self.trackerStore.deleteTracker(
-                        model: self.categories[indexPath.section].trackers[indexPath.item]
+                        model: self.visibleCategories[indexPath.section].trackers[indexPath.item]
                     )
                     self.reloadVisibleCategories()
                 }
@@ -282,6 +301,17 @@ extension TrackersViewController: UICollectionViewDelegate {
             )
         )
         present(controller, animated: true)
+    }
+    
+    private func findCategoryTitle(by trackerID: UUID) -> String? {
+        for category in categories {
+            for tracker in category.trackers {
+                if tracker.id == trackerID {
+                    return category.title
+                }
+            }
+        }
+        return nil
     }
 }
 
@@ -378,11 +408,16 @@ private extension TrackersViewController {
     @objc func reloadVisibleCategories() {
         visibleCategories = []
         let searchText = searchField.text ?? ""
+        var pinnedTrackers: Array<TrackerModel> = []
         
         for category in categories {
             var visibleTrackers: Array<TrackerModel> = []
             
             for tracker in category.trackers {
+                if tracker.isPinned {
+                    pinnedTrackers.append(tracker)
+                    continue
+                }
                 if (isVisibleHabit(model: tracker) || isVisibleEvent(model: tracker))
                     && (searchText.isEmpty || tracker.name.localizedCaseInsensitiveContains(searchText))
                 {
@@ -392,6 +427,15 @@ private extension TrackersViewController {
             if !visibleTrackers.isEmpty {
                 visibleCategories.append(CategoryModel(title: category.title, trackers: visibleTrackers))
             }
+        }
+        if !pinnedTrackers.isEmpty {
+            visibleCategories.insert(
+                CategoryModel(
+                    title: NSLocalizedString("pinnedCategory.title", comment: ""),
+                    trackers: pinnedTrackers
+                ),
+                at: 0
+            )
         }
         showAppropriatePlaceholder()
         trackerCollection.reloadData()

@@ -41,8 +41,12 @@ addCategoryButton.title = "Добавить категорию";
 doneButton.title = "Готово";
 
 // MARK: ContextMenu
+pinItem.title = "Закрепить";
+unpinItem.title = "Открепить";
 editItem.title = "Редактировать";
 deleteItem.title = "Удалить";
+
+pinnedCategory.title = "Закреплённые";
 deleteConfirmation.title = "Уверены что хотите удалить трекер?";
 
 // MARK: Statistics

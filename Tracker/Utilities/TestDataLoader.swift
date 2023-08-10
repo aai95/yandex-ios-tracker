@@ -39,7 +39,8 @@ final class TestDataLoader {
                 name: NSLocalizedString("testTracker.name", comment: ""),
                 color: .ypSelection18,
                 emoji: NSLocalizedString("testTracker.emoji", comment: ""),
-                schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday],
+                isPinned: false
             )
         ]
         
@@ -64,6 +65,7 @@ final class TestDataLoader {
             entity.hexColor = colorSerializer.serialize(color: model.color)
             entity.emoji = model.emoji
             entity.weekDays = scheduleSerializer.serialize(schedule: model.schedule)
+            entity.isPinned = model.isPinned
             entity.records = NSSet(array: recordEntities)
             return entity
         }

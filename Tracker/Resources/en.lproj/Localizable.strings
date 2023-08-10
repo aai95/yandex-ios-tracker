@@ -41,8 +41,12 @@ addCategoryButton.title = "Add category";
 doneButton.title = "Done";
 
 // MARK: ContextMenu
+pinItem.title = "Pin";
+unpinItem.title = "Unpin";
 editItem.title = "Edit";
 deleteItem.title = "Delete";
+
+pinnedCategory.title = "Pinned";
 deleteConfirmation.title = "Are you sure you want to delete the tracker?";
 
 // MARK: Statistics

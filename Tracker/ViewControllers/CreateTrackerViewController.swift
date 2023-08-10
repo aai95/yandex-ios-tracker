@@ -162,7 +162,8 @@ class CreateTrackerViewController: UIViewController {
             name: trackerName.trimmingCharacters(in: .whitespaces),
             color: colors[currentColorIndexPath?.item ?? 0],
             emoji: emojis[currentEmojiIndexPath?.item ?? 0],
-            schedule: configuredSchedule
+            schedule: configuredSchedule,
+            isPinned: false
         )
         delegate?.didCreateNewTracker(model: tracker, in: categoryTitle)
     }
@@ -507,6 +508,7 @@ class EditTrackerViewController: CreateTrackerViewController {
     
     private var trackerID: UUID?
     private var eventDate: Date?
+    private var isPinned: Bool?
     
     weak var editDelegate: EditTrackerViewControllerDelegate?
     
@@ -543,7 +545,8 @@ class EditTrackerViewController: CreateTrackerViewController {
             color: colors[currentColorIndexPath?.item ?? 0],
             emoji: emojis[currentEmojiIndexPath?.item ?? 0],
             schedule: configuredSchedule,
-            date: eventDate
+            date: eventDate,
+            isPinned: isPinned ?? false
         )
         editDelegate?.didSaveEditedTracker(model: tracker, in: categoryTitle)
     }
@@ -551,6 +554,7 @@ class EditTrackerViewController: CreateTrackerViewController {
     func setTrackerToEdit(model: TrackerModel, in category: String) {
         trackerID = model.id
         eventDate = model.date
+        isPinned = model.isPinned
         
         nameField.text = model.name
         selectedCategoryTitle = category
