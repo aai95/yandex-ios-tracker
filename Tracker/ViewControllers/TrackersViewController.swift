@@ -414,14 +414,12 @@ private extension TrackersViewController {
             var visibleTrackers: Array<TrackerModel> = []
             
             for tracker in category.trackers {
-                if tracker.isPinned {
-                    pinnedTrackers.append(tracker)
-                    continue
-                }
-                if (isVisibleHabit(model: tracker) || isVisibleEvent(model: tracker))
-                    && (searchText.isEmpty || tracker.name.localizedCaseInsensitiveContains(searchText))
-                {
-                    visibleTrackers.append(tracker)
+                if isVisibleHabit(model: tracker) || isVisibleEvent(model: tracker) {
+                    if tracker.isPinned {
+                        pinnedTrackers.append(tracker)
+                    } else if searchText.isEmpty || tracker.name.localizedCaseInsensitiveContains(searchText) {
+                        visibleTrackers.append(tracker)
+                    }
                 }
             }
             if !visibleTrackers.isEmpty {
