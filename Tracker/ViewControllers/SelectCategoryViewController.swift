@@ -10,8 +10,11 @@ final class SelectCategoryViewController: UIViewController {
         let table = UITableView(frame: .zero)
         
         table.register(CheckTableViewCell.self, forCellReuseIdentifier: CheckTableViewCell.identifier)
-        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         table.isScrollEnabled = false
+        
+        table.separatorColor = .ypGray
+        table.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        table.tableHeaderView = UIView() // remove separator above first cell
         
         table.layer.masksToBounds = true
         table.layer.cornerRadius = 16
@@ -24,7 +27,7 @@ final class SelectCategoryViewController: UIViewController {
         
         view.configure(
             image: UIImage(named: "CategoriesPlaceholder"),
-            caption: "Привычки и события можно\nобъединить по смыслу"
+            caption: NSLocalizedString("categoriesPlaceholder.caption", comment: "")
         )
         return view
     }()
@@ -32,9 +35,10 @@ final class SelectCategoryViewController: UIViewController {
     private lazy var addButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.setTitle("Добавить категорию", for: .normal)
+        button.setTitle(NSLocalizedString("addCategoryButton.title", comment: ""), for: .normal)
+        button.setTitleColor(.ypWhiteAdaptive, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .ypBlackDay
+        button.backgroundColor = .ypBlackAdaptive
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
@@ -92,15 +96,15 @@ final class SelectCategoryViewController: UIViewController {
     
     private func setupNavigationBar() {
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay,
+            NSAttributedString.Key.foregroundColor: UIColor.ypBlackAdaptive,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
-        navigationController?.navigationBar.topItem?.title = "Категория"
+        navigationController?.navigationBar.topItem?.title = NSLocalizedString("category.title", comment: "")
     }
     
     private func makeViewLayout() {
-        view.backgroundColor = .ypWhiteDay
+        view.backgroundColor = .ypWhiteAdaptive
         
         view.addSubview(checkTable)
         view.addSubview(placeholderView)
@@ -151,11 +155,6 @@ extension SelectCategoryViewController: UITableViewDataSource {
             preconditionFailure("Failed to cast UITableViewCell as CheckTableViewCell")
         }
         checkCell.viewModel = viewModel.categoryList[indexPath.row]
-        
-        if indexPath.row == viewModel.categoryList.count - 1 { // hide separator for last cell
-            let centerX = checkCell.bounds.width / 2
-            checkCell.separatorInset = UIEdgeInsets(top: 0, left: centerX, bottom: 0, right: centerX)
-        }
         return checkCell
     }
 }

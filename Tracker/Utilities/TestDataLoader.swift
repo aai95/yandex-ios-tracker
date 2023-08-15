@@ -36,16 +36,17 @@ final class TestDataLoader {
         let trackerModels = [
             TrackerModel(
                 id: testID,
-                name: "Тестовый трекер",
-                color: .systemOrange,
-                emoji: "🍏",
-                schedule: [.monday, .tuesday, .wednesday, .thursday, .friday]
+                name: NSLocalizedString("testTracker.name", comment: ""),
+                color: .ypSelection18,
+                emoji: NSLocalizedString("testTracker.emoji", comment: ""),
+                schedule: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday],
+                isPinned: false
             )
         ]
         
         let categoryModels = [
             CategoryModel(
-                title: "Тестовая категория",
+                title: NSLocalizedString("testCategory.title", comment: ""),
                 trackers: trackerModels
             )
         ]
@@ -64,6 +65,7 @@ final class TestDataLoader {
             entity.hexColor = colorSerializer.serialize(color: model.color)
             entity.emoji = model.emoji
             entity.weekDays = scheduleSerializer.serialize(schedule: model.schedule)
+            entity.isPinned = model.isPinned
             entity.records = NSSet(array: recordEntities)
             return entity
         }

@@ -9,9 +9,10 @@ final class AddTrackerViewController: UIViewController {
     private lazy var habitButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.setTitle("Привычка", for: .normal)
+        button.setTitle(NSLocalizedString("habitButton.title", comment: ""), for: .normal)
+        button.setTitleColor(.ypWhiteAdaptive, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .ypBlackDay
+        button.backgroundColor = .ypBlackAdaptive
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
@@ -24,9 +25,10 @@ final class AddTrackerViewController: UIViewController {
     private lazy var eventButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.setTitle("Нерегулярное событие", for: .normal)
+        button.setTitle(NSLocalizedString("irregularEventButton.title", comment: ""), for: .normal)
+        button.setTitleColor(.ypWhiteAdaptive, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .ypBlackDay
+        button.backgroundColor = .ypBlackAdaptive
         
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
@@ -61,15 +63,15 @@ final class AddTrackerViewController: UIViewController {
     
     private func setupNavigationBar() {
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay,
+            NSAttributedString.Key.foregroundColor: UIColor.ypBlackAdaptive,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
-        navigationController?.navigationBar.topItem?.title = "Создание трекера"
+        navigationController?.navigationBar.topItem?.title = NSLocalizedString("addTracker.title", comment: "")
     }
     
     private func makeViewLayout() {
-        view.backgroundColor = .ypWhiteDay
+        view.backgroundColor = .ypWhiteAdaptive
         
         let buttonStack = makeButtonStack()
         

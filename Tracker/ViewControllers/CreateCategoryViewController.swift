@@ -9,9 +9,9 @@ final class CreateCategoryViewController: UIViewController {
     private lazy var titleField: CustomTextField = {
         let field = CustomTextField()
         
-        field.placeholder = "Введите название категории"
+        field.placeholder = NSLocalizedString("categoryTitleField.placeholder", comment: "")
         field.font = .systemFont(ofSize: 17, weight: .regular)
-        field.backgroundColor = .ypBackgroundDay
+        field.backgroundColor = .ypBackgroundAdaptive
         
         field.layer.masksToBounds = true
         field.layer.cornerRadius = 16
@@ -24,7 +24,7 @@ final class CreateCategoryViewController: UIViewController {
     private lazy var doneButton: UIButton = {
         let button = UIButton(type: .custom)
         
-        button.setTitle("Готово", for: .normal)
+        button.setTitle(NSLocalizedString("doneButton.title", comment: ""), for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .ypGray
         button.isEnabled = false
@@ -54,10 +54,12 @@ final class CreateCategoryViewController: UIViewController {
             return
         }
         if categoryTitle.isEmpty {
+            doneButton.setTitleColor(.ypWhite, for: .normal)
             doneButton.backgroundColor = .ypGray
             doneButton.isEnabled = false
         } else {
-            doneButton.backgroundColor = .ypBlackDay
+            doneButton.setTitleColor(.ypWhiteAdaptive, for: .normal)
+            doneButton.backgroundColor = .ypBlackAdaptive
             doneButton.isEnabled = true
         }
     }
@@ -77,15 +79,15 @@ final class CreateCategoryViewController: UIViewController {
     
     private func setupNavigationBar() {
         let titleAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.ypBlackDay,
+            NSAttributedString.Key.foregroundColor: UIColor.ypBlackAdaptive,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
-        navigationController?.navigationBar.topItem?.title = "Новая категория"
+        navigationController?.navigationBar.topItem?.title = NSLocalizedString("createCategory.title", comment: "")
     }
     
     private func makeViewLayout() {
-        view.backgroundColor = .ypWhiteDay
+        view.backgroundColor = .ypWhiteAdaptive
         
         view.addSubview(titleField)
         view.addSubview(doneButton)
